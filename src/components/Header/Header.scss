@@ -1,11 +1,16 @@
 .Header-container {
-  background-color: #0171DF;
+  height: 50px;
+  background-color: #0171df;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0px 25px 0px 25px;
-  p{
+  span {
     font-size: 20px;
+  }
+  .TravelAgent-container{
+    display: flex;
+    gap: 10px;
   }
   .Button-container {
     display: flex;
@@ -18,7 +23,7 @@
       padding: 8px;
     }
     button:hover {
-      background-color: #FFD140;
+      background-color: #ffd140;
     }
   }
 }
