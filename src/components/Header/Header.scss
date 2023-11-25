@@ -1,3 +1,24 @@
-.Header-container{
-    background-color: fuchsia;
+.Header-container {
+  background-color: #3CAE8B;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px 25px 0px 25px;
+  p{
+    font-size: 20px;
+  }
+  .Button-container {
+    display: flex;
+    gap: 10px;
+    button {
+      width: 80px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      padding: 8px;
+    }
+    button:hover {
+      background-color: #0171df;
+    }
+  }
 }

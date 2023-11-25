@@ -5,5 +5,5 @@ export function MainPage(){
         <>
         <p>Mainpage works!</p>
         </>
-    )
+    );
 }
