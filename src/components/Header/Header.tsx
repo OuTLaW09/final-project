@@ -11,7 +11,7 @@ export function Header() {
         <span className="agent-name">Agent</span>
       </div>
       <div className="Button-container">
-        <button className="Home-button">Home</button>
+        <Link to="*"><button className="Home-button">Home</button></Link>
         <Link to="login">
           <button className="Login-button">Login</button>
         </Link>

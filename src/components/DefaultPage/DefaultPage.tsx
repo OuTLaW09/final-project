@@ -1,3 +1,4 @@
+import './DefaultPage.scss';
 export const DefaultPage=()=>{
     return (
         <>
