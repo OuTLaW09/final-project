@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './App.css';
 import { Header } from './components/Header/Header';
-import { Footer } from './components/Footer/Footer';
+import { Footer } from './components/MainPage/Footer/Footer';
 import { MainPage } from './components/MainPage/MainPage';
 import { Routes,Route } from 'react-router-dom';
 import { LoginPage } from './components/LoginPage/LoginPage';
