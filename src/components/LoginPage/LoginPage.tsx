@@ -15,23 +15,23 @@ export const LoginPage=(props:LoginPageProps)=>{
     };
   
     return (
-        <>
-         <div className="login-container">
-            <p>Log In </p>
-            <form>
+        <div className="Login-Main">
+         <div className="Login-container">
+            <p>Log In</p>
+            <form className='Form'>
                 <label>
-                    username:
-                    <input type="text" placeholder="enter username"/>
+                    <span>Username:</span>
+                    <input type="text" placeholder="Enter Username"/>
                 </label>
                 <label>
-                    password:
-                    <input type="password"placeholder="enter password" />
+                <span>Password:</span>
+                    <input type="password"placeholder="Enter Password" />
                 </label>
                 <button className="login_btn" onClick={LoginBtnClick}>Log in</button>
                 <a href="#">Do you forget password?</a>
                 <a href="#">Create a account</a>
             </form>
          </div>
-        </>
+        </div>
     )
 };
