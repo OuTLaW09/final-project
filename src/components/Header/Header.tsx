@@ -1,10 +1,11 @@
+import { Link } from 'react-router-dom';
 import './Header.scss';
-export function Header() {
+export function Header(){
   return (
     <div className="Header-container">
       <p className="agent-name">Lorem Impus</p>
-      <button className="Login-button">Login</button>
-      <button className="Signup-button">Sign Up</button>
+      <Link to="login"><button className="Login-button">Login</button></Link>
+      <Link to="signUp"><button className="Signup-button">Sign Up</button></Link>
     </div>
   );
 }
