@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './App.css';
 import { Header } from './components/Header/Header';
-import { Footer } from './components/MainPage/Footer/Footer';
+import { Footer } from './components/Footer/Footer';
 import { MainPage } from './components/MainPage/MainPage';
 import { Routes,Route } from 'react-router-dom';
 import { LoginPage } from './components/LoginPage/LoginPage';
@@ -23,8 +23,8 @@ function App() {
     <>
      <Header/>
      <Routes>
-      <Route index path="login" element={<LoginPage handleLogin={HandleLogInBtn} />} />
-      <Route path="signUp" element={<SignUpPage  signUpHandler={HandleSignUpBtn} /> }/>
+      <Route index path="Login" element={<LoginPage handleLogin={HandleLogInBtn} />} />
+      <Route path="SignUp" element={<SignUpPage  signUpHandler={HandleSignUpBtn} /> }/>
       <Route path="*" element={<DefaultPage/>}/>
      </Routes>
      current user is:{userInfo ? userInfo.userName : "-there is no such user please enter your data"}

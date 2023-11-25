@@ -12,10 +12,10 @@ export function Header() {
       </div>
       <div className="Button-container">
         <Link to="*"><button className="Home-button">Home</button></Link>
-        <Link to="login">
+        <Link to="Login">
           <button className="Login-button">Login</button>
         </Link>
-        <Link to="signUp">
+        <Link to="SignUp">
           <button className="Signup-button">Sign Up</button>
         </Link>
       </div>
