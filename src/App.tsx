@@ -30,6 +30,7 @@ function App() {
      current user is:{userInfo ? userInfo.userName : "-there is no such user please enter your data"}
      <MainPage/>
      <Footer/>
+    <DefaultPage/>
     </>
   );
 }

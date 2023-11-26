@@ -1,8 +1,8 @@
-import './DefaultPage.scss';
+import './DefaultPage';
+import backgroundimage from "../../assets/Images/EnteringImage.jpg"
 export const DefaultPage=()=>{
     return (
-        <div className="HomePage-container">
-            
+        <div className="DefaultPage-container">
         </div>
     )
 }
