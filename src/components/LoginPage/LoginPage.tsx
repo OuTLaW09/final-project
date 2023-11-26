@@ -32,6 +32,7 @@ export const LoginPage=(props:LoginPageProps)=>{
                 <button className="login_btn" onClick={LoginBtnClick}>Log in</button>
                 <a href="#">Do you forget password?</a>
                 <a href="#">Create a account</a>
+                <p>Hello Murad!</p>
             </form>
          </div>
         </div>
