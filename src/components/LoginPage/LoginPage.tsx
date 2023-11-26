@@ -1,7 +1,5 @@
 import { User } from '../../models/user';
 import './LoginPage.scss';
-import bacgroundimage from "../../assets/Images/Enterinimage.jpg"
-import { Link } from 'react-router-dom';
 import leftPhoto from '../../assets/Images/left-arrow.png'
 type LoginPageProps={
     handleLogin: (user:User)=>void;
