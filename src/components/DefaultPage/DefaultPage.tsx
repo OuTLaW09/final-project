@@ -13,7 +13,7 @@ export const DefaultPage = () => {
               Assist You For Coming True Your Intensions
             </p>
           </div>
-          <img src={FlightsLogo}/>
+          <img src={FlightsLogo} className="FlightLogoClass"/>
         </div>
       </div>
     </div>
