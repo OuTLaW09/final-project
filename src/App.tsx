@@ -6,8 +6,8 @@ import { MainPage } from './components/MainPage/MainPage';
 import { Routes,Route } from 'react-router-dom';
 import { LoginPage } from './components/LoginPage/LoginPage';
 import { SignUpPage } from './components/SignUpPage/SignUpPage';
-import { DefaultPage } from './components/DefaultPage/DefaultPage';
 import { User, UserSignUP } from './models/user';
+import { NotFoundPage } from './components/NotFoundPage/NotFoundPage';
 
 function App() {
   const [userInfo, setUserInfo]=useState<UserSignUP | undefined>(undefined)
@@ -26,7 +26,7 @@ function App() {
       <Route path="/" element={<MainPage />} />
       <Route path="login" element={<LoginPage handleLogin={handleLogInBtn} />} />
       <Route path="sign-up" element={<SignUpPage  signUpHandler={handleSignUpBtn} /> }/>
-      <Route path="*" element={<DefaultPage/>}/>
+      <Route path="*" element={<NotFoundPage/>}/>
      </Routes>
      current user is:{userInfo ? userInfo.userName : "-there is no such user please enter your data"}
      <Footer/>
