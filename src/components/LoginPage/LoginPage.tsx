@@ -21,9 +21,9 @@ export const LoginPage=(props:LoginPageProps)=>{
         <div className="Login-Main">
             <img src={logInBg} className='logInBg' />
             <div className="logInContainer">
-            <a href='http://localhost:3000/*' className='leftBtn'>
+            <Link to='/' className='leftBtn'>
                 <img src={leftPhoto} className='leftPhotoLogIn' />
-            </a>
+            </Link>
             <div className="Login-container">
                 <p className='logInP'>Log In</p>
                 
@@ -37,7 +37,7 @@ export const LoginPage=(props:LoginPageProps)=>{
                     </label>
                     <button className="login_btn" onClick={LoginBtnClick}>Log in</button>
                     <a href="#">Do you forget password?</a>
-                    <a href="http://localhost:3000/SignUp">Create a account</a>
+                    <Link to="/sign-up">Create a account</Link>
                     
                 </form>
          </div>

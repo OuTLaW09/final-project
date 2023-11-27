@@ -11,11 +11,11 @@ export function Header() {
         <span className="agent-name">Agent</span>
       </div>
       <div className="Button-container">
-        <Link to="*"><button className="Home-button">Home</button></Link>
-        <Link to="Login">
+        <Link to="/"><button className="Home-button">Home</button></Link>
+        <Link to="login">
           <button className="Login-button">Login</button>
         </Link>
-        <Link to="SignUp">
+        <Link to="sign-up">
           <button className="Signup-button">Sign Up</button>
         </Link>
       </div>

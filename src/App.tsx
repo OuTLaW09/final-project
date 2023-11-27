@@ -10,32 +10,28 @@ import { DefaultPage } from './components/DefaultPage/DefaultPage';
 import { User, UserSignUP } from './models/user';
 
 function App() {
-  const [userInfo,SetUserInfo]=useState<UserSignUP | undefined>(undefined)
-  function HandleLogInBtn(user:User){
+  const [userInfo, setUserInfo]=useState<UserSignUP | undefined>(undefined)
+  function handleLogInBtn(user:User){
     alert(user.userName)
 
   }
-  function HandleSignUpBtn(userSignUp:UserSignUP){
-    SetUserInfo(userSignUp)
+  function handleSignUpBtn(userSignUp:UserSignUP){
+    setUserInfo(userSignUp)
 
   }
   return(
     <>
      <Header/>
      <Routes>
-      <Route index path="Login" element={<LoginPage handleLogin={HandleLogInBtn} />} />
-      <Route path="SignUp" element={<SignUpPage  signUpHandler={HandleSignUpBtn} /> }/>
+      <Route path="/" element={<MainPage />} />
+      <Route path="login" element={<LoginPage handleLogin={handleLogInBtn} />} />
+      <Route path="sign-up" element={<SignUpPage  signUpHandler={handleSignUpBtn} /> }/>
       <Route path="*" element={<DefaultPage/>}/>
      </Routes>
      current user is:{userInfo ? userInfo.userName : "-there is no such user please enter your data"}
-     <MainPage/>
      <Footer/>
     </>
   );
 }
 
 export default App;
-function UseState(): [any, any] {
-  throw new Error('Function not implemented.');
-}
-
