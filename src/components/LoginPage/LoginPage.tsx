@@ -22,9 +22,12 @@ export const LoginPage=(props:LoginPageProps)=>{
     };
   
     return (
-        <div className="Login-Main">
+        <div className="login-Main">
             <div className="login-container">
                 <div className='left-side-login'>
+                     <Link to='/' >
+                        <img src={leftPhoto} className='left-btn' />
+                    </Link>
                     <div className='top-side-login'>
                         <p className='login-capture'>Log in</p>
                         <div className="login-logos">
@@ -58,18 +61,9 @@ export const LoginPage=(props:LoginPageProps)=>{
                             <Link to="/sign-up"><button className='sign-up-btn'>Sign Up</button></Link>
 
                         </div>
-                       
                     </div>
-                    {/* <a href="#">Do you forget password?</a>
-                    <Link to="/sign-up">Create a account</Link> */}
-
-                        
-                    
-
                 </div>
-                {/* <Link to='/' className='leftBtn'>
-                    <img src={leftPhoto} className='leftPhotoLogIn' />
-                </Link> */}
+               
            
 
             </div>

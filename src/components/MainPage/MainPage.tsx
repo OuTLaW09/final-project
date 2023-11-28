@@ -1,4 +1,4 @@
-import "./MainPage.scss";
+import "./Mainpage.scss";
 import FlightsLogo from "../../assets/Images/FlightsLogo.png";
 export const MainPage = () => {
   return (
