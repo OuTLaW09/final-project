@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import './App.css';
-import { Header } from './components/Header/Header';
 import { Footer } from './components/Footer/Footer';
 import { MainPage } from './components/MainPage/MainPage';
 import { Routes,Route } from 'react-router-dom';
@@ -21,7 +20,6 @@ function App() {
   }
   return(
     <>
-     <Header/>
      <Routes>
       <Route path="/" element={<MainPage />} />
       <Route path="login" element={<LoginPage handleLogin={handleLogInBtn} />} />
