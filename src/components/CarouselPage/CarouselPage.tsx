@@ -1,7 +1,7 @@
 import React from 'react';
 import { Carousel } from 'antd';
 import { cities } from '../../models/CarouselObject';
-import { Content } from 'antd/es/layout/layout';
+import './CarouselPage.scss';
 
 interface Cities{
     imageUrl: string;
@@ -13,16 +13,6 @@ interface Cities{
 interface ArrayProps{
     items:Cities[]
 }
-const contentStyle: React.CSSProperties = {
-    display:'flex',
-    flexDirection:'column',
-    gap:'10px',
-    margin: 0,
-    alignItems:'center',
-    background: '#364d79',
-  };
-
-  
 export const CarouselPage: React.FC = () => {
     const onChange = (currentSlide: number) => {
       console.log(currentSlide);
@@ -32,8 +22,8 @@ export const CarouselPage: React.FC = () => {
       <Carousel afterChange={onChange}>
         {
             cities.map((item)=>(
-                <div>
-                    <div style={contentStyle}>
+                <div className='main-carusel'>
+                    <div className='city-card'>
                         <img src={item.imageUrl} alt="" />
                         <p >Seosons:{item.seasons}</p>
                         <p>Rating:{item.rating}</p>
