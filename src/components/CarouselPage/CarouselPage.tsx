@@ -22,12 +22,14 @@ export const CarouselPage: React.FC = () => {
       <Carousel afterChange={onChange}>
         {
             cities.map((item)=>(
-                <div className='main-carusel'>
+                <div className='main-carousel'>
                     <div className='city-card'>
-                        <img src={item.imageUrl} alt="" />
-                        <p >Seosons:{item.seasons}</p>
+                        <img className="carousel-image"src={item.imageUrl} />
+                        <div className="about-city-container">
+                        <p >Suitable Seasons:{item.seasons}</p>
                         <p>Rating:{item.rating}</p>
                         <p>Packages:{item.packages}</p>
+                        </div>
                         <p >Description:{item.description}</p>
 
                     </div>
