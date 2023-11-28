@@ -1,8 +1,32 @@
+import React from "react";
+import { Carousel } from "antd";
 import "./MainPage.scss";
 import FlightsLogo from "../../assets/Images/FlightsLogo.png";
+import airplane from "../../assets/Images/airplane.png";
+import { Link } from "react-router-dom";
+
 export const MainPage = () => {
   return (
     <div className="MainPage-container">
+      <div className="Header-container">
+        <div className="TravelAgent-container">
+          <span className="agent-name">Travel</span>
+          <img src={airplane} />
+          <span className="agent-name">Agent</span>
+        </div>
+        <div className="Button-container">
+          <Link to="/">
+            <button className="Home-button">Home</button>
+          </Link>
+          <Link to="login">
+            <button className="Login-button">Login</button>
+          </Link>
+          <Link to="sign-up">
+            <button className="Signup-button">Sign Up</button>
+          </Link>
+        </div>
+      </div>
+
       <div className="HeroSection-container">
         <div className="Info-container">
           <p className="StartingText">You Can Travel Anywhere With Us</p>
@@ -15,15 +39,7 @@ export const MainPage = () => {
         </div>
         <img src={FlightsLogo} />
       </div>
-      <div className="AboutPlaces-container">
-        <div className="London-container">
-          <img src="" />
-          <div className="Seasons"></div>
-          <div className="Rating"></div>
-          <div className="Packages"></div>
-          <div className="Description"></div>
-        </div>
-      </div>
+      <div className="AboutPlaces-container"></div>
     </div>
   );
 };
