@@ -1,5 +1,4 @@
 
-
 export const cities = [
   {
     imageUrl: 'image',
