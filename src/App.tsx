@@ -7,6 +7,7 @@ import { LoginPage } from './components/LoginPage/LoginPage';
 import { SignUpPage } from './components/SignUpPage/SignUpPage';
 import { User, UserSignUP } from './models/user';
 import { NotFoundPage } from './components/NotFoundPage/NotFoundPage';
+import { CarouselPage } from './components/CarouselPage/CarouselPage';
 
 function App() {
   const [userInfo, setUserInfo]=useState<UserSignUP | undefined>(undefined)
@@ -26,7 +27,7 @@ function App() {
       <Route path="sign-up" element={<SignUpPage  signUpHandler={handleSignUpBtn} /> }/>
       <Route path="*" element={<NotFoundPage/>}/>
      </Routes>
-     current user is:{userInfo ? userInfo.userName : "-there is no such user please enter your data"}
+     <CarouselPage/>
      <Footer/>
     </>
   );

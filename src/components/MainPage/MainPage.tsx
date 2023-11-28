@@ -3,6 +3,8 @@ import FlightsLogo from "../../assets/Images/FlightsLogo.png";
 import airplane from "../../assets/Images/airplane.png";
 import { Link } from "react-router-dom";
 
+
+
 export const MainPage = () => {
   return (
     <div className="MainPage-container">
@@ -38,6 +40,8 @@ export const MainPage = () => {
         <img src={FlightsLogo} />
       </div>
       <div className="AboutPlaces-container"></div>
+      
     </div>
+    
   );
 };
