@@ -6,7 +6,7 @@ import './CarouselPage.scss';
 interface Cities{
     imageUrl: string;
     seasons: string[];
-    rating: number;
+    rating: string;
     packages: string[];
     description: string
 }
