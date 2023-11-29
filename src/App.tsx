@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import './App.css';
-import { Footer } from './components/Footer/Footer';
-import { MainPage } from './components/MainPage/MainPage';
 import { Routes,Route } from 'react-router-dom';
 import { LoginPage } from './components/LoginPage/LoginPage';
 import { SignUpPage } from './components/SignUpPage/SignUpPage';
 import { User, UserSignUP } from './models/user';
 import { NotFoundPage } from './components/NotFoundPage/NotFoundPage';
-import { CarouselPage } from './components/CarouselPage/CarouselPage';
+import { MainPage } from './components/MainPage/MainPage';
+
 
 function App() {
   const [userInfo, setUserInfo]=useState<UserSignUP | undefined>(undefined)
@@ -23,13 +22,12 @@ function App() {
   return(
     <>
      <Routes>
-      <Route path="/" element={<MainPage />} />
+      <Route path="/" element={<MainPage/>} />
       <Route path="login" element={<LoginPage handleLogin={handleLogInBtn} />} />
       <Route path="sign-up" element={<SignUpPage  signUpHandler={handleSignUpBtn} /> }/>
       <Route path="*" element={<NotFoundPage/>}/>
      </Routes>
-     <CarouselPage/>
-     <Footer/>
+     
     </>
   );
 }
