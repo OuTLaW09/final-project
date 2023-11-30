@@ -60,8 +60,8 @@ export const SignUpPage = (props: SignUpProps) => {
     const prefixSelector = (
       <Form.Item name="prefix" noStyle>
         <Select style={{ width: 70 }}>
-          <Option value="70">+70</Option>
-          <Option value="50">+50</Option>
+          <Option value="994">+994</Option>
+          <Option value="998">+998</Option>
         </Select>
       </Form.Item>
     );
@@ -74,7 +74,7 @@ export const SignUpPage = (props: SignUpProps) => {
           <div className="overlay-signup">
             <p className="welcome-back">Welcome Back,Friend</p>
             <p className="personal-info">To keep connected with us please,log in with your personal info</p>
-            <Link to={"/login"}><Button >Log in</Button></Link>
+            <Link to={"/login"}><button type="button" >Log in</button></Link>
           </div>
           
 
