@@ -6,6 +6,7 @@ export function MainPage(){
     return(
         <>
         <HeroPage/>
+        
         <CarouselPage/>
         <Footer/>
         </>
