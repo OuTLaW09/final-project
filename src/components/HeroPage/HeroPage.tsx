@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 
 export const HeroPage = () => {
   return (
-    <div className="MainPage-container">
+    <div className="hero-page-container">
       <div className="Header-container">
         <div className="TravelAgent-container">
           <span className="agent-name">Travel</span>

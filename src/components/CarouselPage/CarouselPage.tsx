@@ -68,14 +68,16 @@ export const CarouselPage: React.FC = () => {
         >
           {cities.map((item) => (
             <div className="city-card">
-              <img className="carousel-image" src={item.imageUrl} />
+              <div className="carousel-image-container">
+              <img src={item.imageUrl} />
+              </div>
               <div className="about-city-container">
                 <p className="place-name">{item.name}</p>
                 <p className="city-properties">Suitable Seasons:{item.seasons}</p>
                 <p className="city-properties">Rating:{item.rating}</p>
                 <p className="city-properties">Packages:{item.packages}</p>
               </div>
-              <p>Description:{item.description}</p>
+              <p className="description-of-places">{item.description}</p>
             </div>
 
           ))}
