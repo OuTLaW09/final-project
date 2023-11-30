@@ -6,6 +6,7 @@ import type { FormItemProps } from 'antd';
 import React from 'react';
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 import { Link } from "react-router-dom";
+import goBackSignUp from '../../assets/Images/left.png';
 type SignUpProps = {
   signUpHandler: (userSignUp: UserSignUP) => void;
 };
@@ -72,9 +73,10 @@ export const SignUpPage = (props: SignUpProps) => {
         <div className="left-side-signup">
           <img src={leftSignUp} alt="" className="left-signup-image" />
           <div className="overlay-signup">
+           <Link to="/"> <img src={goBackSignUp} alt="" className="go-back-signup" /></Link>
             <p className="welcome-back">Welcome Back,Friend</p>
             <p className="personal-info">To keep connected with us please,log in with your personal info</p>
-            <Link to={"/login"}><button type="button" >Log in</button></Link>
+            <Link to="/login"><Button type="primary" >LOG IN</Button></Link>
           </div>
           
 
@@ -84,36 +86,40 @@ export const SignUpPage = (props: SignUpProps) => {
           <p className="signup-p">Sign Up </p>
           <Form name="form_item_path" layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed} className="Form" >
             <MyFormItemGroup prefix={['user']}>
-              <MyFormItemGroup prefix={['name']}>
-               <MyFormItem name="firstName"  label='First Name'  className="first-name-signup" 
-               rules={[{ required: true, message: 'Please input your first name!' }]}>
-                  <Input className="first-name-signup-input" placeholder="First Name" />
-                </MyFormItem>
-                <MyFormItem name="lastName" label="Last Name"
-                rules={[{ required: true, message: 'Please input your last name!' }]}>
-                    <Input placeholder="Last Name" />
-                </MyFormItem>
+              <MyFormItemGroup prefix={['name']} >
+                <div className="user-name">
+                  <MyFormItem name="firstName"  label='First Name'  className="first-name-signup" 
+                  rules={[{ required: true, message: 'Please input your first name!' }]}>
+                      <Input className="first-name-signup-input" placeholder="First Name" />
+                    </MyFormItem>
+                    <MyFormItem name="lastName" label="Last Name"
+                    rules={[{ required: true, message: 'Please input your last name!' }]}>
+                        <Input placeholder="Last Name" />
+                    </MyFormItem>
+                </div>
 
               </MyFormItemGroup>
-                
-                <MyFormItem name="email" label="Email" 
-                rules={[ {
-            type: 'email',
-            message: 'The input is not valid E-mail!',
-          },
-          {
-            required: true,
-            message: 'Please input your E-mail!',
-          },
-        ]}
-          >
-                   <Input placeholder="email" type="email"/>
-                </MyFormItem>
+                <div className="email-age">
+                  <MyFormItem name="email" label="Email" 
+                  rules={[ {
+              type: 'email',
+              message: 'The input is not valid E-mail!',
+            },
+            {
+              required: true,
+              message: 'Please input your E-mail!',
+            },
+          ]}
+            >
+                    <Input placeholder="email" type="email"/>
+                  </MyFormItem>
+              
+                  <MyFormItem name="age" label="Age"
+                  rules={[{ required: true, message: 'Please input your age!' }]}>
+                  <Input placeholder="age"/>
+                  </MyFormItem>
+              </div>
 
-                <MyFormItem name="age" label="Age"
-                rules={[{ required: true, message: 'Please input your age!' }]}>
-                 <Input placeholder="age"/>
-                </MyFormItem>
                 <MyFormItem name="phone-number" label="Phone Number" className="phone-number"
                 rules={[{ required: true, message: 'Please input your age!' }]}>
                  <Input addonBefore={prefixSelector} style={{ width: '100%' }} placeholder="phone number" />

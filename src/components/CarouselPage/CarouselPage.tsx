@@ -55,6 +55,7 @@ export const CarouselPage: React.FC = () => {
   };
 
   return (
+    
     <div className="wrapper">
       <div
         onWheel={(event) => handleWheel(event)}
