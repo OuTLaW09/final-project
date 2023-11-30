@@ -4,12 +4,11 @@ import { HeroPage } from '../HeroPage/HeroPage';
 import './MainPage.scss';
 export function MainPage(){
     return(
-        <>
+        <div className='main-page-container'>
         <HeroPage/>
-        
         <CarouselPage/>
         <Footer/>
-        </>
+        </div>
 
     )
 }
