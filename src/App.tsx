@@ -5,7 +5,7 @@ import { LoginPage } from './components/LoginPage/LoginPage';
 import { SignUpPage } from './components/SignUpPage/SignUpPage';
 import { User, UserSignUP } from './models/user';
 import { NotFoundPage } from './components/NotFoundPage/NotFoundPage';
-import { MainPage } from './components/MainPage/MainPage';
+import { MainPage } from './components/MainPage/Mainpage';
 
 
 function App() {
