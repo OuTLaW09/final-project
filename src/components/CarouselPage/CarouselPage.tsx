@@ -55,32 +55,35 @@ export const CarouselPage: React.FC = () => {
   };
 
   return (
-    
-    <div className="wrapper">
-      <div
-        onWheel={(event) => handleWheel(event)}
-        className="carousel-wrapper"
-        ref={carouselWrapperRef}
-      >
-        <Carousel
-          afterChange={onChange}
-          className="main-carousel"
-          ref={carouselRef}
+    <div className="carousel-page">
+      <div className="wrapper">
+        <div
+          onWheel={(event) => handleWheel(event)}
+          className="carousel-wrapper"
+          ref={carouselWrapperRef}
         >
-          {cities.map((item) => (
-            <div className="city-card">
-              <img className="carousel-image" src={item.imageUrl} />
-              <div className="about-city-container">
-                <p className="place-name">{item.name}</p>
-                <p className="city-properties">Suitable Seasons:{item.seasons}</p>
-                <p className="city-properties">Rating:{item.rating}</p>
-                <p className="city-properties">Packages:{item.packages}</p>
+          <Carousel
+            afterChange={onChange}
+            className="main-carousel"
+            ref={carouselRef}
+          >
+            {cities.map((item) => (
+              <div className="city-card">
+                <div className="carousel-image-container">
+                <img src={item.imageUrl} />
+                </div>
+                <div className="about-city-container">
+                  <p className="place-name">{item.name}</p>
+                  <p className="city-properties">Suitable Seasons:{item.seasons}</p>
+                  <p className="city-properties">Rating:{item.rating}</p>
+                  <p className="city-properties">Packages:{item.packages}</p>
+                </div>
+                <p className="description-of-places">{item.description}</p>
               </div>
-              <p>Description:{item.description}</p>
-            </div>
 
-          ))}
-        </Carousel>
+            ))}
+          </Carousel>
+        </div>
       </div>
     </div>
   );

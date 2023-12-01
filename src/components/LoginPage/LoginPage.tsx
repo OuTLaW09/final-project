@@ -101,19 +101,6 @@ export const LoginPage=(props:LoginPageProps)=>{
                         </Button>
                         <a href="" className='forgot-password'>Forgot Password</a>
                     </Form>
-                    {/* <form className='form'>
-                        <label>
-                            USERNAME
-                            <input type="text" placeholder="Username"/>
-                        </label>
-                        <label>
-                            PASSWORD
-                            <input type="password"placeholder="Password" />
-                        </label>
-                        <button className="login-btn" onClick={LoginBtnClick}>LOG IN</button>
-                        <a href="" className='forgot-password'>Forgot Password</a>
-                    </form> */}
-
                 </div>
                 <div className="right-side-login">
                     <img src={loginBg} alt="" className='login-bg'/>
