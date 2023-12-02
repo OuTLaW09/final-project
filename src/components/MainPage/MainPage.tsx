@@ -1,4 +1,4 @@
-
+import { Footer } from "../Footer/Footer";
 import { CarouselPage } from "../CarouselPage/CarouselPage";
 import { HeroPage } from "../HeroPage/HeroPage";
 
@@ -55,6 +55,7 @@ export function Mainpage() {
         </div>
         </div>
       </div>
+      <Footer/>
   
     </div>
   );
