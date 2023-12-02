@@ -1,5 +1,7 @@
+
 import { CarouselPage } from "../CarouselPage/CarouselPage";
 import { HeroPage } from "../HeroPage/HeroPage";
+
 import "./Mainpage.scss";
 export function Mainpage() {
   return (
@@ -42,6 +44,7 @@ export function Mainpage() {
           </div>
         </div>
       </div>
+  
     </div>
   );
 }

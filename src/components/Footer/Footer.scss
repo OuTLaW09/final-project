@@ -1,0 +1,16 @@
+.footer-main{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 1000px;
+
+    .top-of-footer{
+        width: 100%;
+        width: 300px;
+        .footer-top-image{
+            width: 100%;
+            height: 300px;
+        }
+
+    }
+}
