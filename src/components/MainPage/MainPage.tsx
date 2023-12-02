@@ -22,15 +22,15 @@ export function Mainpage() {
           </div>
           <div className="selecting-flights-container">
             <div className="select-part">
-              <div className="return-container">
+              <div className="return-container center">
                 <input type="radio" className="return-select" />
                 <label>Return</label>
               </div>
-              <div className="oneway-container">
+              <div className="oneway-container center">
                 <input type="radio" className="oneway-select" />
                 <label>One Way</label>
               </div>
-              <div className="multicity-container">
+              <div className="multicity-container center">
                 <input type="radio" className="multicity-select" />
                 <label>Multi-City</label>
               </div>
@@ -42,6 +42,17 @@ export function Mainpage() {
               </div>
             </div>
           </div>
+          <div className="rotation-main">
+            <div className="rotation-container">
+              <input type="text" placeholder="Where From?"/>
+              <input type="text" placeholder="Where To?"/>
+              <input type="text" placeholder="Departure"/>
+              <input type="text" placeholder="Where To?"/>
+            </div>
+          </div>
+        <div className="search-button">
+          <button>Search Flights</button>
+        </div>
         </div>
       </div>
   
