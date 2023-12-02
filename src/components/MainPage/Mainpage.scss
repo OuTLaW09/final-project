@@ -1,0 +1,35 @@
+.search-container{
+    display: flex;
+    justify-content: center;
+    height: 300px;
+    color: white;
+    background-color: black;
+    box-sizing: border-box;
+    .search-main{
+
+        .property-of-search{
+            font-size: 50px;
+            height: 80px;
+            display: flex;
+            gap:60px
+        }
+        .selecting-flights-container{
+            font-size: 50px;
+            .select-part{
+                display: flex;
+                gap: 40px;
+                input{
+                    width: 30px;
+                    height: 30px;
+                }
+                .type-of-flight{
+                    width: 120px;
+                    .type-select{
+                        width: 100%;
+                        height: 100%;
+                    }
+                }
+            }
+        }
+    }
+}

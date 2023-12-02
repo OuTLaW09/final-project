@@ -5,7 +5,7 @@ import { LoginPage } from './components/LoginPage/LoginPage';
 import { SignUpPage } from './components/SignUpPage/SignUpPage';
 import { User, UserSignUP } from './models/user';
 import { NotFoundPage } from './components/NotFoundPage/NotFoundPage';
-import { MainPage } from './components/MainPage/Mainpage';
+import { Mainpage } from './components/MainPage/Mainpage';
 
 
 function App() {
@@ -22,7 +22,7 @@ function App() {
   return(
     <>
      <Routes>
-      <Route path="/" element={<MainPage/>} />
+      <Route path="/" element={<Mainpage/>} />
       <Route path="login" element={<LoginPage handleLogin={handleLogInBtn} />} />
       <Route path="sign-up" element={<SignUpPage  signUpHandler={handleSignUpBtn} /> }/>
       <Route path="*" element={<NotFoundPage/>}/>
