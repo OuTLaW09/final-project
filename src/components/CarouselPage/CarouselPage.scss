@@ -1,9 +1,30 @@
-.carousel-page{
+.carousel-page::before{
+    content:'';
+    position: absolute;
+    top: 0;
+    left: 50%;
     width: 100%;
-    height:800px;
+    height: 500px;
     background-color: #ebd574;
+    
+    border-radius: 50%;
+    transform-origin: top;
+    transform: translateX(-50%) scale(4);
+    
 
+}
+
+
+.carousel-page{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    top:-30px;
+  
     .carousel-wrapper {
+        position: relative;
+        z-index: 1;
         margin-right: auto;
         margin-left: auto;
         max-width: 600px;
