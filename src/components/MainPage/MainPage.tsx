@@ -2,62 +2,54 @@ import "./Mainpage.scss";
 import { Footer } from "../Footer/Footer";
 import { CarouselPage } from "../CarouselPage/CarouselPage";
 import { HeroPage } from "../HeroPage/HeroPage";
-import dayjs from 'dayjs';
-import customParseFormat from 'dayjs/plugin/customParseFormat';
-import type { DatePickerProps } from 'antd';
+
+import { AndroidOutlined, AppleOutlined } from '@ant-design/icons';
+import { Tabs } from 'antd';
+
 import { DatePicker, Space } from 'antd';
 
-dayjs.extend(customParseFormat);
+
 
 const { RangePicker } = DatePicker;
 
-const dateFormat = 'YYYY/MM/DD';
-const weekFormat = 'MM/DD';
-const monthFormat = 'YYYY/MM';
 
-/** Manually entering any of the following formats will perform date parsing */
-const dateFormatList = ['DD/MM/YYYY', 'DD/MM/YY', 'DD-MM-YYYY', 'DD-MM-YY'];
 
-const customFormat: DatePickerProps['format'] = (value) =>
-  `custom format: ${value.format(dateFormat)}`;
 
-const customWeekStartEndFormat: DatePickerProps['format'] = (value) =>
-  `${dayjs(value).startOf('week').format(weekFormat)} ~ ${dayjs(value)
-    .endOf('week')
-    .format(weekFormat)}`;
 
-const App: React.FC = () => (
-  <Space direction="vertical" size={12}>
-    <DatePicker defaultValue={dayjs('2015/01/01', dateFormat)} format={dateFormat} />
-    <DatePicker defaultValue={dayjs('01/01/2015', dateFormatList[0])} format={dateFormatList} />
-    <DatePicker defaultValue={dayjs('2015/01', monthFormat)} format={monthFormat} picker="month" />
-    <DatePicker defaultValue={dayjs()} format={customWeekStartEndFormat} picker="week" />
-    <RangePicker
-      defaultValue={[dayjs('2015/01/01', dateFormat), dayjs('2015/01/01', dateFormat)]}
-      format={dateFormat}
-    />
-    <DatePicker defaultValue={dayjs('2015/01/01', dateFormat)} format={customFormat} />
-  </Space>
-);
 
-export default App;
 
 export function Mainpage() {
   return (
     <div className="main-page-container">
       <HeroPage />
       <CarouselPage />
+      <hr />
       <div className="search-container">
         <div className="search-main">
-          <div className="property-of-search">
-            <div className="flights-container">
-              <span></span>
-              <span>Flights</span>
-            </div>
-            <div className="hotels-container">
-              <span></span>
-              <span>Hotels</span>
-            </div>
+         <div className="property-of-search">
+              <Tabs
+                  defaultActiveKey="2"
+                  items={[AppleOutlined, AndroidOutlined].map((Icon, i) => {
+                    const id = String(i + 1);
+                    return {
+                      label: <span>Tab {id}</span>,
+                      key: id,
+                      children: `Tab ${id}`,
+                      icon: <Icon />,
+                    };
+                  })}
+
+              />
+
+              {/* <div className="flights-container">
+                <span></span>
+                <span>Flights</span>
+              </div>
+              <div className="hotels-container">
+                <span></span>
+                <span>Hotels</span>
+              </div> */}
+
           </div>
           <div className="selecting-flights-container">
             <div className="select-part">
@@ -78,6 +70,7 @@ export function Mainpage() {
                   <option value="business">Business</option>
                   <option value="economy">Economy</option>
                 </select>
+               
               </div>
             </div>
           </div>
@@ -85,7 +78,9 @@ export function Mainpage() {
             <div className="rotation-container">
               <input type="text" placeholder="Where From?"/>
               <input type="text" placeholder="Where To?"/>
-              <DatePicker picker="date"/>
+              <Space direction="vertical" size={12}>
+                <RangePicker />
+              </Space>
               
               <input type="text" placeholder="Where To?"/>
             </div>
@@ -96,6 +91,11 @@ export function Mainpage() {
         </div>
       </div>
       <Footer/>
+      <div className="last-part-mainpage">
+        <div><a href="">Privacy Policy</a></div>
+        <div><a href="">All rights revered 2023 @Travel Agency</a></div>
+        <div><a href="">Terms&Conditions</a></div>
+      </div>
   
     </div>
   );

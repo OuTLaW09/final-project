@@ -6,6 +6,7 @@ import { SignUpPage } from './components/SignUpPage/SignUpPage';
 import { User, UserSignUP } from './models/user';
 import { NotFoundPage } from './components/NotFoundPage/NotFoundPage';
 import { Mainpage } from './components/MainPage/MainPage';
+import { HeroPage } from './components/HeroPage/HeroPage';
 
 
 function App() {

@@ -2,8 +2,27 @@
   display: flex;
   flex-direction: column;
   background-color: #ebd574;
-}
+  width: 100%;
+  height: 100%;
 
+
+  .last-part-mainpage{
+    display: flex;
+    justify-content: space-around;
+  
+    a{  
+        text-decoration: none;
+        color:#003926;
+        font-family: 'Lato';
+        font-size:15px;
+    }
+  }
+}
+hr{
+    padding:2px 700px;
+    background-color: grey;
+   
+}
 .search-container {
   display: flex;
   justify-content: center;
@@ -79,12 +98,12 @@
         font-weight: 500;
         width: 200px;
         height: 40px;
-        background-color: red;
+        background-color:orangered;
         border-radius: 22px;
         cursor: pointer;
       }
       button:hover {
-        background-color: blue;
+        background-color:#003926;
         transition: 1ms ease-in-out;
       }
     }

@@ -56,7 +56,17 @@ export const CarouselPage: React.FC = () => {
 
   return (
     <div className="carousel-page">
+     
       <div className="wrapper">
+        <div className="header-of-carousel">
+          <div className="left-header-carousel">
+            <span className="prime">Prime</span>
+            <span className="hottest-deals">Hottest Deals</span>
+          </div>
+          <div className="middle-header-carousel">
+            Save big and visit these dream destinations!
+          </div>
+        </div>
         <div
           onWheel={(event) => handleWheel(event)}
           className="carousel-wrapper"
