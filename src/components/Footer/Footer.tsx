@@ -7,6 +7,10 @@ import instagramFooter from '../../assets/Images/instagramFooter.png';
 import facebookFooter from '../../assets/Images/facebookFooter.png'
 import linkedinFooter from '../../assets/Images/linkedinFooter.png'
 
+const topFunction=()=>{
+    document.body.scrollTop=0;
+    document.documentElement.scrollTop=0;
+}
 
 export const Footer =()=>{
     return(
@@ -14,8 +18,7 @@ export const Footer =()=>{
             <div className="top-of-footer">
                 <img src={FooterTopImage} className='footer-top-image' />
                 <div className="back-to-top">
-
-                    <Link to='/'><img src={ BackToTopImage} className='backto-top-image' /></Link>
+                    <Link to='/'><button onClick={topFunction}><img src={ BackToTopImage} className='backto-top-image' /></button></Link>
                     <p className='back-to-top-p'>Back to top</p>
                 </div>
                
