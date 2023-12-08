@@ -1,10 +1,7 @@
-import "./HeroPage.scss";
-import FlightsLogo from "../../assets/Images/FlightsLogo.png";
-import airplane from "../../assets/Images/airplane.png";
-import { Link } from "react-router-dom";
-
-
-
+import './HeroPage.scss';
+import { Link } from 'react-router-dom';
+import FlightsLogo from '../../assets/Images/FlightsLogo.png';
+import airplane from '../../assets/Images/airplane.png';
 
 export const HeroPage = () => {
   return (
@@ -12,7 +9,7 @@ export const HeroPage = () => {
       <div className="Header-container">
         <div className="TravelAgent-container">
           <span className="agent-name">Travel</span>
-          <img src={airplane} />
+          <img alt="" src={airplane} />
           <span className="agent-name">Agent</span>
         </div>
         <div className="Button-container">
@@ -38,13 +35,9 @@ export const HeroPage = () => {
             <br /> Your Intensions
           </p>
         </div>
-        <img src={FlightsLogo} />
+        <img alt="" src={FlightsLogo} />
       </div>
       <div className="AboutPlaces-container"></div>
-
     </div>
-
-   
-    
   );
 };

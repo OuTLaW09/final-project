@@ -1,14 +1,10 @@
-import "./Mainpage.scss";
-import { Footer } from "../Footer/Footer";
-import { CarouselPage } from "../CarouselPage/CarouselPage";
-import { HeroPage } from "../HeroPage/HeroPage";
-import { DatePicker, Space } from "antd";
-import React, { useState } from "react";
-import type { RadioChangeEvent } from "antd";
-import { Radio } from "antd";
-import { Link } from "react-router-dom";
-
- 
+import './Mainpage.scss';
+import { CarouselPage } from '../CarouselPage/CarouselPage';
+import { DatePicker, Radio, RadioChangeEvent, Space } from 'antd';
+import { Footer } from '../Footer/Footer';
+import { HeroPage } from '../HeroPage/HeroPage';
+import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
 
 const { RangePicker } = DatePicker;
 
@@ -16,7 +12,7 @@ export function Mainpage() {
   const [value, setValue] = useState(1);
 
   const onChange = (e: RadioChangeEvent) => {
-    console.log("radio checked", e.target.value);
+    console.log('radio checked', e.target.value);
     setValue(e.target.value);
   };
   return (
@@ -41,25 +37,27 @@ export function Mainpage() {
               <input type="text" placeholder="Where From?" />
               <input type="text" placeholder="Where To?" />
               <Space direction="vertical" size={12}>
-                <RangePicker placeholder={["Departure", "Return"]} />
+                <RangePicker placeholder={['Departure', 'Return']} />
               </Space>
             </div>
           </div>
           <div className="search-button">
-            <Link to='map-page'><button>Search Flights</button></Link>
+            <Link to="map-page">
+              <button>Search Flights</button>
+            </Link>
           </div>
         </div>
       </div>
       <Footer />
       <div className="last-part-mainpage">
         <div>
-          <a href="">Privacy Policy</a>
+          <a href="/">Privacy Policy</a>
         </div>
         <div>
-          <a href="">All rights revered 2023 @Travel Agency</a>
+          <a href="/">All rights revered 2023 @Travel Agency</a>
         </div>
         <div>
-          <a href="">Terms&Conditions</a>
+          <a href="/">Terms&Conditions</a>
         </div>
       </div>
     </div>

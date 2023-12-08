@@ -10,7 +10,7 @@
     "@types/node": "^16.18.64",
     "@types/react": "^18.2.38",
     "@types/react-dom": "^18.2.17",
-    "antd": "^5.11.5",
+    "antd": "^5.11.5",    
     "leaflet": "^1.9.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -22,10 +22,11 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "react-scripts start && eslint src/**/*.ts{,x}",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint:fix": "eslint src/**/*.ts{,x} --fix"
   },
   "eslintConfig": {
     "extends": [
@@ -46,6 +47,11 @@
     ]
   },
   "devDependencies": {
-    "@types/leaflet": "^1.9.8"
+    "@types/leaflet": "^1.9.8",
+    "eslint": "^8.55.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.0.1",
+    "eslint-plugin-sort-imports-es6-autofix": "^0.6.0",
+    "prettier": "^3.1.0"
   }
 }
