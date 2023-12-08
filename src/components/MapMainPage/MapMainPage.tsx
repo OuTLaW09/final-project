@@ -1,14 +1,14 @@
 import './MapMainPage.scss'
-import React from "react";
+import React, { useRef } from "react";
 import { MapContainer, TileLayer } from 'react-leaflet';
 
  
 export const MapMainPage = () => {
- 
+  const mapRef=useRef()
   
   return (
     <div className='map'>
-     
+      <p>test</p>
       <MapContainer center={[40.40926170,49.86709240]} zoom={13} 
       >
         <TileLayer url='https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png'
