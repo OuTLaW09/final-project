@@ -6,6 +6,7 @@ import { DatePicker, Space } from "antd";
 import React, { useState } from "react";
 import type { RadioChangeEvent } from "antd";
 import { Radio } from "antd";
+import { Link } from "react-router-dom";
 
  
 
@@ -45,7 +46,7 @@ export function Mainpage() {
             </div>
           </div>
           <div className="search-button">
-            <button>Search Flights</button>
+            <Link to='map-page'><button>Search Flights</button></Link>
           </div>
         </div>
       </div>

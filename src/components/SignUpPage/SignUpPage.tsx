@@ -3,14 +3,20 @@ import "./SignUpPage.scss";
 import leftSignUp from '../../assets/Images/signupbg.jpg';
 import { Form, Input, Button, Select } from 'antd';
 import type { FormItemProps } from 'antd';
-import React from 'react';
+import React, { useState } from 'react';
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 import { Link } from "react-router-dom";
 import goBackSignUp from '../../assets/Images/left.png';
 type SignUpProps = {
   signUpHandler: (userSignUp: UserSignUP) => void;
 };
+
 export const SignUpPage = (props: SignUpProps) => {
+
+
+ 
+
+
   const userSignUp: UserSignUP = {
     userName: "zeyneb",
     userPassword: "zeyneb2003",
@@ -84,11 +90,12 @@ export const SignUpPage = (props: SignUpProps) => {
         </div>
         <div className="right-side-signup">
           <p className="signup-p">Sign Up </p>
-          <Form name="form_item_path" layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed} className="Form" >
+          <Form name="form_item_path" layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed} className="Form"  >
             <MyFormItemGroup prefix={['user']}>
               <MyFormItemGroup prefix={['name']} >
                 <div className="user-name">
-                  <MyFormItem name="firstName"  label='First Name'  className="first-name-signup" 
+                  <MyFormItem name="firstName"  label='First Name'  className="first-name-signup"  
+        
                   rules={[{ required: true, message: 'Please input your first name!' }]}>
                       <Input className="first-name-signup-input" placeholder="First Name" />
                     </MyFormItem>
@@ -121,7 +128,7 @@ export const SignUpPage = (props: SignUpProps) => {
               </div>
 
                 <MyFormItem name="phone-number" label="Phone Number" className="phone-number"
-                rules={[{ required: true, message: 'Please input your age!' }]}>
+                rules={[{ required: true, message: 'Please input your phone number!' }]}>
                  <Input addonBefore={prefixSelector} style={{ width: '100%' }} placeholder="phone number" />
                 </MyFormItem>
                 <MyFormItem name="password" label="Password" 
