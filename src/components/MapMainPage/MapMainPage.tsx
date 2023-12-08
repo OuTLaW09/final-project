@@ -1,7 +1,7 @@
-import './MapMainPage.scss'
+import './MapMainPage.scss';
 import React from "react";
 import { MapContainer, TileLayer } from 'react-leaflet';
-import React from 'react';
+
 
 export const MapMainPage = () => {
  

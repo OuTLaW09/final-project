@@ -1,7 +1,7 @@
 import './HeroPage.scss';
 import { Link } from 'react-router-dom';
 import FlightsLogo from '../../assets/Images/FlightsLogo.png';
-import airplane from '../../assets/Images/airplane.png';
+import airplane from '../../assets/Images/headerLogo.png';
 
 export const HeroPage = () => {
   return (
