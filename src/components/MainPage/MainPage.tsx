@@ -1,11 +1,13 @@
 import './Mainpage.scss';
 import { CarouselPage } from '../CarouselPage/CarouselPage';
-import { DatePicker, Radio, RadioChangeEvent, Space } from 'antd';
+import { DatePicker, Radio, RadioChangeEvent, TreeSelect, Space, Select } from 'antd';
 import { Footer } from '../Footer/Footer';
 import { HeroPage } from '../HeroPage/HeroPage';
 import { Link } from 'react-router-dom';
 import React, { useState } from 'react';
+import { statesData } from '../../models/countriesData';
 
+const { Option} = Select;
 const { RangePicker } = DatePicker;
 
 export function Mainpage() {
@@ -15,6 +17,7 @@ export function Mainpage() {
     console.log('radio checked', e.target.value);
     setValue(e.target.value);
   };
+
   return (
     <div className="main-page-container">
       <HeroPage />
@@ -35,7 +38,14 @@ export function Mainpage() {
           <div className="rotation-main">
             <div className="rotation-container">
               <input type="text" placeholder="Where From?" />
-              <input type="text" placeholder="Where To?" />
+              <Select style={{ width: 80 }} placeholder='Where to?'>
+                   {statesData.features.map((item)=>(
+                    <Option> {item.properties.name}</Option>
+    
+                   ))}
+              </Select>
+                 
+             
               <Space direction="vertical" size={12}>
                 <RangePicker placeholder={['Departure', 'Return']} />
               </Space>
