@@ -40,76 +40,77 @@ hr{
     margin-top: 50px;
     height: 300px;
     border: none;
+    border-radius:20px;
     color: #000000;
     background-color: #ffffff;
-
-    .property-of-search {
-      font-size: 30px;
-      height: 80px;
-      display: flex;
-      gap: 60px;
-    }
-    .selecting-flights-container {
-      .center {
-        display: flex;
-        align-items: center;
-      }
-      font-size: 20px;
-      .select-part {
-        display: flex;
-        gap: 40px;
-        input {
-          width: 30px;
-          height: 30px;
-        }
-        .type-of-flight {
-          select {
-            border: none;
+    .search-form{
+      padding:50px;
+      .selecting-flights-container {
+     
+        font-size: 20px;
+        .select-part {
+          display: flex;
+          gap: 40px;
+          input {
+            width: 30px;
+            height: 30px;
           }
-          width: 200px;
-          .type-select {
+        
+         
+        }
+      }
+      .rotation-main {
+        margin-top: 40px;
+        .rotation-container {
+          input {
             font-size: 20px;
-            width: 100%;
-            height: 100%;
+            width: 200px;
+            height: 40px;
+            padding:12px 12px;
+            
+          };
+          .where-from-input{
+            height: 50px;
+            border:1px solid grey;
+            border-radius: 5px;
+          }
+  
+          .countries-select{
+            font-size: 20px;
+            width: 200px;
+            height: 95px;
+            padding:10px;
+            border-radius: 0%;
+            color: grey;
+            
+            
           }
         }
       }
-    }
-    .rotation-main {
-      margin-top: 40px;
-      .rotation-container {
-        input {
-          font-size: 20px;
+      .search-button {
+        box-sizing: border-box;
+        margin-top: 30px;
+        display: flex;
+        justify-content: flex-end;
+        button {
+          border: none;
+          outline: none;
+          margin-right: 30px;
+          color: #ffffff;
+          font-weight: 500;
           width: 200px;
           height: 40px;
-          padding:12px 12px;
+          background-color:orangered;
+          border-radius: 22px;
+          cursor: pointer;
+        }
+        button:hover {
+          background-color:#003926;
+          transition: 1ms ease-in-out;
         }
       }
-      RangePicker{
-        
-      }
+
     }
-    .search-button {
-      box-sizing: border-box;
-      margin-top: 30px;
-      display: flex;
-      justify-content: flex-end;
-      button {
-        border: none;
-        outline: none;
-        margin-right: 30px;
-        color: #ffffff;
-        font-weight: 500;
-        width: 200px;
-        height: 40px;
-        background-color:orangered;
-        border-radius: 22px;
-        cursor: pointer;
-      }
-      button:hover {
-        background-color:#003926;
-        transition: 1ms ease-in-out;
-      }
-    }
+    
   }
 }
