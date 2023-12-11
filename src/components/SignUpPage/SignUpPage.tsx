@@ -11,9 +11,8 @@ type SignUpProps = {
 };
 
 export const SignUpPage = (props: SignUpProps) => {
-
   const userSignUp: UserSignUP = {
-    userName:'zeyneb',
+    userName: 'zeyneb',
     userPassword: 'zeyneb2003',
     userEmail: 'ddndndn@hhdh',
     userNumber: 708080080,
@@ -24,8 +23,6 @@ export const SignUpPage = (props: SignUpProps) => {
 
   const onFinish = (value: object) => {
     console.log(value);
-
- 
   };
 
   const onFinishFailed = (errorInfo: any) => {
@@ -36,7 +33,7 @@ export const SignUpPage = (props: SignUpProps) => {
   interface MyFormItemGroupProps {
     prefix: string | number | (string | number)[];
     children: React.ReactNode;
-  };
+  }
 
   function toArr(str: string | number | (string | number)[]): (string | number)[] {
     return Array.isArray(str) ? str : [str];
@@ -45,7 +42,6 @@ export const SignUpPage = (props: SignUpProps) => {
   const MyFormItemGroup = ({ prefix, children }: MyFormItemGroupProps) => {
     const prefixPath = React.useContext(MyFormItemContext);
     const concatPath = React.useMemo(() => [...prefixPath, ...toArr(prefix)], [prefixPath, prefix]);
-    
 
     return <MyFormItemContext.Provider value={concatPath}>{children}</MyFormItemContext.Provider>;
   };
@@ -54,7 +50,7 @@ export const SignUpPage = (props: SignUpProps) => {
     const prefixPath = React.useContext(MyFormItemContext);
     const concatName = name !== undefined ? [...prefixPath, ...toArr(name)] : undefined;
     console.log(concatName);
-    return <Form.Item name={concatName} {...props} /> ;
+    return <Form.Item name={concatName} {...props} />;
   };
 
   const { Option } = Select;

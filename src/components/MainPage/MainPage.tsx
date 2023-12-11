@@ -1,44 +1,37 @@
 import './Mainpage.scss';
 import { CarouselPage } from '../CarouselPage/CarouselPage';
-import { DatePicker, Radio, RadioChangeEvent, Space, Select } from 'antd';
+import { DatePicker, Radio, RadioChangeEvent, Select, Space } from 'antd';
 import { Footer } from '../Footer/Footer';
 import { HeroPage } from '../HeroPage/HeroPage';
 import { Link } from 'react-router-dom';
-import React, { useEffect, useState } from 'react';
 import { citiesArray } from '../../models/citiesData';
-const { Option} = Select;
+import React, { useEffect, useState } from 'react';
+const { Option } = Select;
 const { RangePicker } = DatePicker;
 
-
 export function Mainpage() {
-  const [city,setCity]=useState<any[]>([]);
-  const [num,setNum]=useState(1);
-  const request=async()=>{
+  const [city, setCity] = useState<any[]>([]);
+  const [num, setNum] = useState(1);
+  const request = async () => {
     await fetch('https://api.eightydays.me/api/v2/cities')
-
-    .then((resp)=>resp.json())
-    .then((res)=>setCity(res));
+      .then((resp) => resp.json())
+      .then((res) => setCity(res));
   };
-  useEffect(()=>{
+  useEffect(() => {
     request();
-  },[num]);
-  let newCityArray:any[]=[];
+  }, [num]);
+  let newCityArray: any[] = [];
   for (let mainValueCity of Object.values(city)) {
-    if(Object.keys(mainValueCity)[1]==='values'){
+    if (Object.keys(mainValueCity)[1] === 'values') {
       for (let index = 0; index < mainValueCity['values'].length; index++) {
         newCityArray.push(mainValueCity['values'][index]['name']);
-        // console.log(mainValueCity['values'][index]['name']);  
-      }; 
-
-    };
-    
-  };
+        // console.log(mainValueCity['values'][index]['name']);
+      }
+    }
+  }
   console.log(newCityArray);
   console.log(newCityArray.length);
- 
-  
-  
-  
+
   const [value, setValue] = useState(1);
 
   const onChange = (e: RadioChangeEvent) => {
@@ -49,22 +42,22 @@ export function Mainpage() {
   const onChangeSelect = (value: string) => {
     console.log(`selected ${value}`);
   };
-  
+
   const onSearchSelect = (value: string) => {
     console.log('search:', value);
   };
   const filterOption = (input: string, option?: { label: string; value: string }) =>
     (option?.label ?? '').toLowerCase().includes(input.toLowerCase());
 
-    const onChangeSelectfirst = (value: string) => {
-      console.log(`selected ${value}`);
-    };
-    
-    const onSearchSelectfirst = (value: string) => {
-      console.log('search:', value);
-    };
-    const filterOptionfirst= (input: string, option?: { label: string; value: string }) =>
-      (option?.label ?? '').toLowerCase().includes(input.toLowerCase());
+  const onChangeSelectfirst = (value: string) => {
+    console.log(`selected ${value}`);
+  };
+
+  const onSearchSelectfirst = (value: string) => {
+    console.log('search:', value);
+  };
+  const filterOptionfirst = (input: string, option?: { label: string; value: string }) =>
+    (option?.label ?? '').toLowerCase().includes(input.toLowerCase());
 
   return (
     <div className="main-page-container">
@@ -85,27 +78,35 @@ export function Mainpage() {
             </div>
             <div className="rotation-main">
               <div className="rotation-container">
-              <Select showSearch  placeholder='Where from?' className='countries-select'
-                optionFilterProp="children"
-                onChange={onChangeSelectfirst}
-                onSearch={onSearchSelectfirst}
-                filterOption={filterOptionfirst}
+                <Select
+                  showSearch
+                  placeholder="Where from?"
+                  className="countries-select"
+                  optionFilterProp="children"
+                  onChange={onChangeSelectfirst}
+                  onSearch={onSearchSelectfirst}
+                  filterOption={filterOptionfirst}
                 >
-                  {newCityArray.map((cityName)=>(
-                    <Option  value={cityName} label={cityName}>{cityName}</Option>
-                  ))
-                  }
+                  {newCityArray.map((cityName) => (
+                    <Option value={cityName} label={cityName}>
+                      {cityName}
+                    </Option>
+                  ))}
                 </Select>
-                <Select showSearch  placeholder='Where to?' className='countries-select'
-                optionFilterProp="children"
-                onChange={onChangeSelect}
-                onSearch={onSearchSelect}
-                filterOption={filterOption}
+                <Select
+                  showSearch
+                  placeholder="Where to?"
+                  className="countries-select"
+                  optionFilterProp="children"
+                  onChange={onChangeSelect}
+                  onSearch={onSearchSelect}
+                  filterOption={filterOption}
                 >
-                  {citiesArray.map((town)=>(
-                    <Option value={town.name} label={town.name}>{town.name}</Option>
-                  ))
-                  }
+                  {citiesArray.map((town) => (
+                    <Option value={town.name} label={town.name}>
+                      {town.name}
+                    </Option>
+                  ))}
                 </Select>
                 <Space direction="vertical" size={12}>
                   <RangePicker placeholder={['Departure', 'Return']} />
