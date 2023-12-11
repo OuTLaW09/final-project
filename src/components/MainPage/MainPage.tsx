@@ -34,9 +34,6 @@ export function Mainpage() {
   console.log(newCityArray);
   console.log(newCityArray.length);
  
-  
-  
-  
   const [value, setValue] = useState(1);
 
   const onChangeRadio = (e: RadioChangeEvent) => {
