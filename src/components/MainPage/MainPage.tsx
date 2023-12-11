@@ -4,11 +4,10 @@ import { DatePicker, Radio, RadioChangeEvent, Select, Space } from 'antd';
 import { Footer } from '../Footer/Footer';
 import { HeroPage } from '../HeroPage/HeroPage';
 import { Link } from 'react-router-dom';
-import { citiesArray } from '../../models/citiesData';
+import { citiesArray, citiesThemes } from '../../models/citiesData';
 import React, { useEffect, useState } from 'react';
 const { Option } = Select;
 const { RangePicker } = DatePicker;
-
 export function Mainpage() {
   const [city, setCity] = useState<any[]>([]);
   const [num, setNum] = useState(1);
@@ -25,34 +24,28 @@ export function Mainpage() {
     if (Object.keys(mainValueCity)[1] === 'values') {
       for (let index = 0; index < mainValueCity['values'].length; index++) {
         newCityArray.push(mainValueCity['values'][index]['name']);
-        // console.log(mainValueCity['values'][index]['name']);  
-      }; 
-
-    };
-    
-  };
-  console.log(newCityArray);
-  console.log(newCityArray.length);
- 
-  const [value, setValue] = useState(1);
-
-  const onChangeRadio = (e: RadioChangeEvent) => {
-    setValue(e.target.value);
-    if(e.target.value===3){
-      return(
-        <Radio.Group name="radiogroup">
-          <Radio value={2}>2 Cities</Radio>
-          <Radio value={3}>3 Cities</Radio>
-          <Radio value={4}>4 Cities</Radio>
-        </Radio.Group>
-      );
-    }else{
-      console.log('wrong choice');
-    };
-  };
-
+      }
+    }
+  }
+  let whereFromValue: string = '';
+  let cityTheme: string = '';
+  let choosenCity: any[] = [];
+  let lastChoosenCity:any[]=[];
   const onChangeSelect = (value: string) => {
     console.log(`selected ${value}`);
+    cityTheme = value;
+    for (let index = 0; index < citiesArray.length; index++) {
+      for (let i = 0; i < citiesArray[index].startThemes.length; i++) {
+        for (let j = 0; j < citiesThemes.length; j++) {
+          if (citiesThemes[j].name === cityTheme) {
+            if (citiesThemes[j].code === citiesArray[index].startThemes[i]) {
+              choosenCity.push(citiesArray[index]);
+            }
+          }
+        }
+      }
+    }
+    console.log(choosenCity);
   };
 
   const onSearchSelect = (value: string) => {
@@ -63,12 +56,39 @@ export function Mainpage() {
 
   const onChangeSelectfirst = (value: string) => {
     console.log(`selected ${value}`);
+    whereFromValue = value;
   };
 
   const onSearchSelectfirst = (value: string) => {
     console.log('search:', value);
   };
   const filterOptionfirst = (input: string, option?: { label: string; value: string }) =>
+    (option?.label ?? '').toLowerCase().includes(input.toLowerCase());
+
+  const onChangeCountCity = (value: string) => {
+      console.log(`selected ${value}`);
+      for (let index = 0; index < Number(value); index++) {
+
+        const random = Math.floor(Math.random() * choosenCity.length);
+        
+        for (let i = 0; i <lastChoosenCity.length; i++) {
+          if(choosenCity[random]===lastChoosenCity[i]){
+            continue;
+          };
+        
+         
+          
+        };
+        lastChoosenCity.push(choosenCity[random]); 
+        console.log(lastChoosenCity);
+      };
+    };
+    
+    
+  const onSearchCountCity = (value: string) => {
+      console.log('search:', value);
+    };
+  const filterOptionCountCity = (input: string, option?: { label: string; value: string }) =>
     (option?.label ?? '').toLowerCase().includes(input.toLowerCase());
 
   return (
@@ -79,15 +99,6 @@ export function Mainpage() {
       <div className="search-container">
         <div className="search-main">
           <div className="search-form">
-            <div className="selecting-flights-container">
-              <div className="select-part">
-                <Radio.Group onChange={onChangeRadio} value={value}>
-                  <Radio value={1}>Return</Radio>
-                  <Radio value={2}>One Way</Radio>
-                  <Radio value={3}>Multi-City</Radio>
-                </Radio.Group>
-              </div>
-            </div>
             <div className="rotation-main">
               <div className="rotation-container">
                 <Select
@@ -107,19 +118,46 @@ export function Mainpage() {
                 </Select>
                 <Select
                   showSearch
-                  placeholder="Where to?"
+                  placeholder="Filter"
                   className="countries-select"
                   optionFilterProp="children"
                   onChange={onChangeSelect}
                   onSearch={onSearchSelect}
                   filterOption={filterOption}
                 >
-                  {citiesArray.map((town) => (
-                    <Option value={town.name} label={town.name}>
+                  {citiesThemes.map((town) => (
+                    <Option value={town.name}  label={town.name}>
                       {town.name}
                     </Option>
                   ))}
                 </Select>
+                <Select
+                    className='count-of-city'
+                    showSearch
+                    placeholder="Count of City"
+                    optionFilterProp="children"
+                    onChange={onChangeCountCity}
+                    onSearch={onSearchCountCity}
+                    filterOption={filterOptionCountCity}
+                    options={[
+                      {
+                        value: '1',
+                        label: '1',
+                      },
+                      {
+                        value: '2',
+                        label: '2',
+                      },
+                      {
+                        value: '3',
+                        label: '3',
+                      },
+                      {
+                        value: '4',
+                        label: '4',
+                      },
+                    ]}
+                  />
                 <Space direction="vertical" size={12}>
                   <RangePicker placeholder={['Departure', 'Return']} />
                 </Space>
