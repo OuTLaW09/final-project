@@ -33,17 +33,21 @@ export function Mainpage() {
     };
     
   };
-  console.log(newCityArray);
-  console.log(newCityArray.length);
- 
-  
-  
-  
   const [value, setValue] = useState(1);
 
-  const onChange = (e: RadioChangeEvent) => {
-    console.log('radio checked', e.target.value);
+  const onChangeRadio = (e: RadioChangeEvent) => {
     setValue(e.target.value);
+    if(e.target.value===3){
+      return(
+        <Radio.Group name="radiogroup">
+          <Radio value={2}>2 Cities</Radio>
+          <Radio value={3}>3 Cities</Radio>
+          <Radio value={4}>4 Cities</Radio>
+        </Radio.Group>
+      );
+    }else{
+      console.log('wrong choice');
+    };
   };
 
   const onChangeSelect = (value: string) => {
@@ -76,7 +80,7 @@ export function Mainpage() {
           <div className="search-form">
             <div className="selecting-flights-container">
               <div className="select-part">
-                <Radio.Group onChange={onChange} value={value}>
+                <Radio.Group onChange={onChangeRadio} value={value}>
                   <Radio value={1}>Return</Radio>
                   <Radio value={2}>One Way</Radio>
                   <Radio value={3}>Multi-City</Radio>
