@@ -25,30 +25,28 @@ export function Mainpage() {
     if (Object.keys(mainValueCity)[1] === 'values') {
       for (let index = 0; index < mainValueCity['values'].length; index++) {
         newCityArray.push(mainValueCity['values'][index]['name']);
-        // console.log(mainValueCity['values'][index]['name']);  
-      }; 
-
+        // console.log(mainValueCity['values'][index]['name']);
+      };
     };
-    
   };
   console.log(newCityArray);
   console.log(newCityArray.length);
- 
+
   const [value, setValue] = useState(1);
 
   const onChangeRadio = (e: RadioChangeEvent) => {
     setValue(e.target.value);
-    if(e.target.value===3){
-      return(
+    if (e.target.value === 3) {
+      return (
         <Radio.Group name="radiogroup">
           <Radio value={2}>2 Cities</Radio>
           <Radio value={3}>3 Cities</Radio>
           <Radio value={4}>4 Cities</Radio>
         </Radio.Group>
       );
-    }else{
+    } else {
       console.log('wrong choice');
-    };
+    }
   };
 
   const onChangeSelect = (value: string) => {

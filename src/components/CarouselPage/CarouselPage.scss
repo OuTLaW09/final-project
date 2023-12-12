@@ -1,96 +1,85 @@
-.carousel-page::before{
-    content:'';
-    position: absolute;
-    top: 0;
-    left: 50%;
-    width: 100%;
-    height: 500px;
-    background-color: #ebd574;
-    
-    border-radius: 50%;
-    transform-origin: top;
-    transform: translateX(-50%) scale(4);
-    
+.carousel-page {
+    background-color: gold;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  top: -30px;
 
-}
-
-
-.carousel-page{
-    position: relative;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    top:-30px;
-
-    .header-of-carousel{
-        position: absolute;
-        display: flex;
-        justify-content: space-around;
-      
-        font-size: 30px;
-        padding:40px;
-    }
-
- 
-  
-    .carousel-wrapper {
-        position: relative;
-        z-index: 1;
-        margin-right: auto;
-        margin-left: auto;
-        max-width: 600px;
-        height: 600px;
-        margin-top: 70px;
-    
+  .carousel-wrapper {
+    margin-right: auto;
+    margin-left: auto;
+    max-width: 600px;
+    height: 450px;
+    margin-top: 20px;
 
     .main-carousel {
-        border-radius: 3%;
-        display: flex;
-        justify-content: center;
-        margin-top: 30px;
-        max-width: 600px;
-        height: 630px;
-        .city-card {
+      border-radius: 3%;
+      margin-top: 30px;
+      max-width: 600px;
+      height: 450px;
+      display: flex;
+
+      .city-card {
         font-weight: bolder;
         color: #ffffff;
-        display: flex;
-        justify-content: center;
-        flex-direction: column;
-        align-items: center;
         background-color: transparent;
-        .description-of-places {
-            font-size: x-large;
-        }
-        .carousel-image-container {
+        gap: 0px;
+        .city-card-flex {
+          display: flex;
+          justify-content: space-between;
+          gap: 50px;
+
+          .carousel-image-container {
             display: flex;
             justify-content: center;
+            width: 250px;
+            height: 250px;
             img {
-            margin-top: 5px;
-            width: 550px;
-            height: 350px;
-            border-radius: 5%;
+              margin-top: 5px;
+              width: 100%;
+              height: 100%;
+              border-radius: 50%;
             }
-        }
-        .about-city-container {
-            color:#ffffff;
+          }
+          .about-city-container {
+            color: #000000;
+
             align-content: center;
             flex-wrap: wrap;
-            width: 600px;
+            width: 200px;
             display: flex;
             flex-direction: column;
-            justify-content: center;
             font-size: larger;
             .place-name {
-            margin-top: 5px;
-            margin-left: 10px;
-            font-size: xx-large;
+              margin-top: 5px;
+              margin-left: 10px;
+              font-size: xx-large;
             }
             .city-properties {
-            margin-top: 0px;
-            margin-left: 10px;
+              margin-top: 0;
+              margin-left: 10px;
+              color: #000000;
             }
+          }
         }
+        .description-of-places {
+          margin-top: 20px;
+          width: 100%;
+          font-size: large;
+          color: #000000;
         }
+      }
     }
+  }
+  .footer-of-carousel {
+    justify-content: space-around;
+    font-size: 30px;
+    padding: 40px;
+    .upper-word {
+      margin-left: 30%;
     }
+    .down-word {
+      margin-left: 40%;
+    }
+  }
 }
