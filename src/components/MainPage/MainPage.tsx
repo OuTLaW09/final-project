@@ -6,9 +6,36 @@ import { HeroPage } from '../HeroPage/HeroPage';
 import { Link } from 'react-router-dom';
 import { citiesArray, citiesThemes } from '../../models/citiesData';
 import React, { useEffect, useState } from 'react';
+
 const { Option } = Select;
 const { RangePicker } = DatePicker;
+
+type ChoosenCitiesType = {
+  name: string;
+  weight?: number | null;
+  nameSearch: string;
+  nameAddition?: string;
+  codeIata: string;
+  codeSky?: null | string;
+  timezoneIana: string;
+  bookingUrl: string;
+  airbnbUrl?: string;
+  themes: string[];
+  icon: null;
+  location: number[];
+  countryId: string;
+  docId: string;
+  dayTrips?: undefined;
+  startThemes: string[];
+  apiVersion?: string;
+  content?: object | null;
+};
+
 export function Mainpage() {
+  const [whereFromValue, setWhereFromValue] = useState<string>('');
+  const [cityTheme, setCityTheme] = useState<string>('');
+  const [choosenCity, setChoosenCity] = useState<ChoosenCitiesType[]>([]);
+  const[lastChoosenCity,setLastChoosenCity]=useState<ChoosenCitiesType[]>([]);
   const [city, setCity] = useState<any[]>([]);
   const [num, setNum] = useState(1);
   const request = async () => {
@@ -19,7 +46,9 @@ export function Mainpage() {
   useEffect(() => {
     request();
   }, [num]);
-  let newCityArray: any[] = [];
+  let newCityArray = [];
+  let choosenCityArray:any[]=[];
+  let lastChoosenCityArray:any[]=[];
   for (let mainValueCity of Object.values(city)) {
     if (Object.keys(mainValueCity)[1] === 'values') {
       for (let index = 0; index < mainValueCity['values'].length; index++) {
@@ -27,26 +56,25 @@ export function Mainpage() {
       }
     }
   }
-  let whereFromValue: string = '';
-  let cityTheme: string = '';
-  let choosenCity: any[] = [];
-  let lastChoosenCity:any[]=[];
+
+  
+
   const onChangeSelect = (value: string) => {
-    console.log(`selected ${value}`);
-    cityTheme = value;
-    for (let index = 0; index < citiesArray.length; index++) {
-      for (let i = 0; i < citiesArray[index].startThemes.length; i++) {
-        for (let j = 0; j < citiesThemes.length; j++) {
-          if (citiesThemes[j].name === cityTheme) {
-            if (citiesThemes[j].code === citiesArray[index].startThemes[i]) {
-              choosenCity.push(citiesArray[index]);
-            }
+    const newCitiesArray: ChoosenCitiesType[] = [];
+    citiesArray.forEach((City, index) => {
+      City.startThemes.forEach((startTheme) => {
+        const matchingTheme = citiesThemes.find((theme) => theme.code === startTheme);
+        if (matchingTheme && matchingTheme.name === value) {
+          if (matchingTheme.code === startTheme) {
+            choosenCityArray.push(City);
           }
         }
-      }
-    }
-    console.log(choosenCity);
+      });
+    });
+    setChoosenCity(choosenCityArray);
+    
   };
+  console.log(choosenCity);
 
   const onSearchSelect = (value: string) => {
     console.log('search:', value);
@@ -56,7 +84,7 @@ export function Mainpage() {
 
   const onChangeSelectfirst = (value: string) => {
     console.log(`selected ${value}`);
-    whereFromValue = value;
+    setWhereFromValue(value);
   };
 
   const onSearchSelectfirst = (value: string) => {
@@ -66,28 +94,25 @@ export function Mainpage() {
     (option?.label ?? '').toLowerCase().includes(input.toLowerCase());
 
   const onChangeCountCity = (value: string) => {
-      console.log(`selected ${value}`);
+    {
       for (let index = 0; index < Number(value); index++) {
-
         const random = Math.floor(Math.random() * choosenCity.length);
-        
-        for (let i = 0; i <lastChoosenCity.length; i++) {
-          if(choosenCity[random]===lastChoosenCity[i]){
+        console.log(choosenCity.length);
+
+        for (let i = 0; i < lastChoosenCity.length; i++) {
+          if (choosenCity[random] === lastChoosenCity[i]) {
             continue;
-          };
-        
-         
-          
-        };
-        lastChoosenCity.push(choosenCity[random]); 
-        console.log(lastChoosenCity);
-      };
-    };
-    
-    
+          }
+        }
+        lastChoosenCityArray.push(choosenCity[random]);
+        setLastChoosenCity(lastChoosenCityArray);
+      }
+    }
+  };
+console.log(lastChoosenCity);
   const onSearchCountCity = (value: string) => {
-      console.log('search:', value);
-    };
+    console.log('search:', value);
+  };
   const filterOptionCountCity = (input: string, option?: { label: string; value: string }) =>
     (option?.label ?? '').toLowerCase().includes(input.toLowerCase());
 
@@ -111,7 +136,7 @@ export function Mainpage() {
                   filterOption={filterOptionfirst}
                 >
                   {newCityArray.map((cityName) => (
-                    <Option value={cityName} label={cityName}>
+                    <Option key={cityName} value={cityName} label={cityName}>
                       {cityName}
                     </Option>
                   ))}
@@ -121,43 +146,46 @@ export function Mainpage() {
                   placeholder="Filter"
                   className="countries-select"
                   optionFilterProp="children"
-                  onChange={onChangeSelect}
+                  onChange={(e) => {
+                    setCityTheme(e);
+                    onChangeSelect(e);
+                  }}
                   onSearch={onSearchSelect}
                   filterOption={filterOption}
                 >
                   {citiesThemes.map((town) => (
-                    <Option value={town.name}  label={town.name}>
+                    <Option value={town.name} label={town.name}>
                       {town.name}
                     </Option>
                   ))}
                 </Select>
                 <Select
-                    className='count-of-city'
-                    showSearch
-                    placeholder="Count of City"
-                    optionFilterProp="children"
-                    onChange={onChangeCountCity}
-                    onSearch={onSearchCountCity}
-                    filterOption={filterOptionCountCity}
-                    options={[
-                      {
-                        value: '1',
-                        label: '1',
-                      },
-                      {
-                        value: '2',
-                        label: '2',
-                      },
-                      {
-                        value: '3',
-                        label: '3',
-                      },
-                      {
-                        value: '4',
-                        label: '4',
-                      },
-                    ]}
-                  />
+                  className="count-of-city"
+                  showSearch
+                  placeholder="Count of City"
+                  optionFilterProp="children"
+                  onChange={onChangeCountCity}
+                  onSearch={onSearchCountCity}
+                  filterOption={filterOptionCountCity}
+                  options={[
+                    {
+                      value: '1',
+                      label: '1',
+                    },
+                    {
+                      value: '2',
+                      label: '2',
+                    },
+                    {
+                      value: '3',
+                      label: '3',
+                    },
+                    {
+                      value: '4',
+                      label: '4',
+                    },
+                  ]}
+                />
                 <Space direction="vertical" size={12}>
                   <RangePicker placeholder={['Departure', 'Return']} />
                 </Space>

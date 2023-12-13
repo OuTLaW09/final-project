@@ -1,4 +1,27 @@
-export const citiesArray = [
+type CitiesType={
+  name: string;
+  weight?: number | null;
+  nameSearch: string;
+  nameAddition?: string;
+  codeIata: string;
+  codeSky?: null | string;
+  timezoneIana: string;
+  bookingUrl:string;
+  airbnbUrl?:string;
+  themes: string[];
+  icon: null;
+  location: number[];
+  countryId: string;
+  docId:string;
+  dayTrips?: undefined;
+  startThemes:string[];
+  apiVersion?:string;
+  content?:object |null;
+
+};
+
+
+export const citiesArray:CitiesType[]= [
   {
     name: 'Stuttgart',
     weight: 53,
@@ -23,13 +46,9 @@ export const citiesArray = [
       storyDesc: 'Stuttgart, where innovation meets scenic beauty.',
       textDesc:
         'Nestled between vine-covered hills, Stuttgart is not only the capital of Baden-W\u00fcrttemberg but also the automotive heart of Germany. Home to Mercedes-Benz and Porsche, the city offers world-class museums dedicated to these iconic brands. The historic Schlossplatz provides a central point for exploration, while Wilhelma, one of Europe\u0027s most beautiful zoological-botanical gardens, offers a unique combination of flora and fauna. With its rich history, vibrant arts scene, and scenic beauty, Stuttgart provides a diverse range of attractions for every traveler.',
-      oneDayTrip: 'Black Forest, Heidelberg, Ludwigsburg',
+
     },
-    weather: {
-      avgTempAir: [1, 2, 6, 10, 14, 17, 19, 18, 15, 10, 5, 2],
-      avgDaysSunny: [3, 4, 7, 9, 11, 14, 14, 13, 10, 8, 5, 3],
-      avgWeatherStatus: ['snow', 'snow', 'rain', 'cloud', 'sun', 'sun', 'sun', 'cloud-sun', 'cloud', 'rain', 'cloud', 'snow'],
-    },
+
   },
   {
     name: 'Fort William',
@@ -112,11 +131,7 @@ export const citiesArray = [
       yearOfBirth: '1909',
       localHolidays: [{ date: '4th April', reason: 'Tel Aviv City Day' }],
     },
-    weather: {
-      avgTempAir: [14, 15, 17, 20, 24, 26, 28, 29, 28, 25, 21, 16],
-      avgDaysSunny: [10, 11, 12, 13, 14, 14, 14, 14, 13, 12, 11, 10],
-      avgWeatherStatus: ['cloud', 'cloud', 'sun', 'sun', 'sun', 'sun', 'sun', 'sun', 'sun', 'sun-cloud', 'cloud', 'cloud'],
-    },
+    
   },
   {
     name: 'Lauterbrunnen',
@@ -153,78 +168,7 @@ export const citiesArray = [
     bookingUrl: 'http://www.booking.com/searchresults.html?city=-1946324\u0026no_rooms=1\u0026group_adults=2',
     airbnbUrl: '',
     startThemes: ['eurp_us', 'eurp_sh', 'capital', 'mediterranean', 'fr'],
-    dayTrips: [
-      {
-        name: 'Mir Castle',
-        type: 'bus',
-        desc: '',
-        departureName: '',
-        arrivalName: '',
-        price: 5,
-        returnPrice: false,
-        timeTravel: '1h40',
-        timeStay: '3h',
-        lat: 53.451239000000001,
-        lon: 26.472999999999999,
-        ticketlink: 'https://rasp.yandex.by/bus/minsk--mir-by',
-      },
-      {
-        name: 'Nesvizh Castle',
-        type: 'bus',
-        desc: '',
-        departureName: '',
-        arrivalName: '',
-        price: 5,
-        returnPrice: false,
-        timeTravel: '1h50',
-        timeStay: '3h',
-        lat: 53.222878000000001,
-        lon: 26.691735999999999,
-        ticketlink: 'https://rasp.yandex.by/search/bus/?fromName=%D0%9C%D0%B8%D0%BD%D1%81%D0%BA\u0026toName=%D0%9D%D0%B5%D1%81%D0%B2%D0%B8%D0%B6',
-      },
-      {
-        name: 'Lake Narach',
-        type: 'bus',
-        desc: '',
-        departureName: '',
-        arrivalName: '',
-        price: 6,
-        returnPrice: false,
-        timeTravel: '3h00',
-        timeStay: '3h',
-        lat: 54.852499999999999,
-        lon: 26.749721999999998,
-        ticketlink: 'https://rasp.yandex.by/search/bus/?fromName=\u041c\u0438\u043d\u0441\u043a\u0026toName=\u041d\u0430\u0440\u043e\u0447\u044c',
-      },
-      {
-        name: 'Berezinsky Biosphere Reserve',
-        type: 'bus',
-        desc: '',
-        departureName: '',
-        arrivalName: '',
-        price: 6,
-        returnPrice: false,
-        timeTravel: '3h00',
-        timeStay: '3h',
-        lat: 54.766666999999998,
-        lon: 28.300000000000001,
-        ticketlink: 'http://www.berezinsky.by',
-      },
-      {
-        name: 'Belarusian Folk Museum',
-        type: 'bus',
-        desc: '',
-        departureName: '',
-        arrivalName: '',
-        price: 2,
-        returnPrice: false,
-        timeTravel: '1h00',
-        timeStay: '3h',
-        lat: 53.832599999999999,
-        lon: 27.374199999999998,
-        ticketlink: 'http://www.etna.by',
-      },
-    ],
+    
   },
   {
     name: 'Linz',
@@ -271,11 +215,6 @@ export const citiesArray = [
       localCurrency: 'Euro (EUR)',
       yearOfBirth: '4th century BC',
       localHolidays: [{ date: '14th July', reason: 'Bastille Day' }],
-    },
-    weather: {
-      avgTempAir: [10, 11, 13, 15, 18, 22, 25, 25, 22, 19, 14, 11],
-      avgDaysSunny: [5, 6, 7, 8, 9, 10, 11, 11, 9, 7, 6, 5],
-      avgWeatherStatus: ['cloud-sun', 'cloud-sun', 'sun', 'sun', 'sun', 'sun', 'sun', 'sun', 'sun', 'cloud-sun', 'cloud-sun', 'cloud-sun'],
     },
   },
   {
@@ -326,11 +265,7 @@ export const citiesArray = [
       yearOfBirth: '1191',
       localHolidays: [{ date: '1st August', reason: 'Swiss National Day' }],
     },
-    weather: {
-      avgTempAir: [-1, 0, 4, 8, 12, 15, 18, 17, 14, 9, 4, 0],
-      avgDaysSunny: [2, 3, 5, 6, 7, 8, 9, 8, 6, 4, 3, 2],
-      avgWeatherStatus: ['snow', 'snow', 'cloud-sun', 'sun', 'sun', 'sun', 'sun', 'sun-cloud', 'cloud', 'cloud-rain', 'cloud', 'snow'],
-    },
+
   },
   {
     name: 'Brighton',
@@ -400,36 +335,7 @@ export const citiesArray = [
     docId: 'cty-1',
     bookingUrl: 'https://www.booking.com/searchresults.en.html?city=-1746443\u0026no_rooms=1\u0026group_adults=2',
     startThemes: ['eurp_us', 'eurp_sh', 'capital', 'mediterranean', 'fr'],
-    dayTrips: [
-      {
-        name: 'Halle',
-        type: 'bus',
-        desc: '',
-        departureName: 'Berlin ZOB',
-        arrivalName: 'Halle',
-        price: 10,
-        returnPrice: false,
-        timeTravel: '2h',
-        timeStay: '3h',
-        lat: 51.483333000000002,
-        lon: 11.966666999999999,
-        ticketlink: 'https://shop.flixbus.com',
-      },
-      {
-        name: 'Magdeburg',
-        type: 'bus',
-        desc: '',
-        departureName: 'Berlin ZOB',
-        arrivalName: 'Magdeburg',
-        price: 12,
-        returnPrice: false,
-        timeTravel: '1h45',
-        timeStay: '5h',
-        lat: 52.133333,
-        lon: 11.616667,
-        ticketlink: 'https://shop.flixbus.com',
-      },
-    ],
+    
   },
   {
     name: 'Tbilisi',
@@ -502,7 +408,7 @@ export const citiesArray = [
     countryId: 'ctry-92',
     docId: 'cty-146',
     startThemes: ['america',  'capital', 'mediterranean'],
-    dayTrips: [],
+
   },
   {
     name: 'Istanbul',
@@ -720,11 +626,7 @@ export const citiesArray = [
         'Milan, an epitome of style, is where designers, artists, and entrepreneurs converge. Wander through the Galleria Vittorio Emanuele II, one of the world\u0027s oldest shopping malls, to experience luxury retail at its best. Delve into history at the Sforza Castle, or immerse yourself in the artsy ambiance of the Brera District. As dusk sets, Milan\u0027s nightlife springs to life, offering chic aperitivo spots and contemporary dining experiences. From its iconic fashion weeks to its rich tapestry of arts and history, Milan is endlessly captivating.',
       oneDayTrip: 'Lugano, Monza, Stresa',
     },
-    weather: {
-      avgTempAir: [4, 6, 11, 15, 19, 23, 26, 26, 22, 17, 11, 5],
-      avgDaysSunny: [4, 5, 7, 10, 11, 12, 14, 13, 10, 8, 5, 4],
-      avgWeatherStatus: ['cloud', 'cloud', 'cloud-sun', 'sun', 'sun', 'sun', 'sun', 'sun', 'sun', 'cloud-sun', 'cloud', 'cloud'],
-    },
+    
   },
   {
     name: 'Tokyo',
@@ -771,11 +673,7 @@ export const citiesArray = [
       yearOfBirth: '963',
       localHolidays: [{ date: '23rd June', reason: 'National Day' }],
     },
-    weather: {
-      avgTempAir: [2, 3, 7, 10, 14, 17, 19, 18, 15, 10, 6, 3],
-      avgDaysSunny: [1, 2, 4, 5, 6, 6, 7, 6, 5, 3, 2, 1],
-      avgWeatherStatus: ['cloud-snow', 'cloud-sun', 'cloud-sun', 'sun', 'sun', 'sun', 'sun', 'sun', 'cloud-sun', 'cloud-rain', 'cloud', 'cloud-snow'],
-    },
+   
   },
 ];
 
