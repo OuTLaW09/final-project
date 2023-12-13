@@ -33,7 +33,7 @@ export const CarouselPage: React.FC = () => {
   }, []);
 
   const isChildOfCarouselWrapper = (currentNode: HTMLElement): boolean => {
-    if (currentNode.tagName === 'BODY') {
+    if (currentNode?.tagName === 'BODY') {
       return false;
     }
 
@@ -54,33 +54,34 @@ export const CarouselPage: React.FC = () => {
 
   return (
     <div className="carousel-page">
-      <div className="header-of-carousel">
-        <div className="left-header-carousel">
-          <span className="prime">Prime</span>
-          <span className="hottest-deals">Hottest Deals</span>
-        </div>
-        <div className="middle-header-carousel">Save big and visit these dream destinations!</div>
-      </div>
-
       <div className="wrapper">
         <div onWheel={(event) => handleWheel(event)} className="carousel-wrapper" ref={carouselWrapperRef}>
           <Carousel afterChange={onChange} className="main-carousel" ref={carouselRef}>
             {cities.map((item) => (
               <div className="city-card">
-                <div className="carousel-image-container">
-                  <img alt="" src={item.imageUrl} />
-                </div>
-                <div className="about-city-container">
-                  <p className="place-name">{item.name}</p>
-                  <p className="city-properties">Suitable Seasons:{item.seasons}</p>
-                  <p className="city-properties">Rating:{item.rating}</p>
-                  <p className="city-properties">Packages:{item.packages}</p>
+                <div className="city-card-flex">
+                  <div className="carousel-image-container">
+                    <img alt="" src={item.imageUrl} />
+                  </div>
+                  <div className="about-city-container">
+                    <p className="place-name">{item.name}</p>
+                    <p className="city-properties">Suitable Seasons:{item.seasons}</p>
+                    <p className="city-properties">Rating:{item.rating}</p>
+                    <p className="city-properties">Packages:{item.packages}</p>
+                  </div>
                 </div>
                 <p className="description-of-places">{item.description}</p>
               </div>
             ))}
           </Carousel>
         </div>
+      </div>
+      <div className="footer-of-carousel">
+        <div className="upper-word">
+          <span className="prime">Prime</span>
+          <span className="hottest-deals">Hottest Deals</span>
+        </div>
+        <div className="down-word">Save big and visit these dream destinations!</div>
       </div>
     </div>
   );
