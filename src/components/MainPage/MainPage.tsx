@@ -6,9 +6,36 @@ import { HeroPage } from '../HeroPage/HeroPage';
 import { Link } from 'react-router-dom';
 import { citiesArray, citiesThemes } from '../../models/citiesData';
 import React, { useEffect, useState } from 'react';
+
 const { Option } = Select;
 const { RangePicker } = DatePicker;
+
+type ChoosenCitiesType = {
+  name: string;
+  weight?: number | null;
+  nameSearch: string;
+  nameAddition?: string;
+  codeIata: string;
+  codeSky?: null | string;
+  timezoneIana: string;
+  bookingUrl: string;
+  airbnbUrl?: string;
+  themes: string[];
+  icon: null;
+  location: number[];
+  countryId: string;
+  docId: string;
+  dayTrips?: undefined;
+  startThemes: string[];
+  apiVersion?: string;
+  content?: object | null;
+};
+
 export function Mainpage() {
+  const [whereFromValue, setWhereFromValue] = useState<string>('');
+  const [cityTheme, setCityTheme] = useState<string>('');
+  const [choosenCity, setChoosenCity] = useState<ChoosenCitiesType[]>([]);
+  const[lastChoosenCity,setLastChoosenCity]=useState<ChoosenCitiesType[]>([]);
   const [city, setCity] = useState<any[]>([]);
   const [num, setNum] = useState(1);
   const request = async () => {
@@ -19,7 +46,9 @@ export function Mainpage() {
   useEffect(() => {
     request();
   }, [num]);
-  let newCityArray: any[] = [];
+  let newCityArray = [];
+  let choosenCityArray:any[]=[];
+  let lastChoosenCityArray:any[]=[];
   for (let mainValueCity of Object.values(city)) {
     if (Object.keys(mainValueCity)[1] === 'values') {
       for (let index = 0; index < mainValueCity['values'].length; index++) {
@@ -28,42 +57,26 @@ export function Mainpage() {
       }
     }
   }
-  console.log(newCityArray);
-  console.log(newCityArray.length);
-
-  const [value, setValue] = useState(1);
-
-  const onChangeRadio = (e: RadioChangeEvent) => {
-    setValue(e.target.value);
-    if (e.target.value === 3) {
-      return (
-        <Radio.Group name="radiogroup">
-          <Radio value={2}>2 Cities</Radio>
-          <Radio value={3}>3 Cities</Radio>
-          <Radio value={4}>4 Cities</Radio>
-        </Radio.Group>
-      );
-    } else {
-      console.log('wrong choice');
-    }
-  };
-
+  let whereFromValue: string = '';
+  let cityTheme: string = '';
+  let choosenCity: any[] = [];
+  let lastChoosenCity:any[]=[];
   const onChangeSelect = (value: string) => {
-    console.log(`selected ${value}`);
-    cityTheme = value;
-    for (let index = 0; index < citiesArray.length; index++) {
-      for (let i = 0; i < citiesArray[index].startThemes.length; i++) {
-        for (let j = 0; j < citiesThemes.length; j++) {
-          if (citiesThemes[j].name === cityTheme) {
-            if (citiesThemes[j].code === citiesArray[index].startThemes[i]) {
-              choosenCity.push(citiesArray[index]);
-            }
+    const newCitiesArray: ChoosenCitiesType[] = [];
+    citiesArray.forEach((City, index) => {
+      City.startThemes.forEach((startTheme) => {
+        const matchingTheme = citiesThemes.find((theme) => theme.code === startTheme);
+        if (matchingTheme && matchingTheme.name === value) {
+          if (matchingTheme.code === startTheme) {
+            choosenCityArray.push(City);
           }
         }
-      }
-    }
-    console.log(choosenCity);
+      });
+    });
+    setChoosenCity(choosenCityArray);
+    
   };
+  console.log(choosenCity);
 
   const onSearchSelect = (value: string) => {
     console.log('search:', value);
@@ -73,7 +86,7 @@ export function Mainpage() {
 
   const onChangeSelectfirst = (value: string) => {
     console.log(`selected ${value}`);
-    whereFromValue = value;
+    setWhereFromValue(value);
   };
 
   const onSearchSelectfirst = (value: string) => {
@@ -83,20 +96,25 @@ export function Mainpage() {
     (option?.label ?? '').toLowerCase().includes(input.toLowerCase());
 
   const onChangeCountCity = (value: string) => {
-    console.log(`selected ${value}`);
-    for (let index = 0; index < Number(value); index++) {
-      const random = Math.floor(Math.random() * choosenCity.length);
+      console.log(`selected ${value}`);
+      for (let index = 0; index < Number(value); index++) {
 
-      for (let i = 0; i < lastChoosenCity.length; i++) {
-        if (choosenCity[random] === lastChoosenCity[i]) {
-          continue;
-        }
-      }
-      lastChoosenCity.push(choosenCity[random]);
-      console.log(lastChoosenCity);
-    }
-  };
-
+        const random = Math.floor(Math.random() * choosenCity.length);
+        
+        for (let i = 0; i <lastChoosenCity.length; i++) {
+          if(choosenCity[random]===lastChoosenCity[i]){
+            continue;
+          };
+        
+         
+          
+        };
+        lastChoosenCity.push(choosenCity[random]); 
+        console.log(lastChoosenCity);
+      };
+    };
+    
+    
   const onSearchCountCity = (value: string) => {
     console.log('search:', value);
   };
@@ -123,7 +141,7 @@ export function Mainpage() {
                   filterOption={filterOptionfirst}
                 >
                   {newCityArray.map((cityName) => (
-                    <Option value={cityName} label={cityName}>
+                    <Option key={cityName} value={cityName} label={cityName}>
                       {cityName}
                     </Option>
                   ))}
@@ -133,7 +151,10 @@ export function Mainpage() {
                   placeholder="Filter"
                   className="countries-select"
                   optionFilterProp="children"
-                  onChange={onChangeSelect}
+                  onChange={(e) => {
+                    setCityTheme(e);
+                    onChangeSelect(e);
+                  }}
                   onSearch={onSearchSelect}
                   filterOption={filterOption}
                 >
