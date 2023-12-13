@@ -8,7 +8,6 @@ import { Route, Routes } from 'react-router-dom';
 import { SignUpPage } from './components/SignUpPage/SignUpPage';
 import { User, UserSignUP } from './models/user';
 import React, { useState } from 'react';
-import { Ticket } from './components/Ticket/Ticket';
 
 function App() {
   const [userInfo, setUserInfo] = useState<UserSignUP | undefined>(undefined);
@@ -21,7 +20,6 @@ function App() {
 
   return (
     <>
-      <Ticket />
       <Routes>
         <Route path="/" element={<Mainpage />} />
         <Route path="login" element={<LoginPage handleLogin={handleLogInBtn} />} />
