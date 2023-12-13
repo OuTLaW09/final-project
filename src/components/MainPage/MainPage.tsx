@@ -56,14 +56,12 @@ export function Mainpage() {
     if (Object.keys(mainValueCity)[1] === 'values') {
       for (let index = 0; index < mainValueCity['values'].length; index++) {
         newCityArray.push(mainValueCity['values'][index]['name']);
-        // console.log(mainValueCity['values'][index]['name']);
       }
     }
   }
-  let whereFromValue: string = '';
-  let cityTheme: string = '';
-  let choosenCity: any[] = [];
-  let lastChoosenCity:any[]=[];
+
+  
+
   const onChangeSelect = (value: string) => {
     const newCitiesArray: ChoosenCitiesType[] = [];
     citiesArray.forEach((City, index) => {
@@ -99,25 +97,22 @@ export function Mainpage() {
     (option?.label ?? '').toLowerCase().includes(input.toLowerCase());
 
   const onChangeCountCity = (value: string) => {
-      console.log(`selected ${value}`);
+    {
       for (let index = 0; index < Number(value); index++) {
-
         const random = Math.floor(Math.random() * choosenCity.length);
-        
-        for (let i = 0; i <lastChoosenCity.length; i++) {
-          if(choosenCity[random]===lastChoosenCity[i]){
+        console.log(choosenCity.length);
+
+        for (let i = 0; i < lastChoosenCity.length; i++) {
+          if (choosenCity[random] === lastChoosenCity[i]) {
             continue;
-          };
-        
-         
-          
-        };
-        lastChoosenCity.push(choosenCity[random]); 
-        console.log(lastChoosenCity);
-      };
-    };
-    
-    
+          }
+        }
+        lastChoosenCityArray.push(choosenCity[random]);
+        setLastChoosenCity(lastChoosenCityArray);
+      }
+    }
+  };
+console.log(lastChoosenCity);
   const onSearchCountCity = (value: string) => {
     console.log('search:', value);
   };
