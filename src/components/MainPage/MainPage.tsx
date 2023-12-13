@@ -1,6 +1,6 @@
 import './Mainpage.scss';
 import { CarouselPage } from '../CarouselPage/CarouselPage';
-import { DatePicker, Radio, RadioChangeEvent, Select, Space } from 'antd';
+import { DatePicker, Select, Space } from 'antd';
 import { Footer } from '../Footer/Footer';
 import { HeroPage } from '../HeroPage/HeroPage';
 import { Link } from 'react-router-dom';
@@ -11,6 +11,7 @@ import type { Dayjs } from 'dayjs';
 const { Option } = Select;
 const { RangePicker } = DatePicker;
 
+export let DepartureArray:any[]=[];
 type RangeValue = [Dayjs | null, Dayjs | null] | null;
 
 type ChoosenCitiesType = {
@@ -38,7 +39,7 @@ export function Mainpage() {
   const [whereFromValue, setWhereFromValue] = useState<string>('');
   const [cityTheme, setCityTheme] = useState<string>('');
   const [choosenCity, setChoosenCity] = useState<ChoosenCitiesType[]>([]);
-  const[lastChoosenCity,setLastChoosenCity]=useState<ChoosenCitiesType[]>([]);
+  const [lastChoosenCity, setLastChoosenCity] = useState<ChoosenCitiesType[]>([]);
   const [city, setCity] = useState<any[]>([]);
   const [num, setNum] = useState(1);
   const request = async () => {
@@ -49,21 +50,23 @@ export function Mainpage() {
   useEffect(() => {
     request();
   }, [num]);
-  let newCityArray = [];
-  let choosenCityArray:any[]=[];
-  let lastChoosenCityArray:any[]=[];
+  const newCityArray: any[] = [];
+  const newCityArrayLocation: any[] = [];
+  const choosenCityArray: ChoosenCitiesType[] = [];
+  const lastChoosenCityArray: ChoosenCitiesType[] = [];
+  const rotationArray: any[] = [];
   for (let mainValueCity of Object.values(city)) {
     if (Object.keys(mainValueCity)[1] === 'values') {
       for (let index = 0; index < mainValueCity['values'].length; index++) {
         newCityArray.push(mainValueCity['values'][index]['name']);
+        newCityArrayLocation.push(mainValueCity['values'][index]['location']);
       }
     }
   }
-
-  
+  console.log(newCityArray);
+  console.log(newCityArrayLocation);
 
   const onChangeSelect = (value: string) => {
-    const newCitiesArray: ChoosenCitiesType[] = [];
     citiesArray.forEach((City, index) => {
       City.startThemes.forEach((startTheme) => {
         const matchingTheme = citiesThemes.find((theme) => theme.code === startTheme);
@@ -75,7 +78,6 @@ export function Mainpage() {
       });
     });
     setChoosenCity(choosenCityArray);
-    
   };
   console.log(choosenCity);
 
@@ -112,36 +114,51 @@ export function Mainpage() {
       }
     }
   };
-console.log(lastChoosenCity);
+  console.log(lastChoosenCity);
   const onSearchCountCity = (value: string) => {
     console.log('search:', value);
   };
   const filterOptionCountCity = (input: string, option?: { label: string; value: string }) =>
     (option?.label ?? '').toLowerCase().includes(input.toLowerCase());
 
-    const [dates, setDates] = useState<RangeValue>(null);
-    const [value, setValue] = useState<RangeValue>(null);
-  
-    const disabledDate = (current: Dayjs) => {
-      if (!dates) {
-        return false;
-      }
-      const tooLate = dates[0] && current.diff(dates[0], 'days') >= 12;
-      const tooEarly = dates[1] && dates[1].diff(current, 'days') >= 12;
-      return !!tooEarly || !!tooLate;
-    };
-  
-    const onOpenChange = (open: boolean) => {
-      if (open) {
-        setDates([null, null]);
-      } else {
-        setDates(null);
-      }
-    };
-  
+  const [dates, setDates] = useState<RangeValue>(null);
+  const [value, setValue] = useState<RangeValue>(null);
 
-  
+  const disabledDate = (current: Dayjs) => {
+    if (!dates) {
+      return false;
+    }
+    const tooLate = dates[0] && current.diff(dates[0], 'days') >= 12;
+    const tooEarly = dates[1] && dates[1].diff(current, 'days') >= 12;
+    return !!tooEarly || !!tooLate;
+  };
 
+  const onOpenChange = (open: boolean) => {
+    if (open) {
+      setDates([null, null]);
+    } else {
+      setDates(null);
+    }
+  };
+
+  for (let indexName = 0; indexName < newCityArray.length; indexName++) {
+    if (whereFromValue === newCityArray[indexName]) {
+      for (let indexLoc = 0; indexLoc < newCityArrayLocation.length; indexLoc++) {
+        if (indexLoc === indexName) {
+          rotationArray.push(newCityArrayLocation[indexLoc]);
+        }
+      }
+    }
+  }
+  
+  lastChoosenCity.forEach((lastCity)=>{
+    rotationArray.push(lastCity.location);
+  }
+    
+  );
+  DepartureArray=rotationArray;
+  console.log(DepartureArray);
+ 
   return (
     <div className="main-page-container">
       <HeroPage />
@@ -180,7 +197,7 @@ console.log(lastChoosenCity);
                   filterOption={filterOption}
                 >
                   {citiesThemes.map((town) => (
-                    <Option value={town.name} label={town.name}>
+                    <Option key={town.docId} value={town.name} label={town.name}>
                       {town.name}
                     </Option>
                   ))}
@@ -213,19 +230,18 @@ console.log(lastChoosenCity);
                   ]}
                 />
                 <Space direction="vertical" size={12}>
-                  <RangePicker placeholder={['Departure', 'Return']}
-                   value={dates || value}
-                   disabledDate={disabledDate}
-                   onCalendarChange={(val) => {
-                     setDates(val);
-                   }}
-                   onChange={(val) => {
-                     setValue(val);
-                   }}
-                   onOpenChange={onOpenChange}
-                   changeOnBlur
-                  
-                  
+                  <RangePicker
+                    placeholder={['Departure', 'Return']}
+                    value={dates || value}
+                    disabledDate={disabledDate}
+                    onCalendarChange={(val) => {
+                      setDates(val);
+                    }}
+                    onChange={(val) => {
+                      setValue(val);
+                    }}
+                    onOpenChange={onOpenChange}
+                    changeOnBlur
                   />
                 </Space>
               </div>
