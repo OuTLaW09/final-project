@@ -6,9 +6,12 @@ import { HeroPage } from '../HeroPage/HeroPage';
 import { Link } from 'react-router-dom';
 import { citiesArray, citiesThemes } from '../../models/citiesData';
 import React, { useEffect, useState } from 'react';
+import type { Dayjs } from 'dayjs';
 
 const { Option } = Select;
 const { RangePicker } = DatePicker;
+
+type RangeValue = [Dayjs | null, Dayjs | null] | null;
 
 type ChoosenCitiesType = {
   name: string;
@@ -116,6 +119,29 @@ console.log(lastChoosenCity);
   const filterOptionCountCity = (input: string, option?: { label: string; value: string }) =>
     (option?.label ?? '').toLowerCase().includes(input.toLowerCase());
 
+    const [dates, setDates] = useState<RangeValue>(null);
+    const [value, setValue] = useState<RangeValue>(null);
+  
+    const disabledDate = (current: Dayjs) => {
+      if (!dates) {
+        return false;
+      }
+      const tooLate = dates[0] && current.diff(dates[0], 'days') >= 12;
+      const tooEarly = dates[1] && dates[1].diff(current, 'days') >= 12;
+      return !!tooEarly || !!tooLate;
+    };
+  
+    const onOpenChange = (open: boolean) => {
+      if (open) {
+        setDates([null, null]);
+      } else {
+        setDates(null);
+      }
+    };
+  
+
+  
+
   return (
     <div className="main-page-container">
       <HeroPage />
@@ -187,7 +213,20 @@ console.log(lastChoosenCity);
                   ]}
                 />
                 <Space direction="vertical" size={12}>
-                  <RangePicker placeholder={['Departure', 'Return']} />
+                  <RangePicker placeholder={['Departure', 'Return']}
+                   value={dates || value}
+                   disabledDate={disabledDate}
+                   onCalendarChange={(val) => {
+                     setDates(val);
+                   }}
+                   onChange={(val) => {
+                     setValue(val);
+                   }}
+                   onOpenChange={onOpenChange}
+                   changeOnBlur
+                  
+                  
+                  />
                 </Space>
               </div>
             </div>
