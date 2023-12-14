@@ -12,6 +12,8 @@ const { Option } = Select;
 const { RangePicker } = DatePicker;
 
 export let DepartureArray:any[]=[];
+export let DepartureArrayName:string[]=[];
+export const Departure:any[]=[];
 type RangeValue = [Dayjs | null, Dayjs | null] | null;
 
 type ChoosenCitiesType = {
@@ -51,7 +53,8 @@ export function Mainpage() {
     request();
   }, [num]);
   const newCityArray: any[] = [];
-  const newCityArrayLocation: any[] = [];
+  const rotationArrayNames:string[]=[];
+  const newCityArrayLocation: number[] = [];
   const choosenCityArray: ChoosenCitiesType[] = [];
   const lastChoosenCityArray: ChoosenCitiesType[] = [];
   const rotationArray: any[] = [];
@@ -60,11 +63,13 @@ export function Mainpage() {
       for (let index = 0; index < mainValueCity['values'].length; index++) {
         newCityArray.push(mainValueCity['values'][index]['name']);
         newCityArrayLocation.push(mainValueCity['values'][index]['location']);
+        
       }
     }
   }
   console.log(newCityArray);
   console.log(newCityArrayLocation);
+  console.log(rotationArrayNames,'jjjjjj');
 
   const onChangeSelect = (value: string) => {
     citiesArray.forEach((City, index) => {
@@ -146,6 +151,8 @@ export function Mainpage() {
       for (let indexLoc = 0; indexLoc < newCityArrayLocation.length; indexLoc++) {
         if (indexLoc === indexName) {
           rotationArray.push(newCityArrayLocation[indexLoc]);
+          rotationArrayNames.push(newCityArray[indexName]);
+
         }
       }
     }
@@ -153,11 +160,15 @@ export function Mainpage() {
   
   lastChoosenCity.forEach((lastCity)=>{
     rotationArray.push(lastCity.location);
+    rotationArrayNames.push(lastCity.name);
   }
     
   );
   DepartureArray=rotationArray;
+  DepartureArrayName=rotationArrayNames;
+  console.log(DepartureArrayName);
   console.log(DepartureArray);
+
  
   return (
     <div className="main-page-container">
