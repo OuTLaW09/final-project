@@ -1,4 +1,3 @@
-
 .login-Main {
   width: 100%;
   height: 650px;
@@ -6,85 +5,71 @@
   justify-content: center;
   align-items: center;
   padding: 30px 0px;
-  
 
-  .login-container{
-    margin-top:20px;
+  .login-container {
+    margin-top: 20px;
     max-width: 100%;
     display: flex;
     box-shadow: 10px 10px 20px;
-   
-    
 
-    .left-side-login{
+    .left-side-login {
       width: 50%;
-      padding:20px;
-      background-color:#ffffff;
+      padding: 20px;
+      background-color: #ffffff;
 
-      .left-btn{
-        width:20px;
-        height:20px;
+      .left-btn {
+        width: 20px;
+        height: 20px;
       }
-      .top-side-login{
+      .top-side-login {
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        padding:25px;
+        padding: 25px;
         .login-capture {
-          font-family: "Lato", Arial, sans-serif;
+          font-family: 'Lato', Arial, sans-serif;
           font-weight: bolder;
           font-size: 25px;
           color: rgb(70, 68, 68);
           text-align: center;
-          margin-left:-40px;
-          
-        };
-  
-        .login-logos{
-          
+          margin-left: -40px;
+        }
+
+        .login-logos {
           display: flex;
           gap: 12px;
-          margin-left:-30px;
-          .login-logo-link{
-            padding-bottom:5px;
-            .login-logo{
-              padding:15px;
-              border:1px solid gray;
+          margin-left: -30px;
+          .login-logo-link {
+            padding-bottom: 5px;
+            .login-logo {
+              padding: 15px;
+              border: 1px solid gray;
               border-radius: 50px;
               width: 20px;
               height: 20px;
             }
           }
-        };
-        .use-account{
-          font-size:15px;
-          margin-left: -20px;
-          color:rgba(74, 71, 71, 0.7);
-          
         }
-
+        .use-account {
+          font-size: 15px;
+          margin-left: -20px;
+          color: rgba(74, 71, 71, 0.7);
+        }
       }
-     
 
-      
       .form {
         display: flex;
         flex-direction: column;
-        gap:10px;
-        
-  
+        gap: 10px;
+
         label {
-          font-family: "Lato", Arial, sans-serif;
+          font-family: 'Lato', Arial, sans-serif;
           font-weight: bold;
           gap: 10px;
-          
-
-         
-          
         }
-        .input{
-          padding:0px 10px;
+        .input {
+          padding: 0px 10px;
           background-color: rgba(0, 0, 0, 0.05);
           height: 38px;
           color: #000;
@@ -101,97 +86,148 @@
           justify-content: center;
           align-items: center;
           padding: 10px;
-          
         }
         .login-btn:hover {
-          background-color:#3CAE8B;
+          background-color: #3cae8b;
           transition: ease-in-out 0.6s;
-          color:#ffffff;
+          color: #ffffff;
         }
 
-        .forgot-password{
+        .forgot-password {
           text-decoration: none;
-          color:rgba(74, 71, 71, 0.8);
-          
-
+          color: rgba(74, 71, 71, 0.8);
         }
-      
       }
     }
-    .right-side-login{
+    .right-side-login {
       position: relative;
       width: 50%;
-     
-     
 
-      .login-bg{
+      .login-bg {
         width: 100%;
         height: 690px;
-      
-        
-        
-        
       }
 
       .overlay {
         position: absolute;
         bottom: 100%;
-        background-color:#3CAE8B;
+        background-color: #3cae8b;
         overflow: hidden;
         width: 100%;
         height: 0;
-        transition: .5s ease;
+        transition: 0.5s ease;
 
         display: flex;
         justify-content: center;
         align-items: center;
 
-        .right-side-details{
+        .right-side-details {
           padding: 30px;
-          font-family: "Lato", Arial, sans-serif;
+          font-family: 'Lato', Arial, sans-serif;
           text-align: center;
-         
-          .hello-friend{
-            font-size:35px;
+
+          .hello-friend {
+            font-size: 35px;
             color: #ffffff;
             font-weight: bolder;
-            font-family: "Lato", Arial, sans-serif;
-           
-            
+            font-family: 'Lato', Arial, sans-serif;
           }
-          .no-account{
+          .no-account {
             font-size: 30px;
             color: #ffffff;
             opacity: 0.7;
-
           }
-          .enter-detail{
+          .enter-detail {
             font-size: 20px;
             color: #ffffff;
             opacity: 0.8;
-
           }
-          .sign-up-btn{
-            
-            padding:10px 30px;
-            background-color: #3CAE8B;
-            border:1px solid white;
+          .sign-up-btn {
+            padding: 10px 30px;
+            background-color: #3cae8b;
+            border: 1px solid white;
             border-radius: 40px;
             color: #ffffff;
           }
-          .sign-up-btn:hover{
+          .sign-up-btn:hover {
             background-color: #0171df;
           }
-
         }
-
       }
     }
 
-    .right-side-login:hover .overlay{
-      bottom:0;
+    .right-side-login:hover .overlay {
+      bottom: 0;
       height: 100%;
     }
   }
-  
+}
+@media (max-width: 415px) {
+  #root {
+    width: 100%;
+    height: 100%;
+  }
+  .login-Main {
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #8a74f4;
+    .login-container {
+      box-shadow: none;
+      margin: 0;
+      width: 100%;
+      height: 100%;
+      background-color: #8a74f4;
+      .left-side-login {
+        display: flex;
+        flex-direction: column;
+        margin-top: 20px;
+        width: 100%;
+        height: 100%;
+        background-color: #8a74f4;
+        .top-side-login {
+          .login-capture {
+            font-weight: bolder;
+            font-size: 40px;
+            color: rgb(255, 251, 251);
+          }
+          .login-logos {
+            .login-logo-link {
+              .login-logo {
+                border: 1px solid rgb(252, 250, 250);
+                border-radius: 50px;
+                width: 30px;
+                height: 30px;
+              }
+            }
+          }
+          .use-account {
+            font-size: 20px;
+            font-weight: bolder;
+            color: rgb(255, 251, 251);
+          }
+        }
+        .form {
+          gap: 20px;
+          label {
+            color: #ffffff;
+            font-weight: bolder;
+            gap: 10px;
+          }
+          .input {
+            background-color: #ffffff;
+            font-size: 20px;
+          }
+          .forgot-password {
+            text-decoration: none;
+            color: #ffffff;
+            font-weight: bolder;
+          }
+        }
+      }
+      .right-side-login {
+        display: none;
+      }
+    }
+  }
 }
