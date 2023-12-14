@@ -29,10 +29,8 @@ export const HeroPage = () => {
         <div className="Info-container">
           <p className="StartingText">You Can Travel Anywhere With Us</p>
           <p className="OverallInfo">
-            For Any Dream as Travelling For Job, Journey, Holidays <br />
-            And So On. You Can Select Any Country And City
-            <br /> Which You Want And We Will Assist You For Coming True
-            <br /> Your Intensions
+            For Any Dream as Travelling For Job, Journey, Holidays And So On. You Can Select Any Country And City Which You Want And We Will Assist
+            You For Coming True Your Intensions
           </p>
         </div>
         <img alt="" src={FlightsLogo} />
