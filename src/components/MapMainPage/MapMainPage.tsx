@@ -26,14 +26,11 @@ export const MapMainPage = () => {
           url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="https://carto.com/attribution">CARTO</a>'
         />
-        {DepartureArray.map((cityLoc) => {
+        {DepartureArray.map((cityLoc, index) => {
           return (
             <>
               <Marker position={cityLoc} icon={markerIcon}>
-                {DepartureArrayName.map((cityName) => {
-                  console.log('cityName', cityName);
-                  return <Popup>{cityName}</Popup>;
-                })}
+                <Popup>{DepartureArrayName[index]}</Popup>;
               </Marker>
               <Polyline positions={departureArrayForPolyline} />
             </>
