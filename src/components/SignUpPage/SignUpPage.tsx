@@ -11,19 +11,26 @@ type SignUpProps = {
 };
 
 export const SignUpPage = (props: SignUpProps) => {
+  const[signInfo,setSignInfo]=useState<any>();
   const userSignUp: UserSignUP = {
     userName: 'zeyneb',
     userPassword: 'zeyneb2003',
     userEmail: 'ddndndn@hhdh',
     userNumber: 708080080,
   };
+
   const SignUpBtn = () => {
     props.signUpHandler(userSignUp);
   };
-
+ 
   const onFinish = (value: object) => {
-    console.log(value);
+    setSignInfo(value);
+ 
   };
+ for(const ojb in signInfo){
+  console.log(ojb,signInfo[ojb]);
+ };
+
 
   const onFinishFailed = (errorInfo: any) => {
     console.log('Failed:', errorInfo);

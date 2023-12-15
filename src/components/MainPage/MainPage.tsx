@@ -11,9 +11,8 @@ import type { Dayjs } from 'dayjs';
 const { Option } = Select;
 const { RangePicker } = DatePicker;
 
-export let DepartureArray:any[]=[];
-export let DepartureArrayName:string[]=[];
-export const Departure:any[]=[];
+export let DepartureArray: any[] = [];
+export let DepartureArrayName: string[] = [];
 type RangeValue = [Dayjs | null, Dayjs | null] | null;
 
 type ChoosenCitiesType = {
@@ -53,7 +52,7 @@ export function Mainpage() {
     request();
   }, [num]);
   const newCityArray: any[] = [];
-  const rotationArrayNames:string[]=[];
+  const rotationArrayNames: string[] = [];
   const newCityArrayLocation: number[] = [];
   const choosenCityArray: ChoosenCitiesType[] = [];
   const lastChoosenCityArray: ChoosenCitiesType[] = [];
@@ -63,13 +62,10 @@ export function Mainpage() {
       for (let index = 0; index < mainValueCity['values'].length; index++) {
         newCityArray.push(mainValueCity['values'][index]['name']);
         newCityArrayLocation.push(mainValueCity['values'][index]['location']);
-        
       }
     }
   }
-  console.log(newCityArray);
-  console.log(newCityArrayLocation);
-  console.log(rotationArrayNames,'jjjjjj');
+
 
   const onChangeSelect = (value: string) => {
     citiesArray.forEach((City, index) => {
@@ -111,10 +107,13 @@ export function Mainpage() {
 
         for (let i = 0; i < lastChoosenCity.length; i++) {
           if (choosenCity[random] === lastChoosenCity[i]) {
+            console.log(choosenCity[random], 'random');
+            console.log(lastChoosenCity[i], 'i');
             continue;
           }
         }
         lastChoosenCityArray.push(choosenCity[random]);
+
         setLastChoosenCity(lastChoosenCityArray);
       }
     }
@@ -128,6 +127,7 @@ export function Mainpage() {
 
   const [dates, setDates] = useState<RangeValue>(null);
   const [value, setValue] = useState<RangeValue>(null);
+  
 
   const disabledDate = (current: Dayjs) => {
     if (!dates) {
@@ -152,24 +152,20 @@ export function Mainpage() {
         if (indexLoc === indexName) {
           rotationArray.push(newCityArrayLocation[indexLoc]);
           rotationArrayNames.push(newCityArray[indexName]);
-
         }
       }
     }
   }
-  
-  lastChoosenCity.forEach((lastCity)=>{
+
+  lastChoosenCity.forEach((lastCity) => {
     rotationArray.push(lastCity.location);
     rotationArrayNames.push(lastCity.name);
-  }
-    
-  );
-  DepartureArray=rotationArray;
-  DepartureArrayName=rotationArrayNames;
+  });
+  DepartureArray = rotationArray;
+  DepartureArrayName = rotationArrayNames;
   console.log(DepartureArrayName);
   console.log(DepartureArray);
 
- 
   return (
     <div className="main-page-container">
       <HeroPage />
