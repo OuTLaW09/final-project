@@ -11,7 +11,7 @@ import type { Dayjs } from 'dayjs';
 const { Option } = Select;
 const { RangePicker } = DatePicker;
 
-export let DepartureArray:any[]=[];
+export let DepartureArray: any[] = [];
 type RangeValue = [Dayjs | null, Dayjs | null] | null;
 
 type ChoosenCitiesType = {
@@ -150,20 +150,17 @@ export function Mainpage() {
       }
     }
   }
-  
-  lastChoosenCity.forEach((lastCity)=>{
+
+  lastChoosenCity.forEach((lastCity) => {
     rotationArray.push(lastCity.location);
-  }
-    
-  );
-  DepartureArray=rotationArray;
+  });
+  DepartureArray = rotationArray;
   console.log(DepartureArray);
- 
+
   return (
     <div className="main-page-container">
       <HeroPage />
       <CarouselPage />
-      <hr />
       <div className="search-container">
         <div className="search-main">
           <div className="search-form">

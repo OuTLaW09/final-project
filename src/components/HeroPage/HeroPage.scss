@@ -82,6 +82,7 @@
         }
       }
       .Button-container {
+        gap: 0px;
         button {
           width: 80px;
         }
@@ -90,7 +91,6 @@
     .HeroSection-container {
       position: relative;
       justify-content: space-around;
-      align-items: center;
       height: 250px;
       @keyframes rotateLeftToRight {
         0% {
@@ -103,8 +103,9 @@
       img {
         animation: rotateLeftToRight 5s linear infinite;
         position: absolute;
-        width: 400px;
-        height: 200px;
+        width: 300px;
+        height: 150px;
+        margin-top: 20px;
       }
       span {
         font-size: 16px;
@@ -115,7 +116,7 @@
         color: #ffd140;
         display: flex;
         flex-direction: column;
-        justify-content: space-between;
+        gap: 150px;
         .StartingText {
           margin: 0;
           font-size: 20px;

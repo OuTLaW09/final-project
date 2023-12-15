@@ -18,15 +18,9 @@
     }
   }
 }
-hr{
-    padding:2px 700px;
-    background-color: grey;
-   
-}
 .search-container {
   display: flex;
   justify-content: center;
-  height: 500px;
   color: white;
   background-color: #ebd574;
   opacity: 0.9;
@@ -37,7 +31,6 @@ hr{
     padding: 30px 0px 0px 30px;
     width: 70%;
     margin-top: 50px;
-    height: 300px;
     border: none;
     border-radius:20px;
     color: #000000;
@@ -51,7 +44,6 @@ hr{
             width: 200px;
             height: 40px;
             padding:12px 12px;
-            
           };
           .where-from-input{
             height: 50px;
@@ -64,8 +56,6 @@ hr{
             border:1px solid grey;
             border-radius: 5px;
           }
-
-  
           .countries-select{
             font-size: 20px;
             width: 200px;
@@ -73,8 +63,6 @@ hr{
             padding:10px;
             border-radius: 0%;
             color: grey;
-            
-            
           }
         }
       }
@@ -100,8 +88,45 @@ hr{
           transition: 1ms ease-in-out;
         }
       }
-
     }
-    
+  }
+}
+@media (width < 500px) {
+  .ant-picker-panels {
+    flex-direction: column;
+  }
+
+  .ant-picker-range {
+    flex-direction: column;
+
+    .ant-picker-suffix {
+      position: absolute;
+      right: 18px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    .ant-picker-active-bar {
+      display: none;
+    }
+
+    input {
+      text-align: center;
+    }
+  }
+  .search-container {
+    .search-main{
+      padding: 0;
+      .search-form{
+        padding:30px;
+        .rotation-main {
+          .rotation-container {
+            .ant-select-selector{
+              font-size: 18px;
+            }
+          }
+        }
+      }
+    }
   }
 }
