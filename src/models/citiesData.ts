@@ -1,4 +1,4 @@
-type CitiesType={
+type CitiesType = {
   name: string;
   weight?: number | null;
   nameSearch: string;
@@ -6,22 +6,20 @@ type CitiesType={
   codeIata: string;
   codeSky?: null | string;
   timezoneIana: string;
-  bookingUrl:string;
-  airbnbUrl?:string;
+  bookingUrl: string;
+  airbnbUrl?: string;
   themes: string[];
   icon: null;
   location: number[];
   countryId: string;
-  docId:string;
+  docId: string;
   dayTrips?: undefined;
-  startThemes:string[];
-  apiVersion?:string;
-  content?:object |null;
-
+  startThemes: string[];
+  apiVersion?: string;
+  content?: object | null;
 };
 
-
-export const citiesArray:CitiesType[]= [
+export const citiesArray: CitiesType[] = [
   {
     name: 'Stuttgart',
     weight: 53,
@@ -46,9 +44,7 @@ export const citiesArray:CitiesType[]= [
       storyDesc: 'Stuttgart, where innovation meets scenic beauty.',
       textDesc:
         'Nestled between vine-covered hills, Stuttgart is not only the capital of Baden-W\u00fcrttemberg but also the automotive heart of Germany. Home to Mercedes-Benz and Porsche, the city offers world-class museums dedicated to these iconic brands. The historic Schlossplatz provides a central point for exploration, while Wilhelma, one of Europe\u0027s most beautiful zoological-botanical gardens, offers a unique combination of flora and fauna. With its rich history, vibrant arts scene, and scenic beauty, Stuttgart provides a diverse range of attractions for every traveler.',
-
     },
-
   },
   {
     name: 'Fort William',
@@ -62,7 +58,7 @@ export const citiesArray:CitiesType[]= [
     docId: 'cty-1011',
     bookingUrl: 'https://www.booking.com//searchresults.en.html?city=-2596447\u0026aid=849127\u0026no_rooms=1\u0026group_adults=1\u0026room1=A',
     airbnbUrl: '',
-    startThemes: ['europe','eurp_sh','eurp_us'],
+    startThemes: ['europe', 'eurp_sh', 'eurp_us'],
     apiVersion: ':2:',
     content: { topReason: '', shortDesc: 'City in Scotland' },
   },
@@ -80,7 +76,7 @@ export const citiesArray:CitiesType[]= [
     docId: 'cty-1012',
     bookingUrl: 'https://www.booking.com/searchresults.en.html?city=-268962\u0026aid=849127\u0026no_rooms=1\u0026group_adults=1\u0026room1=A',
     airbnbUrl: '',
-    startThemes: ['europe','eurp_sh','eurp_us'],
+    startThemes: ['europe', 'eurp_sh', 'eurp_us'],
     apiVersion: ':2:',
     content: { topReason: '', shortDesc: 'Town in Norway' },
   },
@@ -98,7 +94,7 @@ export const citiesArray:CitiesType[]= [
     docId: 'cty-1029',
     bookingUrl: 'https://www.booking.com/searchresults.en.html?city=-116612\u0026aid=849127\u0026no_rooms=1\u0026group_adults=1\u0026room1=A',
     airbnbUrl: '',
-    startThemes: ['eurp','eurp_sh','eurp_us'],
+    startThemes: ['eurp', 'eurp_sh', 'eurp_us'],
     apiVersion: ':2:',
     content: { topReason: '', shortDesc: '' },
   },
@@ -118,7 +114,7 @@ export const citiesArray:CitiesType[]= [
     docId: 'cty-103',
     bookingUrl: 'http://www.booking.com/searchresults.html?city=-781545\u0026no_rooms=1\u0026group_adults=2',
     airbnbUrl: '',
-    startThemes: ['eurp_us', 'eurp_sh', 'capital', 'mediterranean', 'fr','asia'],
+    startThemes: ['eurp_us', 'eurp_sh', 'capital', 'mediterranean', 'fr', 'asia'],
     apiVersion: ':2:',
     content: {
       topReason: 'Beaches, Bauhaus Architecture, Carmel Market',
@@ -131,7 +127,6 @@ export const citiesArray:CitiesType[]= [
       yearOfBirth: '1909',
       localHolidays: [{ date: '4th April', reason: 'Tel Aviv City Day' }],
     },
-    
   },
   {
     name: 'Lauterbrunnen',
@@ -168,7 +163,6 @@ export const citiesArray:CitiesType[]= [
     bookingUrl: 'http://www.booking.com/searchresults.html?city=-1946324\u0026no_rooms=1\u0026group_adults=2',
     airbnbUrl: '',
     startThemes: ['eurp_us', 'eurp_sh', 'capital', 'mediterranean', 'fr'],
-    
   },
   {
     name: 'Linz',
@@ -185,7 +179,7 @@ export const citiesArray:CitiesType[]= [
     docId: 'cty-1058',
     bookingUrl: 'https://www.booking.com/searchresults.en.html?city=-1984321\u0026aid=849127\u0026no_rooms=1\u0026group_adults=1\u0026room1=A',
     airbnbUrl: '',
-    startThemes: ['eurp','eurp_sh','eurp_us'],
+    startThemes: ['eurp', 'eurp_sh', 'eurp_us'],
     apiVersion: ':2:',
     content: { topReason: '', shortDesc: '' },
   },
@@ -231,7 +225,7 @@ export const citiesArray:CitiesType[]= [
     docId: 'cty-1066',
     bookingUrl: 'https://www.booking.com/searchresults.en.html?city=-394970\u0026aid=849127\u0026no_rooms=1\u0026group_adults=1\u0026room1=A',
     airbnbUrl: '',
-    startThemes: ['eurp','eurp_sh','eurp_us'],
+    startThemes: ['eurp', 'eurp_sh', 'eurp_us'],
     apiVersion: ':2:',
     content: {
       topReason: '',
@@ -265,7 +259,6 @@ export const citiesArray:CitiesType[]= [
       yearOfBirth: '1191',
       localHolidays: [{ date: '1st August', reason: 'Swiss National Day' }],
     },
-
   },
   {
     name: 'Brighton',
@@ -281,7 +274,7 @@ export const citiesArray:CitiesType[]= [
     docId: 'cty-1141',
     bookingUrl: '',
     airbnbUrl: '',
-    startThemes: ['europe', 'eu', 'schengen','eurp_sh','eurp_us'],
+    startThemes: ['europe', 'eu', 'schengen', 'eurp_sh', 'eurp_us'],
     apiVersion: ':2:',
     content: { topReason: 'Bullring Shopping Centre, Gas Street, Barclaycard Arena', shortDesc: 'City in East Sussex' },
   },
@@ -299,7 +292,7 @@ export const citiesArray:CitiesType[]= [
     docId: 'cty-1144',
     bookingUrl: '',
     airbnbUrl: '',
-    startThemes: ['europe', 'eu', 'schengen','eurp_sh','eurp_us'],
+    startThemes: ['europe', 'eu', 'schengen', 'eurp_sh', 'eurp_us'],
     apiVersion: ':2:',
     content: { topReason: '', shortDesc: 'City in England' },
   },
@@ -335,7 +328,6 @@ export const citiesArray:CitiesType[]= [
     docId: 'cty-1',
     bookingUrl: 'https://www.booking.com/searchresults.en.html?city=-1746443\u0026no_rooms=1\u0026group_adults=2',
     startThemes: ['eurp_us', 'eurp_sh', 'capital', 'mediterranean', 'fr'],
-    
   },
   {
     name: 'Tbilisi',
@@ -352,7 +344,7 @@ export const citiesArray:CitiesType[]= [
     docId: 'cty-102',
     bookingUrl: 'http://www.booking.com/searchresults.html?city=900047975\u0026no_rooms=1\u0026group_adults=2',
     airbnbUrl: '',
-    startThemes: ['eurp_us', 'capital', 'mediterranean', 'fr','asia'],
+    startThemes: ['eurp_us', 'capital', 'mediterranean', 'fr', 'asia'],
     apiVersion: ':2:',
     content: { topReason: 'Old Town exploring, friendly locals and food', shortDesc: 'Capital of the country of Georgia' },
   },
@@ -369,7 +361,7 @@ export const citiesArray:CitiesType[]= [
     countryId: 'ctry-16',
     docId: 'cty-1310',
     bookingUrl: 'https://www.booking.com/searchresults.en.html?city=-302053\u0026aid=849127\u0026no_rooms=1\u0026group_adults=2',
-    startThemes: ['best place to visit','eurp_us'],
+    startThemes: ['best place to visit', 'eurp_us'],
     content: { topReason: '', shortDesc: '' },
     weight: 75,
     apiVersion: ':2:',
@@ -407,8 +399,7 @@ export const citiesArray:CitiesType[]= [
     location: [40.730600000000003, -73.935199999999995],
     countryId: 'ctry-92',
     docId: 'cty-146',
-    startThemes: ['america',  'capital', 'mediterranean'],
-
+    startThemes: ['america', 'capital', 'mediterranean'],
   },
   {
     name: 'Istanbul',
@@ -418,14 +409,28 @@ export const citiesArray:CitiesType[]= [
     codeIata: 'IST',
     codeSky: null,
     timezoneIana: 'Europe/Istanbul',
-    themes: ['eurp', 'eurp10', 'eurp_us', 'eurp_in', 'eurp_sh', 'mediterranean', 'europe', 'balkans', 'include', 'turkey', 'aa', 'rmntc', 'honeymoon'],
+    themes: [
+      'eurp',
+      'eurp10',
+      'eurp_us',
+      'eurp_in',
+      'eurp_sh',
+      'mediterranean',
+      'europe',
+      'balkans',
+      'include',
+      'turkey',
+      'aa',
+      'rmntc',
+      'honeymoon',
+    ],
     icon: null,
     location: [41.013610999999997, 28.954999999999998],
     countryId: 'ctry-135',
     docId: 'cty-104',
     bookingUrl: 'http://www.booking.com/searchresults.html?city=-755070\u0026no_rooms=1\u0026group_adults=2',
     airbnbUrl: '',
-    startThemes: ['eurp_us', 'eurp_sh', 'capital', 'mediterranean', 'fr','turkey'],
+    startThemes: ['eurp_us', 'eurp_sh', 'capital', 'mediterranean', 'fr', 'turkey'],
     apiVersion: ':2:',
     content: {
       topReason: 'Hagia Sophia, Blue Mosque, Topkapi Palace',
@@ -504,7 +509,7 @@ export const citiesArray:CitiesType[]= [
     docId: 'cty-1072',
     bookingUrl: 'https://www.booking.com/searchresults.en.html?city=-400105\u0026aid=849127\u0026no_rooms=1\u0026group_adults=1\u0026room1=A',
     airbnbUrl: '',
-    startThemes: ['eurp','best place to visit'],
+    startThemes: ['eurp', 'best place to visit'],
     apiVersion: ':2:',
     content: {
       topReason: '',
@@ -543,7 +548,7 @@ export const citiesArray:CitiesType[]= [
     location: [36.174970000000002, -115.13722],
     countryId: 'ctry-92',
     docId: 'cty-174',
-    startThemes: ['america', 'us_big','best place to visit'],
+    startThemes: ['america', 'us_big', 'best place to visit'],
     apiVersion: ':2:',
     content: { topReason: 'Grand Canyon, Helicopter Ride, Red Rock Canyon', shortDesc: null },
   },
@@ -626,7 +631,6 @@ export const citiesArray:CitiesType[]= [
         'Milan, an epitome of style, is where designers, artists, and entrepreneurs converge. Wander through the Galleria Vittorio Emanuele II, one of the world\u0027s oldest shopping malls, to experience luxury retail at its best. Delve into history at the Sforza Castle, or immerse yourself in the artsy ambiance of the Brera District. As dusk sets, Milan\u0027s nightlife springs to life, offering chic aperitivo spots and contemporary dining experiences. From its iconic fashion weeks to its rich tapestry of arts and history, Milan is endlessly captivating.',
       oneDayTrip: 'Lugano, Monza, Stresa',
     },
-    
   },
   {
     name: 'Tokyo',
@@ -641,7 +645,7 @@ export const citiesArray:CitiesType[]= [
     location: [35.689487499999998, 139.69170639999999],
     countryId: 'ctry-213',
     docId: 'cty-282',
-    startThemes: ['eurp_us','capital','asia'],
+    startThemes: ['eurp_us', 'capital', 'asia'],
     apiVersion: ':2:',
     content: { topReason: 'Japanese Cuisine, Japanese Culture, Train System\n', shortDesc: 'Capital of Japan' },
   },
@@ -673,16 +677,15 @@ export const citiesArray:CitiesType[]= [
       yearOfBirth: '963',
       localHolidays: [{ date: '23rd June', reason: 'National Day' }],
     },
-   
   },
 ];
 
-export const citiesThemes=[
-  {"apiVersion":":2:","code":"eurp_us","dstn":"eurp","docId":"thm-8","zoom":3.5,"name":"Europe: Best Places to Visit"},
-  {"apiVersion":":2:","code":"eurp_sh","dstn":"europe","docId":"thm-5","zoom":4.0999999999999996,"name":"Europe: Schengen countries"},
-  {"name":"Turkey","dstn":"tr","code":"turkey","apiVersion":":2:","docId":"thm-94"},
-  {"apiVersion":":2:","code":"america/europe","docId":"thm-54","name":" America and Europe"},
-  {"name":"United States","dstn":"us","code":"america","docId":"thm-43","apiVersion":":2:"},
-  {"name":"Asia","code":"asia","docId":"thm-51","apiVersion":":2:"},
-  {"apiVersion":":2:","code":"capital","docId":"thm-10","dstn":"europe","name":"Capitals"}
+export const citiesThemes = [
+  { apiVersion: ':2:', code: 'eurp_us', dstn: 'eurp', docId: 'thm-8', zoom: 3.5, name: 'Europe: Best Places to Visit' },
+  { apiVersion: ':2:', code: 'eurp_sh', dstn: 'europe', docId: 'thm-5', zoom: 4.0999999999999996, name: 'Europe: Schengen countries' },
+  { name: 'Turkey', dstn: 'tr', code: 'turkey', apiVersion: ':2:', docId: 'thm-94' },
+  { apiVersion: ':2:', code: 'america/europe', docId: 'thm-54', name: ' America and Europe' },
+  { name: 'United States', dstn: 'us', code: 'america', docId: 'thm-43', apiVersion: ':2:' },
+  { name: 'Asia', code: 'asia', docId: 'thm-51', apiVersion: ':2:' },
+  { apiVersion: ':2:', code: 'capital', docId: 'thm-10', dstn: 'europe', name: 'Capitals' },
 ];

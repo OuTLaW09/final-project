@@ -2,36 +2,19 @@ import './SignUpPage.scss';
 import { Button, Form, FormItemProps, Input, Select } from 'antd';
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
-import { UserSignUP } from '../../models/user';
 import React, { useState } from 'react';
 import goBackSignUp from '../../assets/Images/left.png';
 import leftSignUp from '../../assets/Images/signupbg.jpg';
-type SignUpProps = {
-  signUpHandler: (userSignUp: UserSignUP) => void;
-};
 
-export const SignUpPage = (props: SignUpProps) => {
-  const[signInfo,setSignInfo]=useState<any>();
-  const userSignUp: UserSignUP = {
-    userName: 'zeyneb',
-    userPassword: 'zeyneb2003',
-    userEmail: 'ddndndn@hhdh',
-    userNumber: 708080080,
-  };
-
-  const SignUpBtn = () => {
-    props.signUpHandler(userSignUp);
+interface SignupFormProps {
+  onSubmit: (values: any) => void;
+}
+export const SignUpPage:React.FC<SignupFormProps> = ({onSubmit}) => {
+ 
+  const onFinish = (values:any) => {
+    onSubmit(values);
   };
  
-  const onFinish = (value: object) => {
-    setSignInfo(value);
- 
-  };
- for(const ojb in signInfo){
-  console.log(ojb,signInfo[ojb]);
- };
-
-
   const onFinishFailed = (errorInfo: any) => {
     console.log('Failed:', errorInfo);
   };
@@ -70,6 +53,8 @@ export const SignUpPage = (props: SignUpProps) => {
       </Select>
     </Form.Item>
   );
+
+ 
 
   return (
     <div className="signup-main">
@@ -142,8 +127,17 @@ export const SignUpPage = (props: SignUpProps) => {
                 name="password"
                 label="Password"
                 rules={[
-                  { required: true, message: 'Please input your password!' },
-                  { min: 8, message: 'your password must be longer than 8' },
+                  {validator(rules, value, message) {
+                    if (!value) {
+                      message('Please input your password!');
+                    } else if (!/^[A-Z]/.test(value)) {
+                      message('The first letter of the password must be capitalized!');
+                    } else if (!/\d/.test(value)) {
+                      message('The password must contain at least one number!');
+                    } else if(value.length<8){
+                      message('your password must be longer than 8');
+                    };
+                  },}
                 ]}
               >
                 <Input.Password
@@ -153,7 +147,7 @@ export const SignUpPage = (props: SignUpProps) => {
                 />
               </MyFormItem>
             </MyFormItemGroup>
-            <Button type="primary" htmlType="submit" onClick={SignUpBtn}>
+            <Button type="primary" htmlType="submit" >
               SIGN UP
             </Button>
           </Form>

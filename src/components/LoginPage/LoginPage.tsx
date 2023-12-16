@@ -1,6 +1,5 @@
 import './LoginPage.scss';
 import { Button, Form, FormItemProps, Input } from 'antd';
-import { User } from '../../models/user';
 import facebookLogo from '../../assets/Images/facebook.png';
 import googleLogo from '../../assets/Images/google-plus-logo.png';
 import leftPhoto from '../../assets/Images/left-arrow.png';
@@ -9,9 +8,9 @@ import loginBg from '../../assets/Images/loginPage.jpg';
 
 import { Link } from 'react-router-dom';
 import React from 'react';
-type LoginPageProps = {
-  handleLogin: (user: User) => void;
-};
+interface LoginFormProps {
+  onSubmit: (values: any) => void;
+}
 const MyFormItemContext = React.createContext<(string | number)[]>([]);
 
 interface MyFormItemGroupProps {
@@ -37,17 +36,11 @@ const MyFormItem = ({ name, ...props }: FormItemProps) => {
   return <Form.Item name={concatName} {...props} />;
 };
 
-const onFinish = (value: object) => {
-  console.log(value);
-};
 
-export const LoginPage = (props: LoginPageProps) => {
-  const user: User = {
-    userName: 'Zeyneb',
-    userPassword: 'Zeyneb2003',
-  };
-  const LoginBtnClick = () => {
-    props.handleLogin(user);
+
+export const LoginPage : React.FC<LoginFormProps> = ({ onSubmit }) => {
+  const onFinishLogIn = (values: object) => {
+    onSubmit(values);
   };
 
   return (
@@ -72,7 +65,7 @@ export const LoginPage = (props: LoginPageProps) => {
             </div>
             <p className="use-account">or use your account</p>
           </div>
-          <Form name="form_item_path" layout="vertical" onFinish={onFinish} className="form">
+          <Form name="form_item_path" layout="vertical" onFinish={onFinishLogIn} className="form">
             <MyFormItemGroup prefix={['user']}>
               <MyFormItemGroup prefix={['name']}>
                 <MyFormItem name="firstName" label="First Name" rules={[{ required: true, message: 'please fill the form' }]}>
@@ -98,7 +91,7 @@ export const LoginPage = (props: LoginPageProps) => {
               <Input.Password placeholder="Password" className="input" />
             </Form.Item>
 
-            <Button type="primary" htmlType="submit" onClick={LoginBtnClick} className="login-btn">
+            <Button type="primary" htmlType="submit"  className="login-btn">
               LOG IN
             </Button>
             <a href="/" className="forgot-password">

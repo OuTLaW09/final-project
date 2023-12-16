@@ -1,11 +1,9 @@
 import './MapMainPage.scss';
 import { MapContainer, Marker, Polyline, Popup, TileLayer } from 'react-leaflet';
-import { DepartureArray, DepartureArrayName } from '../MainPage/MainPage';
+import { DepartureArray, DepartureArrayName,themeId,docId } from '../MainPage/MainPage';
 import L, { DivIcon } from 'leaflet';
+import { useState } from 'react';
 
-
-console.log(DepartureArray);
-console.log(DepartureArrayName);
 const createCustomIcon = (name: string) => {
   return L.divIcon({
     className: 'custom-marker',
@@ -23,6 +21,64 @@ const createCustomIcon = (name: string) => {
 };
 
 export const MapMainPage = () => {
+
+  const [postData, setPostData] = useState({
+    type: 'AZ',
+    version: 3,
+    debug: 0,
+    deviceIdentifier: 'web',
+    citiesCount: null,
+    payload: {
+      constraints: {
+        timestamp: 0,
+        lastRoute: [],
+      },
+      themeId: themeId,
+      defined_points: {
+        mandatory: [],
+      },
+      excluded_points: [],
+      start_point: {
+        date: '2023-12-30',
+        cityId: docId,
+        type: 'strict',
+      },
+      end_point: {
+        date: '2024-01-10',
+        cityId: docId,
+        type: 'strict',
+      },
+    },
+  });
+
+  const handlePostRequest = async () => {
+    try {
+      const response = await fetch('https://api.eightydays.me/api/v3/tour/build', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(postData),
+      });
+
+      if (response.ok) {
+        const contentType = response.headers.get('Content-Type');
+
+        if (contentType && contentType.includes('application/json')) {
+          const responseData = await response.json();
+          console.log('Response Data:', responseData);
+        } else {
+          console.error('Unexpected response content:', await response.text());
+        }
+      } else {
+        console.error('Error:', response.statusText);
+       
+      }
+    } catch (error:any) {
+      console.error('Error:', error.message);
+    }
+  };
+handlePostRequest();
   const getRandomColor = () => {
     const letters = '0123456789ABCDEF';
     let color = '#';
@@ -36,7 +92,6 @@ export const MapMainPage = () => {
   departureArrayForPolyline.push(DepartureArray[0]);
 
   return (
-    
     <div className="map">
       <MapContainer center={[40.409264, 49.867092]} zoom={2}>
         <TileLayer
@@ -44,36 +99,39 @@ export const MapMainPage = () => {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="https://carto.com/attribution">CARTO</a>'
         />
         {DepartureArray.map((cityLoc, index) => {
-      
           return (
             <>
               <Marker position={cityLoc} icon={createCustomIcon(DepartureArrayName[index])}>
                 <Popup>{DepartureArrayName[index]}</Popup>;
               </Marker>
               return(
-                <>
-                {
-                 departureArrayForPolyline.map((cityLoc, index, array) => (
-                  index < array.length - 1 && (
-                    <Polyline
-                      key={index}
-                      positions={[cityLoc, array[index + 1]]}
-                      color={getRandomColor()}
-                    />
-                  )
-                ))
-                }
-                
-
-                </>
-
+              <>
+                {departureArrayForPolyline.map(
+                  (cityLoc, index, array) =>
+                    index < array.length - 1 && <Polyline key={index} positions={[cityLoc, array[index + 1]]} color={getRandomColor()} />,
+                )}
+              </>
               )
-             
-              
             </>
           );
         })}
       </MapContainer>
+      <div
+       style={{
+        position: 'absolute',
+        top: '20px',
+        left: '20px',
+        backgroundColor: 'white',
+        padding: '10px',
+        border: '1px solid #ccc',
+        zIndex: 1000,
+      }}
+    >
+          <h2>Outside Div Content</h2>
+          <p>This content is outside the Leaflet map.</p>
+
+      </div>
+  
     </div>
   );
 };
