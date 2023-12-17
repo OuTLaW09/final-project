@@ -89,8 +89,6 @@
       }
     }
     .HeroSection-container {
-      position: relative;
-      justify-content: space-around;
       height: 250px;
       @keyframes rotateLeftToRight {
         0% {
@@ -99,7 +97,7 @@
         100% {
           transform: perspective(1200px) rotateY(360deg);
         }
-      }   
+      }
       img {
         animation: rotateLeftToRight 5s linear infinite;
         position: absolute;
