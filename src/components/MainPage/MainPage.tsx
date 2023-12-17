@@ -1,6 +1,6 @@
 import './Mainpage.scss';
 import { CarouselPage } from '../CarouselPage/CarouselPage';
-import { DatePicker, Select, Space, Form } from 'antd';
+import { DatePicker, Select, Space, Form, Modal } from 'antd';
 import { Footer } from '../Footer/Footer';
 import { HeroPage } from '../HeroPage/HeroPage';
 import { Link } from 'react-router-dom';
@@ -319,6 +319,7 @@ export function Mainpage() {
           <a href="/">Terms&Conditions</a>
         </div>
       </div>
+     
     </div>
   );
 }

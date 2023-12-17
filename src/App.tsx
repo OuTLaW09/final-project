@@ -6,12 +6,12 @@ import { NotFoundPage } from './components/NotFoundPage/NotFoundPage';
 import { Route, Routes } from 'react-router-dom';
 import { SignUpPage } from './components/SignUpPage/SignUpPage';
 import React, { useState } from 'react';
+import { message } from 'antd';
 export let checkLogIn: boolean | undefined = false;
+export const signUpData:any=[];
 function App() {
   const [signupInfo, setSignupInfo] = useState<any | null>(null);
   const handleSignUpSubmit = async (values: any) => {
-    const backendUrl = 'https://jsonplaceholder.typicode.com/users';
-
     try {
       const response = await fetch('http://localhost:3000', {
         method: 'POST',
@@ -28,6 +28,12 @@ function App() {
     }
 
     setSignupInfo(values);
+    message.success('you create new account,succesfully');
+    signUpData.push(values['user']['password']);
+    signUpData.push(values['user']['email']);
+    signUpData.push(values['user']['phone-number']);
+
+    console.log(values);
   };
 
   const handleLoginSubmit = (values: any) => {
@@ -40,8 +46,10 @@ function App() {
       values['password'] === signupInfo['user']['password']
     ) {
       checkLogIn = true;
+      message.success('Login succesfull');
     } else {
       checkLogIn = false;
+      message.warning('some information is wrong,please check');
     }
 
     console.log(checkLogIn);

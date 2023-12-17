@@ -7,14 +7,14 @@ import { useState } from 'react';
 const createCustomIcon = (name: string) => {
   return L.divIcon({
     className: 'custom-marker',
-    html: `
-      <div class='inside-marker'>
+    html: 
+      `<div class='inside-marker'>
         <div class= "circle-side">
           <p>time</p>
         </div>
         <div class="city-name">${name}</div>
-      </div>
-    `,
+      </div> `
+    ,
     iconSize: [40, 40],
     iconAnchor: [20, 40],
   });
@@ -116,20 +116,8 @@ handlePostRequest();
           );
         })}
       </MapContainer>
-      <div
-       style={{
-        position: 'absolute',
-        top: '20px',
-        left: '20px',
-        backgroundColor: 'white',
-        padding: '10px',
-        border: '1px solid #ccc',
-        zIndex: 1000,
-      }}
-    >
-          <h2>Outside Div Content</h2>
-          <p>This content is outside the Leaflet map.</p>
-
+      <div className='ticket'>
+          <p>Test</p>
       </div>
   
     </div>

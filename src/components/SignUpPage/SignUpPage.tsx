@@ -9,12 +9,11 @@ import leftSignUp from '../../assets/Images/signupbg.jpg';
 interface SignupFormProps {
   onSubmit: (values: any) => void;
 }
-export const SignUpPage:React.FC<SignupFormProps> = ({onSubmit}) => {
- 
-  const onFinish = (values:any) => {
+export const SignUpPage: React.FC<SignupFormProps> = ({ onSubmit }) => {
+  const onFinish = (values: any) => {
     onSubmit(values);
   };
- 
+
   const onFinishFailed = (errorInfo: any) => {
     console.log('Failed:', errorInfo);
   };
@@ -53,9 +52,6 @@ export const SignUpPage:React.FC<SignupFormProps> = ({onSubmit}) => {
       </Select>
     </Form.Item>
   );
-
- 
-
   return (
     <div className="signup-main">
       <div className="signup-container">
@@ -127,17 +123,21 @@ export const SignUpPage:React.FC<SignupFormProps> = ({onSubmit}) => {
                 name="password"
                 label="Password"
                 rules={[
-                  {validator(rules, value, message) {
-                    if (!value) {
-                      message('Please input your password!');
-                    } else if (!/^[A-Z]/.test(value)) {
-                      message('The first letter of the password must be capitalized!');
-                    } else if (!/\d/.test(value)) {
-                      message('The password must contain at least one number!');
-                    } else if(value.length<8){
-                      message('your password must be longer than 8');
-                    };
-                  },}
+                  {
+                    validator(rule, value, reject) {
+                      if (!value) {
+                        reject('Please input your password!');
+                      } else if (!/^[A-Z]/.test(value)) {
+                        reject('The first letter of the password must be capitalized!');
+                      } else if (!/\d/.test(value)) {
+                        reject('The password must contain at least one number!');
+                      } else if (value.length < 8) {
+                        reject('Your password must be longer than 8 characters!');
+                      }else{
+                        reject();
+                      }
+                    },
+                  },
                 ]}
               >
                 <Input.Password
@@ -147,7 +147,7 @@ export const SignUpPage:React.FC<SignupFormProps> = ({onSubmit}) => {
                 />
               </MyFormItem>
             </MyFormItemGroup>
-            <Button type="primary" htmlType="submit" >
+            <Button type="primary" htmlType="submit">
               SIGN UP
             </Button>
           </Form>

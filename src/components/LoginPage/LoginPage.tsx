@@ -1,5 +1,5 @@
 import './LoginPage.scss';
-import { Button, Form, FormItemProps, Input } from 'antd';
+import { Button, Divider, Form, FormItemProps, Input, Modal, message } from 'antd';
 import facebookLogo from '../../assets/Images/facebook.png';
 import googleLogo from '../../assets/Images/google-plus-logo.png';
 import leftPhoto from '../../assets/Images/left-arrow.png';
@@ -7,7 +7,8 @@ import linkedinLogo from '../../assets/Images/linkedin.png';
 import loginBg from '../../assets/Images/loginPage.jpg';
 
 import { Link } from 'react-router-dom';
-import React from 'react';
+import React, { useState } from 'react';
+import { signUpData } from '../../App';
 interface LoginFormProps {
   onSubmit: (values: any) => void;
 }
@@ -36,12 +37,36 @@ const MyFormItem = ({ name, ...props }: FormItemProps) => {
   return <Form.Item name={concatName} {...props} />;
 };
 
-
-
 export const LoginPage : React.FC<LoginFormProps> = ({ onSubmit }) => {
+
+  const [forgotPasswordOn, setForgotPasswordOn] = useState<boolean>(false);
+  const ForgotPasswordClick = () => {
+    setForgotPasswordOn(true);
+  };
+  const ForgotPasswordCancel = () => {
+    setForgotPasswordOn(false);
+  };
+  const handleOk = () => {
+    setForgotPasswordOn(false);
+  };
+
   const onFinishLogIn = (values: object) => {
     onSubmit(values);
   };
+ 
+    const [email, setEmail] = useState<string>('');
+    const [phoneNumber, setPhoneNumber] = useState<string|number>();
+    const[password,setPassword]=useState<string>('');
+  
+    function FindPassword(){
+      if((signUpData[1]===email)&&(signUpData[2]===phoneNumber)){
+          setPassword(signUpData[0]); 
+          message.info(password);
+      }else{
+          setPassword('no matching');
+          message.warning(password);
+      };
+    };
 
   return (
     <div className="login-Main">
@@ -63,7 +88,7 @@ export const LoginPage : React.FC<LoginFormProps> = ({ onSubmit }) => {
                 <img alt="" src={linkedinLogo} className="login-logo" />
               </a>
             </div>
-            <p className="use-account">or use your account</p>
+            <Divider><p className="use-account">or use your account</p></Divider>
           </div>
           <Form name="form_item_path" layout="vertical" onFinish={onFinishLogIn} className="form">
             <MyFormItemGroup prefix={['user']}>
@@ -90,13 +115,37 @@ export const LoginPage : React.FC<LoginFormProps> = ({ onSubmit }) => {
             >
               <Input.Password placeholder="Password" className="input" />
             </Form.Item>
-
             <Button type="primary" htmlType="submit"  className="login-btn">
               LOG IN
             </Button>
-            <a href="/" className="forgot-password">
+            <Link  to='/login' className="forgot-password" onClick={ForgotPasswordClick}>
               Forgot Password
-            </a>
+            </Link>
+                <Modal 
+                 visible={forgotPasswordOn}
+                 onCancel={ForgotPasswordCancel}
+                 onOk={handleOk}
+                >
+                  <Form className='forgot-password-modal'>
+                    <Form.Item label='Email Address'>
+                        <Input
+                        type="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        />
+                    </Form.Item>
+                    <Form.Item label='Phone Number'>
+                        <Input
+                        type="text"
+                        value={phoneNumber}
+                        onChange={(e) => setPhoneNumber(e.target.value)}
+                        />
+                    </Form.Item>
+                    <Form.Item>
+                        <Button onClick={FindPassword}>Find Password</Button>
+                    </Form.Item>
+                </Form>
+            </Modal>
           </Form>
         </div>
         <div className="right-side-login">
