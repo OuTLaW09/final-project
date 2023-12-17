@@ -82,7 +82,13 @@ export const SignUpPage = (props: SignUpProps) => {
           </div>
         </div>
         <div className="right-side-signup">
-          <p className="signup-p">Sign Up </p>
+          <div className="header-signup">
+            <Link to="/">
+              {' '}
+              <img src={goBackSignUp} alt="" className="go-back-signup" />
+            </Link>
+            <p className="signup-p">Sign Up </p>
+          </div>
           <Form name="form_item_path" layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed} className="Form">
             <MyFormItemGroup prefix={['user']}>
               <MyFormItemGroup prefix={['name']}>
