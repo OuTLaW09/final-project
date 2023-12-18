@@ -1,24 +1,57 @@
 import './MapMainPage.scss';
 import { MapContainer, Marker, Polyline, Popup, TileLayer } from 'react-leaflet';
-import { DepartureArray, DepartureArrayName } from '../MainPage/MainPage';
-import L from 'leaflet';
-const markerIcon = new L.Icon({
-  iconUrl: require('../../assets/Images/marker.png'),
-  iconSize: [45, 45],
-  iconAnchor: [17, 46],
-  popupAnchor: [0, -46],
-});
-const Departure: any[] = [];
-Departure.push(DepartureArray);
-Departure.push(DepartureArrayName);
-console.log(Departure, 'jkjhkjhk');
+import { DepartureArray, DepartureArrayName,themeId,docId } from '../MainPage/MainPage';
+import L, { DivIcon } from 'leaflet';
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+
+const createCustomIcon = (name: string) => {
+  return L.divIcon({
+    className: 'custom-marker',
+    html: 
+      `<div class='inside-marker'>
+        <div class= "circle-side">
+          <p>time</p>
+        </div>
+        <div class="city-name">${name}</div>
+      </div> `
+    ,
+    iconSize: [40, 40],
+    iconAnchor: [20, 40],
+  });
+};
 
 export const MapMainPage = () => {
-  console.log(DepartureArray);
-  const departureArrayForPolyline: any = [...DepartureArray];
+  const { signature } = useParams();
+  useEffect(() => {
+    const fetchData = async () => {
+      let response: Response;
+
+      do {
+        response = await fetch(`https://api.eightydays.me/api/v3/tour/get/${signature}`);
+        await new Promise((resolve, reject) => setTimeout(() => resolve(true), 1000));
+      } while (response.status === 204);
+
+      const data = await response.json();
+      // set state here
+      console.log(data);
+    };
+
+    fetchData();
+  }, [signature]);
+
+  const getRandomColor = () => {
+    const letters = '0123456789ABCDEF';
+    let color = '#';
+    for (let i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+  };
+
+  const departureArrayForPolyline: any[] = [...DepartureArray];
   departureArrayForPolyline.push(DepartureArray[0]);
 
-  console.log('departureArrayForPolyline', departureArrayForPolyline);
   return (
     <div className="map">
       <MapContainer center={[40.409264, 49.867092]} zoom={2}>
@@ -29,14 +62,25 @@ export const MapMainPage = () => {
         {DepartureArray.map((cityLoc, index) => {
           return (
             <>
-              <Marker position={cityLoc} icon={markerIcon}>
+              <Marker position={cityLoc} icon={createCustomIcon(DepartureArrayName[index])}>
                 <Popup>{DepartureArrayName[index]}</Popup>;
               </Marker>
-              <Polyline positions={departureArrayForPolyline} />
+              return(
+              <>
+                {departureArrayForPolyline.map(
+                  (cityLoc, index, array) =>
+                    index < array.length - 1 && <Polyline key={index} positions={[cityLoc, array[index + 1]]} color={getRandomColor()} />,
+                )}
+              </>
+              )
             </>
           );
         })}
       </MapContainer>
+      <div className='ticket'>
+          <p>Test</p>
+      </div>
+  
     </div>
   );
 };
