@@ -2,7 +2,8 @@ import './MapMainPage.scss';
 import { MapContainer, Marker, Polyline, Popup, TileLayer } from 'react-leaflet';
 import { DepartureArray, DepartureArrayName,themeId,docId } from '../MainPage/MainPage';
 import L, { DivIcon } from 'leaflet';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 
 const createCustomIcon = (name: string) => {
   return L.divIcon({
@@ -21,64 +22,24 @@ const createCustomIcon = (name: string) => {
 };
 
 export const MapMainPage = () => {
+  const { signature } = useParams();
+  useEffect(() => {
+    const fetchData = async () => {
+      let response: Response;
 
-  const [postData, setPostData] = useState({
-    type: 'AZ',
-    version: 3,
-    debug: 0,
-    deviceIdentifier: 'web',
-    citiesCount: null,
-    payload: {
-      constraints: {
-        timestamp: 0,
-        lastRoute: [],
-      },
-      themeId: themeId,
-      defined_points: {
-        mandatory: [],
-      },
-      excluded_points: [],
-      start_point: {
-        date: '2023-12-30',
-        cityId: docId,
-        type: 'strict',
-      },
-      end_point: {
-        date: '2024-01-10',
-        cityId: docId,
-        type: 'strict',
-      },
-    },
-  });
+      do {
+        response = await fetch(`https://api.eightydays.me/api/v3/tour/get/${signature}`);
+        await new Promise((resolve, reject) => setTimeout(() => resolve(true), 1000));
+      } while (response.status === 204);
 
-  const handlePostRequest = async () => {
-    try {
-      const response = await fetch('https://api.eightydays.me/api/v3/tour/build', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(postData),
-      });
+      const data = await response.json();
+      // set state here
+      console.log(data);
+    };
 
-      if (response.ok) {
-        const contentType = response.headers.get('Content-Type');
+    fetchData();
+  }, [signature]);
 
-        if (contentType && contentType.includes('application/json')) {
-          const responseData = await response.json();
-          console.log('Response Data:', responseData);
-        } else {
-          console.error('Unexpected response content:', await response.text());
-        }
-      } else {
-        console.error('Error:', response.statusText);
-       
-      }
-    } catch (error:any) {
-      console.error('Error:', error.message);
-    }
-  };
-handlePostRequest();
   const getRandomColor = () => {
     const letters = '0123456789ABCDEF';
     let color = '#';

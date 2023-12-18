@@ -61,7 +61,7 @@ function App() {
         <Route path="/" element={<Mainpage />} />
         <Route path="login" element={<LoginPage onSubmit={handleLoginSubmit} />} />
         <Route path="sign-up" element={<SignUpPage onSubmit={handleSignUpSubmit} />} />
-        <Route path="map-page" element={<MapMainPage />} />
+        <Route path="map-page/:signature" element={<MapMainPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </>

@@ -1,13 +1,14 @@
 import './Mainpage.scss';
 import { CarouselPage } from '../CarouselPage/CarouselPage';
-import { DatePicker, Select, Space, Form, Modal } from 'antd';
+import { City, citiesArray, citiesThemes } from '../../models/citiesData';
+import { CityResponse } from '../../models/CityResponse';
+import { DatePicker, Form, Modal, Select, Space } from 'antd';
 import { Footer } from '../Footer/Footer';
 import { HeroPage } from '../HeroPage/HeroPage';
-import { Link } from 'react-router-dom';
-import { citiesArray, citiesThemes } from '../../models/citiesData';
+import { Link, useNavigate } from 'react-router-dom';
+import { checkLogIn } from '../../App';
 import React, { useEffect, useState } from 'react';
 import type { Dayjs } from 'dayjs';
-import { checkLogIn } from '../../App';
 
 const { Option } = Select;
 const { RangePicker } = DatePicker;
@@ -40,18 +41,20 @@ type ChoosenCitiesType = {
 };
 
 export function Mainpage() {
+  const navigate = useNavigate();
   const [whereFromValue, setWhereFromValue] = useState<string>('');
   const [cityTheme, setCityTheme] = useState<string>('');
-  const [date, setDate] = useState<any>([]);
   const [choosenCity, setChoosenCity] = useState<ChoosenCitiesType[]>([]);
   const [lastChoosenCity, setLastChoosenCity] = useState<ChoosenCitiesType[]>([]);
-  const [city, setCity] = useState<any[]>([]);
+  const [cities, setCities] = useState<City[]>([]);
   const [num, setNum] = useState(1);
+
   const request = async () => {
-    await fetch('https://api.eightydays.me/api/v2/cities')
-      .then((resp) => resp.json())
-      .then((res) => setCity(res));
+    const response = await fetch('https://api.eightydays.me/api/v2/cities');
+    const cities = (await response.json()) as CityResponse;
+    setCities(cities.data.values);
   };
+
   useEffect(() => {
     request();
   }, [num]);
@@ -62,24 +65,60 @@ export function Mainpage() {
   const lastChoosenCityArray: ChoosenCitiesType[] = [];
   const newCityArrayDocId: string[] = [];
   const rotationArray: any[] = [];
-  for (let mainValueCity of Object.values(city)) {
-    if (Object.keys(mainValueCity)[1] === 'values') {
-      for (let index = 0; index < mainValueCity['values'].length; index++) {
-        newCityArray.push(mainValueCity['values'][index]['name']);
-        newCityArrayLocation.push(mainValueCity['values'][index]['location']);
-        newCityArrayDocId.push(mainValueCity['values'][index]['docId']);
+  console.log(docId, whereFromValue);
+
+
+  const onFinishForm = async (values: any) => {
+    if (value) {
+      const date1 = value[0]?.format('YYYY-MM-DD');
+      const date2 = value[1]?.format('YYYY-MM-DD');
+      const payload = {
+        type: 'AZ',
+        version: 3,
+        debug: 0,
+        deviceIdentifier: 'web',
+        citiesCount: null,
+        payload: {
+          constraints: {
+            timestamp: 0,
+            lastRoute: [],
+          },
+          themeId: values.themeId,
+          defined_points: {
+            mandatory: [],
+          },
+          excluded_points: [],
+          start_point: {
+            date: date1,
+            cityId: values.cityId,
+            type: 'strict',
+          },
+          end_point: {
+            date: date2,
+            cityId: values.cityId,
+            type: 'strict',
+          },
+        },
+      };
+      const response = await fetch('https://api.eightydays.me/api/v3/tour/build', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
+      });
+      const data = await response.json();
+      if (data.signature) {
+        // navigate to map component
+        navigate(`map-page/${data.signature}`);
+        console.log(data.signature);
       }
     }
-  }
-  for (let index = 0; index < newCityArray.length; index++) {
-    if (whereFromValue === newCityArray[index]) {
-      docId = newCityArrayDocId[index];
-    }
-  }
-  console.log(docId, whereFromValue);
-  const onFinishForm = (values: any) => {
     console.log(values, 'on finisf form values');
   };
+
+
+
   const onFinishFailedForm = (errorInfo: any) => {
     console.log('Failed:', errorInfo);
   };
@@ -121,30 +160,6 @@ export function Mainpage() {
   };
   const filterOptionfirst = (input: string, option?: { label: string; value: string }) =>
     (option?.label ?? '').toLowerCase().includes(input.toLowerCase());
-
-  const onChangeCountCity = (value: string) => {
-    {
-      for (let index = 0; index < Number(value); index++) {
-        const random = Math.floor(Math.random() * choosenCity.length);
-        console.log(choosenCity.length);
-
-        for (let i = 0; i < lastChoosenCity.length; i++) {
-          if (choosenCity[random] === lastChoosenCity[i]) {
-            console.log(choosenCity[random], 'random');
-            console.log(lastChoosenCity[i], 'i');
-            continue;
-          }
-        }
-        lastChoosenCityArray.push(choosenCity[random]);
-
-        setLastChoosenCity(lastChoosenCityArray);
-      }
-    }
-  };
-  console.log(lastChoosenCity);
-  const onSearchCountCity = (value: string) => {
-    console.log('search:', value);
-  };
   const filterOptionCountCity = (input: string, option?: { label: string; value: string }) =>
     (option?.label ?? '').toLowerCase().includes(input.toLowerCase());
 
@@ -192,17 +207,6 @@ export function Mainpage() {
   console.log(DepartureArrayName);
   console.log(DepartureArray);
 
-
-  let linkTo='';
-  if (checkLogIn === true) {
-    linkTo='map-page';
-    
-  } else {
-    linkTo='login';
-    
-  }
-  
-
   return (
     <div className="main-page-container">
       <HeroPage />
@@ -210,10 +214,10 @@ export function Mainpage() {
       <hr />
       <div className="search-container">
         <div className="search-main">
-          <Form className="search-form" onFinish={onFinishForm} name="searchForm" onFinishFailed={onFinishFailedForm} >
+          <Form className="search-form" onFinish={onFinishForm} name="searchForm" onFinishFailed={onFinishFailedForm}>
             <div className="rotation-main">
               <div className="rotation-container">
-                <Form.Item rules={[{ required: true, message: 'Please select an option' }]}>
+                <Form.Item rules={[{ required: true, message: 'Please select an option' }]} name="cityId">
                   <Select
                     showSearch
                     placeholder="Where from?"
@@ -223,14 +227,14 @@ export function Mainpage() {
                     onSearch={onSearchSelectfirst}
                     filterOption={filterOptionfirst}
                   >
-                    {newCityArray.map((cityName) => (
-                      <Option key={cityName} value={cityName} label={cityName}>
-                        {cityName}
+                    {citiesArray.map((city) => (
+                      <Option key={city.docId} value={city.docId} label={city.name}>
+                        {city.name}
                       </Option>
                     ))}
                   </Select>
                 </Form.Item>
-                <Form.Item>
+                <Form.Item name="themeId">
                   <Select
                     showSearch
                     placeholder="Filter"
@@ -244,20 +248,18 @@ export function Mainpage() {
                     filterOption={filterOption}
                   >
                     {citiesThemes.map((town) => (
-                      <Option key={town.docId} value={town.name} label={town.name}>
+                      <Option key={town.docId} value={town.docId} label={town.name}>
                         {town.name}
                       </Option>
                     ))}
                   </Select>
                 </Form.Item>
-                <Form.Item>
+                <Form.Item name="citiesCount">
                   <Select
                     className="count-of-city"
                     showSearch
                     placeholder="Count of City"
                     optionFilterProp="children"
-                    onChange={onChangeCountCity}
-                    onSearch={onSearchCountCity}
                     filterOption={filterOptionCountCity}
                     options={[
                       {
@@ -279,7 +281,7 @@ export function Mainpage() {
                     ]}
                   ></Select>
                 </Form.Item>
-                <Form.Item>
+                <Form.Item name="dates">
                   <Space direction="vertical" size={12}>
                     <RangePicker
                       placeholder={['Departure', 'Return']}
@@ -296,10 +298,13 @@ export function Mainpage() {
                 </Form.Item>
                 <Form.Item>
                   <div className="search-button">
-                    <Link to={linkTo}>
+                    {!checkLogIn ? (
                       <button>Search Flights</button>
-                    </Link>
-                    
+                    ) : (
+                      <Link to="login">
+                        <button type="button">Search flights</button>
+                      </Link>
+                    )}
                   </div>
                 </Form.Item>
               </div>
@@ -319,7 +324,6 @@ export function Mainpage() {
           <a href="/">Terms&Conditions</a>
         </div>
       </div>
-     
     </div>
   );
 }

@@ -1,4 +1,4 @@
-type CitiesType = {
+export type City = {
   name: string;
   weight?: number | null;
   nameSearch: string;
@@ -19,7 +19,7 @@ type CitiesType = {
   content?: object | null;
 };
 
-export const citiesArray: CitiesType[] = [
+export const citiesArray: City[] = [
   {
     name: 'Stuttgart',
     weight: 53,
