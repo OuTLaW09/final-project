@@ -1,10 +1,13 @@
+
 import './Mainpage.scss';
 import { CarouselPage } from '../CarouselPage/CarouselPage';
-import { DatePicker, Select, Space } from 'antd';
+import { City, citiesArray, citiesThemes } from '../../models/citiesData';
+import { CityResponse } from '../../models/CityResponse';
+import { DatePicker, Form, Modal, Select, Space } from 'antd';
 import { Footer } from '../Footer/Footer';
 import { HeroPage } from '../HeroPage/HeroPage';
-import { Link } from 'react-router-dom';
-import { citiesArray, citiesThemes } from '../../models/citiesData';
+import { Link, useNavigate } from 'react-router-dom';
+import { checkLogIn } from '../../App';
 import React, { useEffect, useState } from 'react';
 import type { Dayjs } from 'dayjs';
 
@@ -44,13 +47,13 @@ export function Mainpage() {
   const [cityTheme, setCityTheme] = useState<string>('');
   const [choosenCity, setChoosenCity] = useState<ChoosenCitiesType[]>([]);
   const [lastChoosenCity, setLastChoosenCity] = useState<ChoosenCitiesType[]>([]);
-  const [city, setCity] = useState<any[]>([]);
+  const [cities, setCities] = useState<City[]>([]);
   const [num, setNum] = useState(1);
 
   const request = async () => {
-    await fetch('https://api.eightydays.me/api/v2/cities')
-      .then((resp) => resp.json())
-      .then((res) => setCity(res));
+    const response = await fetch('https://api.eightydays.me/api/v2/cities');
+    const cities = (await response.json()) as CityResponse;
+    setCities(cities.data.values);
   };
 
   useEffect(() => {
@@ -215,81 +218,96 @@ export function Mainpage() {
           <Form className="search-form" onFinish={onFinishForm} name="searchForm" onFinishFailed={onFinishFailedForm}>
             <div className="rotation-main">
               <div className="rotation-container">
-                <Select
-                  showSearch
-                  placeholder="Where from?"
-                  className="countries-select"
-                  optionFilterProp="children"
-                  onChange={onChangeSelectfirst}
-                  onSearch={onSearchSelectfirst}
-                  filterOption={filterOptionfirst}
-                >
-                  {newCityArray.map((cityName) => (
-                    <Option key={cityName} value={cityName} label={cityName}>
-                      {cityName}
-                    </Option>
-                  ))}
-                </Select>
-                <Select
-                  showSearch
-                  placeholder="Filter"
-                  className="countries-select"
-                  optionFilterProp="children"
-                  onChange={(e) => {
-                    setCityTheme(e);
-                    onChangeSelect(e);
-                  }}
-                  onSearch={onSearchSelect}
-                  filterOption={filterOption}
-                >
-                  {citiesThemes.map((town) => (
-                    <Option key={town.docId} value={town.name} label={town.name}>
-                      {town.name}
-                    </Option>
-                  ))}
-                </Select>
-                <Select
-                  className="count-of-city"
-                  showSearch
-                  placeholder="Count of City"
-                  optionFilterProp="children"
-                  onChange={onChangeCountCity}
-                  onSearch={onSearchCountCity}
-                  filterOption={filterOptionCountCity}
-                  options={[
-                    {
-                      value: '1',
-                      label: '1',
-                    },
-                    {
-                      value: '2',
-                      label: '2',
-                    },
-                    {
-                      value: '3',
-                      label: '3',
-                    },
-                    {
-                      value: '4',
-                      label: '4',
-                    },
-                  ]}
-                />
-                <Space direction="vertical" size={12}>
-                  <RangePicker
-                    placeholder={['Departure', 'Return']}
-                    value={dates || value}
-                    disabledDate={disabledDate}
-                    onCalendarChange={(val) => {
-                      setDates(val);
+                <Form.Item rules={[{ required: true, message: 'Please select an option' }]} name="cityId">
+                  <Select
+                    showSearch
+                    placeholder="Where from?"
+                    className="countries-select"
+                    optionFilterProp="children"
+                    onChange={onChangeSelectfirst}
+                    onSearch={onSearchSelectfirst}
+                    filterOption={filterOptionfirst}
+                  >
+                    {citiesArray.map((city) => (
+                      <Option key={city.docId} value={city.docId} label={city.name}>
+                        {city.name}
+                      </Option>
+                    ))}
+                  </Select>
+                </Form.Item>
+                <Form.Item name="themeId">
+                  <Select
+                    showSearch
+                    placeholder="Filter"
+                    className="countries-select"
+                    optionFilterProp="children"
+                    onChange={(e) => {
+                      setCityTheme(e);
+                      onChangeSelect(e);
                     }}
-                    onChange={(val) => {
-                      setValue(val);
-                    }}
-                    onOpenChange={onOpenChange}
-                    changeOnBlur
-                  />
-                </Space>
+                    onSearch={onSearchSelect}
+                    filterOption={filterOption}
+                  >
+                    {citiesThemes.map((town) => (
+                      <Option key={town.docId} value={town.docId} label={town.name}>
+                        {town.name}
+                      </Option>
+                    ))}
+                  </Select>
+                </Form.Item>
+                <Form.Item name="citiesCount">
+                  <Select
+                    className="count-of-city"
+                    showSearch
+                    placeholder="Count of City"
+                    optionFilterProp="children"
+                    filterOption={filterOptionCountCity}
+                    options={[
+                      {
+                        value: '1',
+                        label: '1',
+                      },
+                      {
+                        value: '2',
+                        label: '2',
+                      },
+                      {
+                        value: '3',
+                        label: '3',
+                      },
+                      {
+                        value: '4',
+                        label: '4',
+                      },
+                    ]}
+                  ></Select>
+                </Form.Item>
+                <Form.Item name="dates">
+                  <Space direction="vertical" size={12}>
+                    <RangePicker
+                      placeholder={['Departure', 'Return']}
+                      value={dates || value}
+                      disabledDate={disabledDate}
+                      onCalendarChange={(val) => {
+                        setDates(val);
+                      }}
+                      onChange={onChangeDate}
+                      onOpenChange={onOpenChange}
+                      changeOnBlur
+                    />
+                  </Space>
+                </Form.Item>
+                <Form.Item>
+                  <div className="search-button">
+                    {!checkLogIn ? (
+                      <button>Search Flights</button>
+                    ) : (
+                      <Link to="login">
+                        <button type="button">Search flights</button>
+                      </Link>
+                    )}
+                  </div>
+                </Form.Item>
               </div>
             </div>
           </Form>
@@ -310,3 +328,4 @@ export function Mainpage() {
     </div>
   );
 }
+
