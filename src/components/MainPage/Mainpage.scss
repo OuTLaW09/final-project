@@ -43,9 +43,12 @@ hr{
     color: #000000;
     background-color: #ffffff;
     .search-form{
+     
       padding:30px;
       .rotation-main {
         .rotation-container {
+          display: grid;
+          grid-template-columns: 2fr 2fr;
           input {
             font-size: 20px;
             width: 200px;
@@ -99,6 +102,8 @@ hr{
           background-color:#003926;
           transition: 1ms ease-in-out;
         }
+      
+         
       }
 
     }

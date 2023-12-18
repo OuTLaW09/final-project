@@ -1,6 +1,5 @@
 import './LoginPage.scss';
-import { Button, Form, FormItemProps, Input } from 'antd';
-import { User } from '../../models/user';
+import { Button, Divider, Form, FormItemProps, Input, Modal, message } from 'antd';
 import facebookLogo from '../../assets/Images/facebook.png';
 import googleLogo from '../../assets/Images/google-plus-logo.png';
 import leftPhoto from '../../assets/Images/left-arrow.png';
@@ -8,10 +7,11 @@ import linkedinLogo from '../../assets/Images/linkedin.png';
 import loginBg from '../../assets/Images/loginPage.jpg';
 
 import { Link } from 'react-router-dom';
-import React from 'react';
-type LoginPageProps = {
-  handleLogin: (user: User) => void;
-};
+import React, { useState } from 'react';
+import { signUpData } from '../../App';
+interface LoginFormProps {
+  onSubmit: (values: any) => void;
+}
 const MyFormItemContext = React.createContext<(string | number)[]>([]);
 
 interface MyFormItemGroupProps {
@@ -37,18 +37,36 @@ const MyFormItem = ({ name, ...props }: FormItemProps) => {
   return <Form.Item name={concatName} {...props} />;
 };
 
-const onFinish = (value: object) => {
-  console.log(value);
-};
+export const LoginPage : React.FC<LoginFormProps> = ({ onSubmit }) => {
 
-export const LoginPage = (props: LoginPageProps) => {
-  const user: User = {
-    userName: 'Zeyneb',
-    userPassword: 'Zeyneb2003',
+  const [forgotPasswordOn, setForgotPasswordOn] = useState<boolean>(false);
+  const ForgotPasswordClick = () => {
+    setForgotPasswordOn(true);
   };
-  const LoginBtnClick = () => {
-    props.handleLogin(user);
+  const ForgotPasswordCancel = () => {
+    setForgotPasswordOn(false);
   };
+  const handleOk = () => {
+    setForgotPasswordOn(false);
+  };
+
+  const onFinishLogIn = (values: object) => {
+    onSubmit(values);
+  };
+ 
+    const [email, setEmail] = useState<string>('');
+    const [phoneNumber, setPhoneNumber] = useState<string|number>();
+    const[password,setPassword]=useState<string>('');
+  
+    function FindPassword(){
+      if((signUpData[1]===email)&&(signUpData[2]===phoneNumber)){
+          setPassword(signUpData[0]); 
+          message.info(password);
+      }else{
+          setPassword('no matching');
+          message.warning(password);
+      };
+    };
 
   return (
     <div className="login-Main">
@@ -70,9 +88,9 @@ export const LoginPage = (props: LoginPageProps) => {
                 <img alt="" src={linkedinLogo} className="login-logo" />
               </a>
             </div>
-            <p className="use-account">or use your account</p>
+            <Divider><p className="use-account">or use your account</p></Divider>
           </div>
-          <Form name="form_item_path" layout="vertical" onFinish={onFinish} className="form">
+          <Form name="form_item_path" layout="vertical" onFinish={onFinishLogIn} className="form">
             <MyFormItemGroup prefix={['user']}>
               <MyFormItemGroup prefix={['name']}>
                 <MyFormItem name="firstName" label="First Name" rules={[{ required: true, message: 'please fill the form' }]}>
@@ -97,13 +115,37 @@ export const LoginPage = (props: LoginPageProps) => {
             >
               <Input.Password placeholder="Password" className="input" />
             </Form.Item>
-
-            <Button type="primary" htmlType="submit" onClick={LoginBtnClick} className="login-btn">
+            <Button type="primary" htmlType="submit"  className="login-btn">
               LOG IN
             </Button>
-            <a href="/" className="forgot-password">
+            <Link  to='/login' className="forgot-password" onClick={ForgotPasswordClick}>
               Forgot Password
-            </a>
+            </Link>
+                <Modal 
+                 visible={forgotPasswordOn}
+                 onCancel={ForgotPasswordCancel}
+                 onOk={handleOk}
+                >
+                  <Form className='forgot-password-modal'>
+                    <Form.Item label='Email Address'>
+                        <Input
+                        type="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        />
+                    </Form.Item>
+                    <Form.Item label='Phone Number'>
+                        <Input
+                        type="text"
+                        value={phoneNumber}
+                        onChange={(e) => setPhoneNumber(e.target.value)}
+                        />
+                    </Form.Item>
+                    <Form.Item>
+                        <Button onClick={FindPassword}>Find Password</Button>
+                    </Form.Item>
+                </Form>
+            </Modal>
           </Form>
         </div>
         <div className="right-side-login">

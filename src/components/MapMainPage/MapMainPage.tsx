@@ -1,92 +1,20 @@
 import './MapMainPage.scss';
 import { MapContainer, Marker, Polyline, Popup, TileLayer } from 'react-leaflet';
-import { DepartureArray, DepartureArrayName,themeId,docId } from '../MainPage/MainPage';
-import L, { DivIcon } from 'leaflet';
-import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { Button, Tabs } from 'antd';
-import TabPane from 'antd/es/tabs/TabPane';
-type CitiesType={
-  bgo:{};
- carriers:[];
- cities:[];
- citiesCount: number;
-deviceIdentifier: string;
-id: string;
-lang: string;
-optIndex: number;
-optimized: boolean;
-shuffle: boolean;
-stations: [];
-themeId: string;
-themeName: string;
-tour: [];
-type: string;
-version: number;
-};
-const createCustomIcon = (name: string) => {
-  return L.divIcon({
-    className: 'custom-marker',
-    html: 
-      `<div class='inside-marker'>
-        <div class= "circle-side">
-          <p>time</p>
-        </div>
-        <div class="city-name">${name}</div>
-      </div> `
-    ,
-    iconSize: [40, 40],
-    iconAnchor: [20, 40],
-  });
-};
+import { DepartureArray } from '../MainPage/MainPage';
+import L from 'leaflet';
+const markerIcon = new L.Icon({
+  iconUrl: require('../../assets/Images/marker.png'),
+  iconSize: [45, 45],
+  iconAnchor: [17, 46],
+  popupAnchor: [0, -46],
+});
 
 export const MapMainPage = () => {
-  const[info,setInfo]=useState<CitiesType[]>([]);
-  const { signature } = useParams();
-  useEffect(() => {
-    const fetchData = async () => {
-      let response: Response;
-      let data;
-
-      do {
-        response = await fetch(`https://api.eightydays.me/api/v3/tour/get/${signature}`);
-        
-        if (response.status === 204) {
-          // Wait for 1 second before making the next request
-          await new Promise((resolve) => setTimeout(resolve, 1000));
-        } else {
-          data = await response.json();
-        }
-      } while (!data);
-      // set state here
-      setInfo(data.data.value);
-      console.log(data);
-      
-    };
-
-    fetchData();
-  }, [signature]);
-  console.log(info);
-  const getRandomColor = () => {
-    const letters = '0123456789ABCDEF';
-    let color = '#';
-    for (let i = 0; i < 6; i++) {
-      color += letters[Math.floor(Math.random() * 16)];
-    }
-    return color;
-  };
-
-  const [selectedCount, setSelectedCount] = useState<number|null>(null);
-
-  const handleTabClick = (count:number) => {
-    setSelectedCount(count);
-  };
-  useEffect(() => {
-    // Set the initial selectedCount to the count of the first city
-    setSelectedCount(info[0]?.citiesCount);
-  }, [info]);
-   
-
+  console.log(DepartureArray);
+  const departureArrayForPolyline: any = [...DepartureArray];
+  departureArrayForPolyline.push(DepartureArray[0]);
+  
+  console.log('departureArrayForPolyline', departureArrayForPolyline);
   return (
     <div className="map">
       {selectedCount !== null && (
@@ -95,61 +23,20 @@ export const MapMainPage = () => {
           url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="https://carto.com/attribution">CARTO</a>'
         />
-        {info.map((cityLoc) => {
-          if(cityLoc.citiesCount===selectedCount){
-            console.log(cityLoc.cities,'cities');
-            {
-              cityLoc.cities.map((city)=>{
-                console.log(city['location'],'ciytt');
-
-              });
-            }
-            {
-              cityLoc.cities.map((city)=>(
-                <Marker position={city['location']} icon={createCustomIcon(city['name'])}>
-                <Popup>{city['name']}</Popup>;
-              </Marker>
-
-              ));
-            }
-          
-          }
-           
-          
+        {DepartureArray.map((cityLoc) => {
+          console.log('cityLoc', cityLoc);
           return (
             <>
-           
-              return(
-              <>
-                {/* {departureArrayForPolyline.map(
-                  (cityLoc, index, array) =>
-                    index < array.length - 1 && <Polyline key={index} positions={[cityLoc, array[index + 1]]} color={getRandomColor()} />,
-                )} */}
-              </>
-              )
+              <Marker position={cityLoc} icon={markerIcon}>
+                <Popup>
+                  <b>city</b>
+                </Popup>
+              </Marker>
+              <Polyline positions={departureArrayForPolyline} />
             </>
           );
         })}
       </MapContainer>
-      )}
-      <div className="tabs">
-        <Tabs type="card" activeKey={String(selectedCount)}>
-          {info.map((city, index) => (
-            <TabPane
-              tab={
-                <Button onClick={() => handleTabClick(city.citiesCount)}>
-                  {` ${city.citiesCount} cities`}
-                </Button>
-              }
-              key={String(city.citiesCount)}
-            />
-          ))}
-        </Tabs>
-      </div>
-      <div className='ticket'>
-          <p>Test</p>
-      </div>
-  
     </div>
   );
 };
