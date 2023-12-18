@@ -1,18 +1,23 @@
 import './Mainpage.scss';
 import { CarouselPage } from '../CarouselPage/CarouselPage';
-import { DatePicker, Select, Space } from 'antd';
+import {  citiesArray, citiesThemes } from '../../models/citiesData';
+// import { CityResponse } from '../../models/CityResponse';
+import { DatePicker, Form, Modal, Select, Space } from 'antd';
 import { Footer } from '../Footer/Footer';
 import { HeroPage } from '../HeroPage/HeroPage';
-import { Link } from 'react-router-dom';
-import { citiesArray, citiesThemes } from '../../models/citiesData';
+import { Link, useNavigate } from 'react-router-dom';
+// import { checkLogIn } from '../../App';
 import React, { useEffect, useState } from 'react';
 import type { Dayjs } from 'dayjs';
 
 const { Option } = Select;
 const { RangePicker } = DatePicker;
-
-export let DepartureArray:any[]=[];
 type RangeValue = [Dayjs | null, Dayjs | null] | null;
+
+export let DepartureArray: any[] = [];
+export let DepartureArrayName: string[] = [];
+export let themeId: string = '';
+export let docId: string = '';
 
 type ChoosenCitiesType = {
   name: string;
@@ -36,38 +41,90 @@ type ChoosenCitiesType = {
 };
 
 export function Mainpage() {
+  const navigate = useNavigate();
   const [whereFromValue, setWhereFromValue] = useState<string>('');
   const [cityTheme, setCityTheme] = useState<string>('');
   const [choosenCity, setChoosenCity] = useState<ChoosenCitiesType[]>([]);
   const [lastChoosenCity, setLastChoosenCity] = useState<ChoosenCitiesType[]>([]);
-  const [city, setCity] = useState<any[]>([]);
+  const [cities, setCities] = useState([]);
   const [num, setNum] = useState(1);
+
   const request = async () => {
-    await fetch('https://api.eightydays.me/api/v2/cities')
-      .then((resp) => resp.json())
-      .then((res) => setCity(res));
+    const response = await fetch('https://api.eightydays.me/api/v2/cities');
+    const cities = (await response.json());
+    setCities(cities.data.values);
   };
+
   useEffect(() => {
     request();
   }, [num]);
   const newCityArray: any[] = [];
-  const newCityArrayLocation: any[] = [];
+  const rotationArrayNames: string[] = [];
+  const newCityArrayLocation: number[] = [];
   const choosenCityArray: ChoosenCitiesType[] = [];
   const lastChoosenCityArray: ChoosenCitiesType[] = [];
+  const newCityArrayDocId: string[] = [];
   const rotationArray: any[] = [];
-  for (let mainValueCity of Object.values(city)) {
-    if (Object.keys(mainValueCity)[1] === 'values') {
-      for (let index = 0; index < mainValueCity['values'].length; index++) {
-        newCityArray.push(mainValueCity['values'][index]['name']);
-        newCityArrayLocation.push(mainValueCity['values'][index]['location']);
+  console.log(docId, whereFromValue);
+
+
+  const onFinishForm = async (values: any) => {
+    if (value) {
+      const date1 = value[0]?.format('YYYY-MM-DD');
+      const date2 = value[1]?.format('YYYY-MM-DD');
+      const payload = {
+        type: 'AZ',
+        version: 3,
+        debug: 0,
+        deviceIdentifier: 'web',
+        citiesCount: null,
+        payload: {
+          constraints: {
+            timestamp: 0,
+            lastRoute: [],
+          },
+          themeId: values.themeId,
+          defined_points: {
+            mandatory: [],
+          },
+          excluded_points: [],
+          start_point: {
+            date: date1,
+            cityId: values.cityId,
+            type: 'strict',
+          },
+          end_point: {
+            date: date2,
+            cityId: values.cityId,
+            type: 'strict',
+          },
+        },
+      };
+      const response = await fetch('https://api.eightydays.me/api/v3/tour/build', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
+      });
+      const data = await response.json();
+      if (data.signature) {
+        // navigate to map component
+        navigate(`map-page/${data.signature}`);
+        console.log(data.signature);
       }
     }
-  }
-  console.log(newCityArray);
-  console.log(newCityArrayLocation);
+    console.log(values, 'on finisf form values');
+  };
+
+
+
+  const onFinishFailedForm = (errorInfo: any) => {
+    console.log('Failed:', errorInfo);
+  };
 
   const onChangeSelect = (value: string) => {
-    citiesArray.forEach((City, index) => {
+    citiesArray.forEach((City) => {
       City.startThemes.forEach((startTheme) => {
         const matchingTheme = citiesThemes.find((theme) => theme.code === startTheme);
         if (matchingTheme && matchingTheme.name === value) {
@@ -83,7 +140,13 @@ export function Mainpage() {
 
   const onSearchSelect = (value: string) => {
     console.log('search:', value);
+    setCityTheme(value);
   };
+  citiesThemes.forEach((filter) => {
+    if (cityTheme === filter.name) {
+      themeId = filter.docId;
+    }
+  });
   const filterOption = (input: string, option?: { label: string; value: string }) =>
     (option?.label ?? '').toLowerCase().includes(input.toLowerCase());
 
@@ -97,32 +160,10 @@ export function Mainpage() {
   };
   const filterOptionfirst = (input: string, option?: { label: string; value: string }) =>
     (option?.label ?? '').toLowerCase().includes(input.toLowerCase());
-
-  const onChangeCountCity = (value: string) => {
-    {
-      for (let index = 0; index < Number(value); index++) {
-        const random = Math.floor(Math.random() * choosenCity.length);
-        console.log(choosenCity.length);
-
-        for (let i = 0; i < lastChoosenCity.length; i++) {
-          if (choosenCity[random] === lastChoosenCity[i]) {
-            continue;
-          }
-        }
-        lastChoosenCityArray.push(choosenCity[random]);
-        setLastChoosenCity(lastChoosenCityArray);
-      }
-    }
-  };
-  console.log(lastChoosenCity);
-  const onSearchCountCity = (value: string) => {
-    console.log('search:', value);
-  };
   const filterOptionCountCity = (input: string, option?: { label: string; value: string }) =>
     (option?.label ?? '').toLowerCase().includes(input.toLowerCase());
 
   const [dates, setDates] = useState<RangeValue>(null);
-  const [value, setValue] = useState<RangeValue>(null);
 
   const disabledDate = (current: Dayjs) => {
     if (!dates) {
@@ -140,25 +181,32 @@ export function Mainpage() {
       setDates(null);
     }
   };
+  const onChangeDate = (val: RangeValue) => {
+    setValue(val);
+  };
+
+  const [value, setValue] = useState<RangeValue>(null);
 
   for (let indexName = 0; indexName < newCityArray.length; indexName++) {
     if (whereFromValue === newCityArray[indexName]) {
       for (let indexLoc = 0; indexLoc < newCityArrayLocation.length; indexLoc++) {
         if (indexLoc === indexName) {
           rotationArray.push(newCityArrayLocation[indexLoc]);
+          rotationArrayNames.push(newCityArray[indexName]);
         }
       }
     }
   }
-  
-  lastChoosenCity.forEach((lastCity)=>{
+
+  lastChoosenCity.forEach((lastCity) => {
     rotationArray.push(lastCity.location);
-  }
-    
-  );
-  DepartureArray=rotationArray;
+    rotationArrayNames.push(lastCity.name);
+  });
+  DepartureArray = rotationArray;
+  DepartureArrayName = rotationArrayNames;
+  console.log(DepartureArrayName);
   console.log(DepartureArray);
- 
+
   return (
     <div className="main-page-container">
       <HeroPage />
@@ -166,92 +214,102 @@ export function Mainpage() {
       <hr />
       <div className="search-container">
         <div className="search-main">
-          <div className="search-form">
+          <Form className="search-form" onFinish={onFinishForm} name="searchForm" onFinishFailed={onFinishFailedForm}>
             <div className="rotation-main">
               <div className="rotation-container">
-                <Select
-                  showSearch
-                  placeholder="Where from?"
-                  className="countries-select"
-                  optionFilterProp="children"
-                  onChange={onChangeSelectfirst}
-                  onSearch={onSearchSelectfirst}
-                  filterOption={filterOptionfirst}
-                >
-                  {newCityArray.map((cityName) => (
-                    <Option key={cityName} value={cityName} label={cityName}>
-                      {cityName}
-                    </Option>
-                  ))}
-                </Select>
-                <Select
-                  showSearch
-                  placeholder="Filter"
-                  className="countries-select"
-                  optionFilterProp="children"
-                  onChange={(e) => {
-                    setCityTheme(e);
-                    onChangeSelect(e);
-                  }}
-                  onSearch={onSearchSelect}
-                  filterOption={filterOption}
-                >
-                  {citiesThemes.map((town) => (
-                    <Option key={town.docId} value={town.name} label={town.name}>
-                      {town.name}
-                    </Option>
-                  ))}
-                </Select>
-                <Select
-                  className="count-of-city"
-                  showSearch
-                  placeholder="Count of City"
-                  optionFilterProp="children"
-                  onChange={onChangeCountCity}
-                  onSearch={onSearchCountCity}
-                  filterOption={filterOptionCountCity}
-                  options={[
-                    {
-                      value: '1',
-                      label: '1',
-                    },
-                    {
-                      value: '2',
-                      label: '2',
-                    },
-                    {
-                      value: '3',
-                      label: '3',
-                    },
-                    {
-                      value: '4',
-                      label: '4',
-                    },
-                  ]}
-                />
-                <Space direction="vertical" size={12}>
-                  <RangePicker
-                    placeholder={['Departure', 'Return']}
-                    value={dates || value}
-                    disabledDate={disabledDate}
-                    onCalendarChange={(val) => {
-                      setDates(val);
+                <Form.Item rules={[{ required: true, message: 'Please select an option' }]} name="cityId">
+                  <Select
+                    showSearch
+                    placeholder="Where from?"
+                    className="countries-select"
+                    optionFilterProp="children"
+                    onChange={onChangeSelectfirst}
+                    onSearch={onSearchSelectfirst}
+                    filterOption={filterOptionfirst}
+                  >
+                    {citiesArray.map((city) => (
+                      <Option key={city.docId} value={city.docId} label={city.name}>
+                        {city.name}
+                      </Option>
+                    ))}
+                  </Select>
+                </Form.Item>
+                <Form.Item name="themeId">
+                  <Select
+                    showSearch
+                    placeholder="Filter"
+                    className="countries-select"
+                    optionFilterProp="children"
+                    onChange={(e) => {
+                      setCityTheme(e);
+                      onChangeSelect(e);
                     }}
-                    onChange={(val) => {
-                      setValue(val);
-                    }}
-                    onOpenChange={onOpenChange}
-                    changeOnBlur
-                  />
-                </Space>
+                    onSearch={onSearchSelect}
+                    filterOption={filterOption}
+                  >
+                    {citiesThemes.map((town) => (
+                      <Option key={town.docId} value={town.docId} label={town.name}>
+                        {town.name}
+                      </Option>
+                    ))}
+                  </Select>
+                </Form.Item>
+                <Form.Item name="citiesCount">
+                  <Select
+                    className="count-of-city"
+                    showSearch
+                    placeholder="Count of City"
+                    optionFilterProp="children"
+                    filterOption={filterOptionCountCity}
+                    options={[
+                      {
+                        value: '1',
+                        label: '1',
+                      },
+                      {
+                        value: '2',
+                        label: '2',
+                      },
+                      {
+                        value: '3',
+                        label: '3',
+                      },
+                      {
+                        value: '4',
+                        label: '4',
+                      },
+                    ]}
+                  ></Select>
+                </Form.Item>
+                <Form.Item name="dates">
+                  <Space direction="vertical" size={12}>
+                    <RangePicker
+                      placeholder={['Departure', 'Return']}
+                      value={dates || value}
+                      disabledDate={disabledDate}
+                      onCalendarChange={(val) => {
+                        setDates(val);
+                      }}
+                      onChange={onChangeDate}
+                      onOpenChange={onOpenChange}
+                      changeOnBlur
+                    />
+                  </Space>
+                </Form.Item>
+                <Form.Item>
+                  <div className="search-button">
+                    {/* {!checkLogIn ? (
+                      <button>Search Flights</button>
+                    ) : (
+                      <Link to="login">
+                        <button type="button">Search flights</button>
+                      </Link>
+                    )} */}
+                  </div>
+                </Form.Item>
               </div>
             </div>
-            <div className="search-button">
-              <Link to="map-page">
-                <button>Search Flights</button>
-              </Link>
-            </div>
-          </div>
+          </Form>
         </div>
       </div>
       <Footer />

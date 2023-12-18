@@ -4,7 +4,26 @@ import { DepartureArray, DepartureArrayName,themeId,docId } from '../MainPage/Ma
 import L, { DivIcon } from 'leaflet';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-
+import { Button, Tabs } from 'antd';
+import TabPane from 'antd/es/tabs/TabPane';
+type CitiesType={
+  bgo:{};
+ carriers:[];
+ cities:[];
+ citiesCount: number;
+deviceIdentifier: string;
+id: string;
+lang: string;
+optIndex: number;
+optimized: boolean;
+shuffle: boolean;
+stations: [];
+themeId: string;
+themeName: string;
+tour: [];
+type: string;
+version: number;
+};
 const createCustomIcon = (name: string) => {
   return L.divIcon({
     className: 'custom-marker',
@@ -22,24 +41,32 @@ const createCustomIcon = (name: string) => {
 };
 
 export const MapMainPage = () => {
+  const[info,setInfo]=useState<CitiesType[]>([]);
   const { signature } = useParams();
   useEffect(() => {
     const fetchData = async () => {
       let response: Response;
+      let data;
 
       do {
         response = await fetch(`https://api.eightydays.me/api/v3/tour/get/${signature}`);
-        await new Promise((resolve, reject) => setTimeout(() => resolve(true), 1000));
-      } while (response.status === 204);
-
-      const data = await response.json();
+        
+        if (response.status === 204) {
+          // Wait for 1 second before making the next request
+          await new Promise((resolve) => setTimeout(resolve, 1000));
+        } else {
+          data = await response.json();
+        }
+      } while (!data);
       // set state here
+      setInfo(data.data.value);
       console.log(data);
+      
     };
 
     fetchData();
   }, [signature]);
-
+  console.log(info);
   const getRandomColor = () => {
     const letters = '0123456789ABCDEF';
     let color = '#';
@@ -49,8 +76,16 @@ export const MapMainPage = () => {
     return color;
   };
 
-  const departureArrayForPolyline: any[] = [...DepartureArray];
-  departureArrayForPolyline.push(DepartureArray[0]);
+  const [selectedCount, setSelectedCount] = useState<number|null>(null);
+
+  const handleTabClick = (count:number) => {
+    setSelectedCount(count);
+  };
+  useEffect(() => {
+    // Set the initial selectedCount to the count of the first city
+    setSelectedCount(info[0]?.citiesCount);
+  }, [info]);
+   
 
   return (
     <div className="map">
@@ -60,24 +95,57 @@ export const MapMainPage = () => {
           url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="https://carto.com/attribution">CARTO</a>'
         />
-        {DepartureArray.map((cityLoc, index) => {
+        {info.map((cityLoc) => {
+          if(cityLoc.citiesCount===selectedCount){
+            console.log(cityLoc.cities,'cities');
+            {
+              cityLoc.cities.map((city)=>{
+                console.log(city['location'],'ciytt');
+
+              });
+            }
+            {
+              cityLoc.cities.map((city)=>(
+                <Marker position={city['location']} icon={createCustomIcon(city['name'])}>
+                <Popup>{city['name']}</Popup>;
+              </Marker>
+
+              ));
+            }
+          
+          }
+           
+          
           return (
             <>
-              <Marker position={cityLoc} icon={createCustomIcon(DepartureArrayName[index])}>
-                <Popup>{DepartureArrayName[index]}</Popup>;
-              </Marker>
+           
               return(
               <>
-                {departureArrayForPolyline.map(
+                {/* {departureArrayForPolyline.map(
                   (cityLoc, index, array) =>
                     index < array.length - 1 && <Polyline key={index} positions={[cityLoc, array[index + 1]]} color={getRandomColor()} />,
-                )}
+                )} */}
               </>
               )
             </>
           );
         })}
       </MapContainer>
+      )}
+      <div className="tabs">
+        <Tabs type="card" activeKey={String(selectedCount)}>
+          {info.map((city, index) => (
+            <TabPane
+              tab={
+                <Button onClick={() => handleTabClick(city.citiesCount)}>
+                  {` ${city.citiesCount} cities`}
+                </Button>
+              }
+              key={String(city.citiesCount)}
+            />
+          ))}
+        </Tabs>
+      </div>
       <div className='ticket'>
           <p>Test</p>
       </div>
@@ -85,3 +153,4 @@ export const MapMainPage = () => {
     </div>
   );
 };
+
