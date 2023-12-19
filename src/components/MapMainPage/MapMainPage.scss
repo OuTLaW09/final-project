@@ -1,9 +1,63 @@
-.map{
-    height:100vh; 
+custom-marker {
+  position: relative;
 }
-.leaflet-container{
-    height: 100vh;  
- }
+.inside-marker {
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  background: red;
+  color: black;
+  z-index: 1;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  border-radius: 30px;
+  text-align: center;
+
+  .circle-side {
+    width: 30px;
+    height: 30px;
+    border: 1px solid white;
+    border-radius: 50%;
+    background-color: orange;
+    color: white;
+  }
+
+  .city-name {
+    font-weight: bold;
+  }
+}
+
+.map {
+  height: 100vh;
+  width: 100%;
+  .ticket{
+    position: absolute;
+    top: 100px;
+    left: 20px;
+    background-color: #fff;
+    padding: 10px;
+    border: 1px solid #fff;
+    z-index: 1000;
+
+  }
+  .tabs{
+    position: absolute;
+    top: 20px;
+    left: 220px;
+    padding: 10px;
+    z-index: 1000;
+  
+  }
+
+ 
+}
 
 
-    
+.leaflet-container {
+  height: 100vh;
+}
