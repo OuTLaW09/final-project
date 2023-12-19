@@ -2,7 +2,7 @@
   font-family: 'Lato';
   width: 100%;
   height: 100%;
-  background-color: #003926;
+  background-color:#032030;
   .Header-container {
     height: 100px;
     background-color: transparent;
@@ -22,7 +22,7 @@
       }
       span {
         font-size: 40px;
-        color: #ffffff;
+        color: #F0C38E;
       }
     }
     .Button-container {
@@ -34,13 +34,13 @@
         background-color: transparent;
         cursor: pointer;
         padding: 8px;
-        color: #ffffff;
+        color: #F1AA9B;
         font-family: 'Lato';
         font-size: 20px;
         transition: 0.5s ease-in;
       }
       button:hover {
-        border-bottom: 3px solid #ffd140;
+        border-bottom: 3px solid #9ABBBA;
         margin-bottom: 30px;
         transition: 0.8s ease-out;
       }
@@ -55,7 +55,7 @@
     }
     .Info-container {
       border-radius: 10px;
-      color: #ffd140;
+      color:#F1AA9B;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -111,7 +111,7 @@
       .Info-container {
         height: 100%;
         border-radius: 10px;
-        color: #ffd140;
+        color:#F1AA9B;
         display: flex;
         flex-direction: column;
         gap: 150px;

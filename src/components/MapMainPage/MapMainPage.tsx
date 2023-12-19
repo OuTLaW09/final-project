@@ -227,7 +227,7 @@ export const MapMainPage = () => {
                              
                             )}
 
-                            
+                    
                           </div>
                         </div>
                       </Timeline.Item>
