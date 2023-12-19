@@ -18,6 +18,7 @@
       background-color: #ffffff;
 
       .left-btn {
+        align-self: flex-start;
         width: 20px;
         height: 20px;
       }
@@ -178,12 +179,32 @@
       height: 100%;
       
       .left-side-login {
-        background-image: url(../../assets/Images/loginPage.jpg);
+        position: relative;
+        overflow: hidden;
         background-size: cover;
         display: flex;
         flex-direction: column;
         width: 100%;
+        &::before{
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          left: 0;
+          right: 0; 
+          content:"";
+          filter: blur(5px);
+          background-image: url(../../assets/Images/loginPage.jpg);
+        }
         .top-side-login {
+          z-index: 1;
+          .left-btn{
+            z-index: 1;
+            width: 30px;
+            height: 30px;
+            position: absolute;
+            top: 20px;
+            left: 20px;
+          }
           .login-capture {
             font-weight: bolder;
             font-size: 40px;
@@ -217,6 +238,8 @@
             font-size: 20px;
           }
           .forgot-password {
+            position: relative;
+            z-index: 1;
             text-decoration: none;
             color: #ffffff;
             font-weight: bolder;

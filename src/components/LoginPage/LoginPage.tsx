@@ -54,10 +54,10 @@ export const LoginPage = (props: LoginPageProps) => {
     <div className="login-Main">
       <div className="login-container">
         <div className="left-side-login">
-          <Link to="/">
+          <div className="top-side-login">
+          <Link to="/" className="left-btn">
             <img alt="" src={leftPhoto} className="left-btn" />
           </Link>
-          <div className="top-side-login">
             <p className="login-capture">Log in</p>
             <div className="login-logos">
               <a href="/" className="login-logo-link">
