@@ -212,7 +212,6 @@ export function Mainpage() {
     <div className="main-page-container">
       <HeroPage />
       <CarouselPage />
-      <hr />
       <div className="search-container">
         <div className="search-main">
           <Form className="search-form" onFinish={onFinishForm} name="searchForm" onFinishFailed={onFinishFailedForm}>
