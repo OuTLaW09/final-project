@@ -3,14 +3,14 @@ import { MapContainer, Marker, Polyline, Popup, TileLayer } from 'react-leaflet'
 import L, { DivIcon } from 'leaflet';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { Button, Tabs, Timeline } from 'antd';
+import { Button, Spin, Tabs, Timeline } from 'antd';
 import TabPane from 'antd/es/tabs/TabPane';
-import { Divider } from 'rc-menu';
+import { SpinPage } from '../SpinPage/SpinPage';
 
 type CitiesType = {
   bgo: {};
   carriers: [];
-  cities: [];
+  cities: any[];
   citiesCount: number;
   deviceIdentifier: string;
   id: string;
@@ -40,7 +40,8 @@ const createCustomIcon = (name: string) => {
 };
 
 export const MapMainPage = () => {
-  function getDaysCount(startDate:Date, endDate:Date) {
+  let newCityArray: any[] = [];
+  function getDaysCount(startDate: Date, endDate: Date) {
     const start = new Date(startDate);
     const end = new Date(endDate);
     const timeDifference = Math.abs(end.getTime() - start.getTime());
@@ -48,6 +49,8 @@ export const MapMainPage = () => {
     return daysCount;
   }
   const [info, setInfo] = useState<CitiesType[]>([]);
+  const [spin, setSpin] = useState<boolean>(true);
+  const [retryCount, setRetryCount] = useState(0);
   const { signature } = useParams();
   useEffect(() => {
     const fetchData = async () => {
@@ -59,6 +62,8 @@ export const MapMainPage = () => {
           response = await fetch(`https://api.eightydays.me/api/v3/tour/get/${signature}`);
 
           if (response.status === 204) {
+            setSpin(true);
+            setRetryCount((count) => count + 1);
             await new Promise((resolve) => setTimeout(resolve, 1000));
           } else {
             data = await response.json();
@@ -67,18 +72,23 @@ export const MapMainPage = () => {
 
         if (data.data && data.data.value) {
           setInfo(data.data.value);
+          setSpin(false);
+
           console.log(data);
         } else {
           console.error('Invalid data structure:', data);
+          setSpin(false);
         }
       } catch (error) {
+        setSpin(false);
         console.error('Error fetching data:', error);
       }
     };
 
     fetchData();
-  }, [signature]);
+  }, [signature, retryCount]);
   console.log(info);
+
   const getRandomColor = () => {
     const letters = '0123456789ABCDEF';
     let color = '#';
@@ -98,6 +108,10 @@ export const MapMainPage = () => {
       setSelectedCount(info[0]?.citiesCount);
     }
   }, [info]);
+
+  if (spin === true) {
+    return <SpinPage />;
+  }
 
   return (
     <div className="map">
@@ -150,15 +164,24 @@ export const MapMainPage = () => {
       <div
         className="ticket"
         style={{
-          background: 'transparent',
+          backgroundColor: '#fff',
+          opacity: '0.7',
         }}
       >
         <Timeline>
           {info.map((cityLoc, indexCityLoc) => {
             if (cityLoc.citiesCount === selectedCount) {
+              {
+                if (cityLoc.cities.length - 1 === cityLoc.citiesCount) {
+                  cityLoc.cities.forEach((city) => newCityArray.push(city));
+                  newCityArray.push(cityLoc.cities[0]);
+                  console.log(newCityArray, 'kdjldkfld');
+                }
+              }
+
               return (
                 <>
-                  {cityLoc.cities.map((city, index,array) => {
+                  {newCityArray?.map((city, index, array) => {
                     return (
                       <Timeline.Item key={index}>
                         <div
@@ -166,7 +189,9 @@ export const MapMainPage = () => {
                             display: 'flex',
                             flexDirection: 'column',
                           }}
-                        > <div>
+                        >
+                          {' '}
+                          <div>
                             {cityLoc.tour[index]['type'] === 'start' || cityLoc.tour[index]['type'] === 'finish' ? (
                               <p>{`${cityLoc.tour[index]['type']} | ${new Date(cityLoc.tour[index]['date']).toLocaleDateString('en-US', {
                                 weekday: 'short',
@@ -178,54 +203,66 @@ export const MapMainPage = () => {
                                 weekday: 'short',
                                 month: 'short',
                                 day: 'numeric',
-                              })}-${new Date(cityLoc.tour[index+1]['date']).toLocaleDateString('en-US', {
+                              })}-${new Date(cityLoc.tour[index + 1]['date']).toLocaleDateString('en-US', {
                                 weekday: 'short',
                                 month: 'short',
                                 day: 'numeric',
-                              })} |${getDaysCount(cityLoc.tour[index+1]['date'],cityLoc.tour[index]['date'])} days`}</p>
+                              })} | ${getDaysCount(cityLoc.tour[index + 1]['date'], cityLoc.tour[index]['date'])} days`}</p>
                             )}
                             <p
                               style={{
                                 fontSize: '25px',
                                 fontFamily: 'Lato',
                                 fontWeight: 'bold',
-                                marginTop:'-20px'
+                                marginTop: '-20px',
                               }}
                             >
                               {` ${city['name']}`}
                             </p>
                           </div>
                           <div
-                          style={{
-                            backgroundColor:'#fff',
-                            borderRadius:'5%'
-
-                          }}>
-                            {index<array.length-1 &&(
-                               <p 
-                               style={{
-                                fontSize:'18px',
-                                fontWeight:'bolder'
-
-                               }}>
-                                {`${city['name']}-${array[index+1]['name']}`}</p>
-
-
+                            style={{
+                              backgroundColor: '#fff',
+                              borderRadius: '5%',
+                            }}
+                          >
+                            {index < array.length - 1 && (
+                              <p
+                                style={{
+                                  fontSize: '18px',
+                                  fontWeight: 'bolder',
+                                }}
+                              >
+                                {`${city['name']}-${array[index + 1]['name']}`}
+                              </p>
                             )}
-                        
-                                
-                                <p>{cityLoc.stations[index]['name']}</p>
-                              
-                            
-                             
 
-                            
-                            
-                                
-
-                            
-                            
-
+                            {index < array.length - 1 && (
+                              <div className="station">
+                                {cityLoc.stations[index]['cityId'] === cityLoc.stations[index + 1]['cityId'] ? (
+                                  index + 2 < array.length - 1 && (
+                                    <>
+                                      <p>{cityLoc.stations[index + 1]['name']}</p>
+                                      <p>{cityLoc.stations[index + 2]['name']}</p>
+                                    </>
+                                  )
+                                ) : (
+                                  <>
+                                    <p>{cityLoc.stations[index]['name']}</p>
+                                    <p>{cityLoc.stations[index + 1]['name']}</p>
+                                  </>
+                                )}
+                                {/* (index===(cityLoc.stations.length-1)){
+                                    <>
+                                    <p>
+                                    {cityLoc.stations[index]['name']}
+                                    </p>
+                                    <p>{cityLoc.stations[(cityLoc.stations.length-1)-index]['name']}</p>
+                                    </>
+                                  }
+                                   */}
+                              </div>
+                            )}
                           </div>
                         </div>
                       </Timeline.Item>

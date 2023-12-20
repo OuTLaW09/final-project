@@ -61,10 +61,10 @@ export const LoginPage : React.FC<LoginFormProps> = ({ onSubmit }) => {
     function FindPassword(){
       if((signUpData[1]===email)&&(signUpData[2]===phoneNumber)){
           setPassword(signUpData[0]); 
-          message.info(password);
+          message.info(signUpData[0]);
       }else{
-          setPassword('no matching');
-          message.warning(password);
+          setPassword('No matching');
+          message.warning('No matching');
       };
     };
 
@@ -125,6 +125,7 @@ export const LoginPage : React.FC<LoginFormProps> = ({ onSubmit }) => {
                  visible={forgotPasswordOn}
                  onCancel={ForgotPasswordCancel}
                  onOk={handleOk}
+                 closeIcon={null}
                 >
                   <Form className='forgot-password-modal'>
                     <Form.Item label='Email Address'>
