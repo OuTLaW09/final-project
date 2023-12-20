@@ -3,8 +3,9 @@ import { MapContainer, Marker, Polyline, Popup, TileLayer } from 'react-leaflet'
 import L, { DivIcon } from 'leaflet';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { Button, Tabs, Timeline } from 'antd';
+import { Button, Spin, Tabs, Timeline } from 'antd';
 import TabPane from 'antd/es/tabs/TabPane';
+import { SpinPage } from '../SpinPage/SpinPage';
 
 type CitiesType = {
   bgo: {};
@@ -48,6 +49,8 @@ export const MapMainPage = () => {
     return daysCount;
   }
   const [info, setInfo] = useState<CitiesType[]>([]);
+  const [spin, setSpin] = useState<boolean>(true);
+  const [retryCount, setRetryCount] = useState(0);
   const { signature } = useParams();
   useEffect(() => {
     const fetchData = async () => {
@@ -59,6 +62,8 @@ export const MapMainPage = () => {
           response = await fetch(`https://api.eightydays.me/api/v3/tour/get/${signature}`);
 
           if (response.status === 204) {
+            setSpin(true);
+            setRetryCount((count) => count + 1);
             await new Promise((resolve) => setTimeout(resolve, 1000));
           } else {
             data = await response.json();
@@ -67,18 +72,23 @@ export const MapMainPage = () => {
 
         if (data.data && data.data.value) {
           setInfo(data.data.value);
+          setSpin(false);
+
           console.log(data);
         } else {
           console.error('Invalid data structure:', data);
+          setSpin(false);
         }
       } catch (error) {
+        setSpin(false);
         console.error('Error fetching data:', error);
       }
     };
 
     fetchData();
-  }, [signature]);
+  }, [signature, retryCount]);
   console.log(info);
+
   const getRandomColor = () => {
     const letters = '0123456789ABCDEF';
     let color = '#';
@@ -98,6 +108,10 @@ export const MapMainPage = () => {
       setSelectedCount(info[0]?.citiesCount);
     }
   }, [info]);
+
+  if (spin === true) {
+    return <SpinPage />;
+  }
 
   return (
     <div className="map">
@@ -150,7 +164,8 @@ export const MapMainPage = () => {
       <div
         className="ticket"
         style={{
-          background: 'transparent',
+          backgroundColor: '#fff',
+          opacity: '0.7',
         }}
       >
         <Timeline>
@@ -223,11 +238,31 @@ export const MapMainPage = () => {
                             )}
 
                             {index < array.length - 1 && (
-                              <p>{cityLoc.stations[index]['name']}</p>
-                             
+                              <div className="station">
+                                {cityLoc.stations[index]['cityId'] === cityLoc.stations[index + 1]['cityId'] ? (
+                                  index + 2 < array.length - 1 && (
+                                    <>
+                                      <p>{cityLoc.stations[index + 1]['name']}</p>
+                                      <p>{cityLoc.stations[index + 2]['name']}</p>
+                                    </>
+                                  )
+                                ) : (
+                                  <>
+                                    <p>{cityLoc.stations[index]['name']}</p>
+                                    <p>{cityLoc.stations[index + 1]['name']}</p>
+                                  </>
+                                )}
+                                {/* (index===(cityLoc.stations.length-1)){
+                                    <>
+                                    <p>
+                                    {cityLoc.stations[index]['name']}
+                                    </p>
+                                    <p>{cityLoc.stations[(cityLoc.stations.length-1)-index]['name']}</p>
+                                    </>
+                                  }
+                                   */}
+                              </div>
                             )}
-
-                    
                           </div>
                         </div>
                       </Timeline.Item>
