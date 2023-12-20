@@ -2,7 +2,7 @@ import './HeroPage.scss';
 import { Link } from 'react-router-dom';
 import FlightsLogo from '../../assets/Images/FlightsLogo.png';
 import airplane from '../../assets/Images/headerLogo.png';
-import { Modal, Tabs, TabsProps } from 'antd';
+import { Modal, Tabs } from 'antd';
 import { useState } from 'react';
 import TabPane from 'antd/es/tabs/TabPane';
 
