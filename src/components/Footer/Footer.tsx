@@ -15,17 +15,6 @@ const topFunction = () => {
 export const Footer = () => {
   return (
     <div className="footer-main">
-      <div className="top-of-footer">
-        <img alt="" src={FooterTopImage} className="footer-top-image" />
-        <div className="back-to-top">
-          <Link to="/">
-            <button onClick={topFunction}>
-              <img alt="" src={BackToTopImage} className="backto-top-image" />
-            </button>
-          </Link>
-          <p className="back-to-top-p">Back to top</p>
-        </div>
-      </div>
       <div className="bottom-of-footer">
         <div className="content-of-bottom-footer">
           <div className="header-of-bottom-footer">
@@ -79,6 +68,17 @@ export const Footer = () => {
               </div>
             </div>
           </div>
+        </div>
+      </div>
+      <div className="top-of-footer">
+        <img alt="" src={FooterTopImage} className="footer-top-image" />
+        <div className="back-to-top">
+          <Link to="/">
+            <button onClick={topFunction}>
+              <img alt="" src={BackToTopImage} className="backto-top-image" />
+            </button>
+          </Link>
+          <p className="back-to-top-p">Back to top</p>
         </div>
       </div>
     </div>
