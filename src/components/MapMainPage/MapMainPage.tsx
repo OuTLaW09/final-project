@@ -2,15 +2,28 @@ import './MapMainPage.scss';
 import { MapContainer, Marker, Polyline, Popup, TileLayer } from 'react-leaflet';
 import L, { DivIcon } from 'leaflet';
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { Button, Spin, Tabs, Timeline } from 'antd';
+import { Link, useParams } from 'react-router-dom';
+import { Button, Modal, Tabs, Timeline } from 'antd';
 import TabPane from 'antd/es/tabs/TabPane';
 import { SpinPage } from '../SpinPage/SpinPage';
+import rightSign from '../../assets/Images/right-arrow.png';
+import divider from '../../assets/Images/divider.png';
+import airplane from '../../assets/Images/air-transport.png';
+import train from '../../assets/Images/train.png';
 
 type CitiesType = {
   bgo: {};
-  carriers: [];
-  cities: any[];
+  carriers: {
+    name: string;
+    type: string;
+    docId: string;
+  }[];
+  cities: {
+    name:string;
+    bookingUrl:string;
+    location:any;
+
+  }[];
   citiesCount: number;
   deviceIdentifier: string;
   id: string;
@@ -18,10 +31,27 @@ type CitiesType = {
   optIndex: number;
   optimized: boolean;
   shuffle: boolean;
-  stations: [];
+  stations: {
+    docId: string;
+    cityId: string;
+    name: string;
+    shortName: string;
+  }[];
   themeId: string;
   themeName: string;
-  tour: [];
+  tour: {
+    type: string;
+    date: string;
+    transfer: {
+      originId: string;
+      destinationId: string;
+      arrivalTime: string;
+      departureTime: string;
+      duration: string;
+      carrierId:string
+
+    };
+  }[];
   type: string;
   version: number;
 };
@@ -38,7 +68,15 @@ const createCustomIcon = (name: string) => {
     iconAnchor: [20, 40],
   });
 };
+const ScrollTicket = () => {
+  const handleScroll = (event:any) => {
+    const delta = event.deltaY;
+    const scrollTicket = document.getElementById('scrollTicket');
 
+    if (scrollTicket) {
+      scrollTicket.scrollTop += delta;
+    };
+  };};
 export const MapMainPage = () => {
   let newCityArray: any[] = [];
   function getDaysCount(startDate: Date, endDate: Date) {
@@ -51,6 +89,7 @@ export const MapMainPage = () => {
   const [info, setInfo] = useState<CitiesType[]>([]);
   const [spin, setSpin] = useState<boolean>(true);
   const [retryCount, setRetryCount] = useState(0);
+  const [modalOpen, setModalOpen] = useState(false);
   const { signature } = useParams();
   useEffect(() => {
     const fetchData = async () => {
@@ -113,6 +152,9 @@ export const MapMainPage = () => {
     return <SpinPage />;
   }
 
+
+
+  
   return (
     <div className="map">
       {selectedCount !== null && (
@@ -128,7 +170,7 @@ export const MapMainPage = () => {
               return (
                 <>
                   {cityLoc.cities.map((city, index) => (
-                    <Marker key={index} position={city['location']} icon={createCustomIcon(city['name'])}>
+                    <Marker key={index} position={city.location} icon={createCustomIcon(city['name'])}>
                       <Popup>{city['name']}</Popup>
                     </Marker>
                   ))}
@@ -136,7 +178,7 @@ export const MapMainPage = () => {
                   {cityLoc.cities.map(
                     (cityLoc, index, array) =>
                       index < array.length - 1 && (
-                        <Polyline key={index} positions={[cityLoc['location'], array[index + 1]['location']]} color={getRandomColor()} />
+                        <Polyline key={index} positions={[cityLoc.location, array[index + 1].location]} color={getRandomColor()} />
                       ),
                   )}
                   {cityLoc.cities.map(
@@ -161,21 +203,25 @@ export const MapMainPage = () => {
           ))}
         </Tabs>
       </div>
+      
       <div
+        onWheel={ScrollTicket}
         className="ticket"
+        id='scrollTicket'
         style={{
           backgroundColor: '#fff',
-          opacity: '0.7',
+          opacity: '0.8',
+          overflowY:'auto',
+          height:'600px'
         }}
       >
         <Timeline>
-          {info.map((cityLoc, indexCityLoc) => {
+          {info.map((cityLoc) => {
             if (cityLoc.citiesCount === selectedCount) {
               {
                 if (cityLoc.cities.length - 1 === cityLoc.citiesCount) {
                   cityLoc.cities.forEach((city) => newCityArray.push(city));
                   newCityArray.push(cityLoc.cities[0]);
-                  console.log(newCityArray, 'kdjldkfld');
                 }
               }
 
@@ -190,80 +236,142 @@ export const MapMainPage = () => {
                             flexDirection: 'column',
                           }}
                         >
-                          {' '}
                           <div>
                             {cityLoc.tour[index]['type'] === 'start' || cityLoc.tour[index]['type'] === 'finish' ? (
-                              <p>{`${cityLoc.tour[index]['type']} | ${new Date(cityLoc.tour[index]['date']).toLocaleDateString('en-US', {
+                              <p>{`${cityLoc.tour[index]['type']} | ${new Date(cityLoc.tour[index].date).toLocaleDateString('en-US', {
                                 weekday: 'short',
                                 month: 'short',
                                 day: 'numeric',
                               })}`}</p>
                             ) : (
-                              <p>{`${new Date(cityLoc.tour[index]['date']).toLocaleDateString('en-US', {
+                              <p>{`${new Date(cityLoc.tour[index].date).toLocaleDateString('en-US', {
                                 weekday: 'short',
                                 month: 'short',
                                 day: 'numeric',
-                              })}-${new Date(cityLoc.tour[index + 1]['date']).toLocaleDateString('en-US', {
+                              })}-${new Date(cityLoc.tour[index + 1].date).toLocaleDateString('en-US', {
                                 weekday: 'short',
                                 month: 'short',
                                 day: 'numeric',
-                              })} | ${getDaysCount(cityLoc.tour[index + 1]['date'], cityLoc.tour[index]['date'])} days`}</p>
+                              })} | ${getDaysCount(new Date(cityLoc.tour[index + 1].date), new Date(cityLoc.tour[index].date))} days`}</p>
                             )}
-                            <p
-                              style={{
-                                fontSize: '25px',
-                                fontFamily: 'Lato',
-                                fontWeight: 'bold',
-                                marginTop: '-20px',
-                              }}
-                            >
-                              {` ${city['name']}`}
-                            </p>
+                            <div className="header-ticket">
+                              <p
+                                style={{
+                                  fontSize: '25px',
+                                  fontFamily: 'Lato',
+                                  fontWeight: 'bold',
+                                  marginTop: '-20px',
+                                }}
+                              >
+                                {` ${city['name']}`}
+                              </p>
+                              {index<array.length-1 &&(
+                               <button style={{
+                                border:'1px  solid white',
+                                borderRadius:'10px',
+                                textDecoration:'none',
+                                padding:'5px 15px',
+                                textAlign:'center',
+                               
+                               
+                               
+                               }}> <Link to={city.bookingUrl} style={{ color:'black'}}>Find Hotel</Link></button>  
+                              )}
+                            
+                            </div>
+                            
                           </div>
+                          {index < array.length -1 && (
+                            <div className="tour-type" style={{ backgroundColor: '#fff',
+                             }}>
+                             {
+                             cityLoc.carriers[index].type==='air'?(
+                              <img src={airplane} alt='/' style={{width:'40px',height:'40px'}}/>
+                              ):(<img src={train} alt='/' style={{width:'40px',height:'40px'}}/>)}
+                              {index <= array.length - 1 && (
+                                <div style={{ display: 'flex', flexDirection: 'column' }}>
+                                  <p style={{marginBottom:'-20px'}}> {cityLoc.carriers[index].name}</p>
+                                  <p>
+                                    {new Date(cityLoc.tour[index + 1].date).toLocaleDateString('en-US', {
+                                      month: 'short',
+                                      day: 'numeric',
+                                    })}
+                                  </p>
+                                </div>
+                              )}
+                            </div>
+                          )}
+                          <Link to='' onClick={() => setModalOpen(true)}>
                           <div
+                           
                             style={{
                               backgroundColor: '#fff',
+                              opacity: '1',
+                              boxShadow: '10px 10px 20px 2px',
                               borderRadius: '5%',
+                              padding: '15px',
                             }}
                           >
                             {index < array.length - 1 && (
-                              <p
-                                style={{
-                                  fontSize: '18px',
-                                  fontWeight: 'bolder',
-                                }}
-                              >
-                                {`${city['name']}-${array[index + 1]['name']}`}
-                              </p>
+                              <div style={{ display: 'flex' }}>
+                                <p
+                                  style={{
+                                    fontSize: '18px',
+                                    fontWeight: 'bolder',
+                                  }}
+                                >
+                                  {`${city['name']} `}
+                                </p>
+                                <img
+                                  src={rightSign}
+                                  alt="/"
+                                  style={{
+                                    width: '20px',
+                                    height: '20px',
+                                    marginTop: '23px',
+                                  }}
+                                />
+                                <p
+                                  style={{
+                                    fontSize: '18px',
+                                    fontWeight: 'bolder',
+                                  }}
+                                >
+                                  {`${array[index + 1]['name']}`}
+                                </p>
+                              </div>
                             )}
 
                             {index < array.length - 1 && (
-                              <div className="station">
-                                {cityLoc.stations[index]['cityId'] === cityLoc.stations[index + 1]['cityId'] ? (
-                                  index + 2 < array.length - 1 && (
-                                    <>
-                                      <p>{cityLoc.stations[index + 1]['name']}</p>
-                                      <p>{cityLoc.stations[index + 2]['name']}</p>
-                                    </>
-                                  )
-                                ) : (
-                                  <>
-                                    <p>{cityLoc.stations[index]['name']}</p>
-                                    <p>{cityLoc.stations[index + 1]['name']}</p>
-                                  </>
-                                )}
-                                {/* (index===(cityLoc.stations.length-1)){
-                                    <>
-                                    <p>
-                                    {cityLoc.stations[index]['name']}
-                                    </p>
-                                    <p>{cityLoc.stations[(cityLoc.stations.length-1)-index]['name']}</p>
-                                    </>
-                                  }
-                                   */}
+                              <div className="station" style={{ marginTop: '-20px' }}>
+                                <div className="long-name" style={{ display: 'flex', justifyContent: 'space-between', marginTop: '-20px' }}>
+                                  <p>{cityLoc.stations.find((t) => t.docId === cityLoc.tour[index + 1].transfer.originId)?.name}-</p>
+                                  <p>{cityLoc.stations.find((t) => t.docId === cityLoc.tour[index + 1].transfer.destinationId)?.name}</p>
+                                </div>
+                                <div className="short-name" style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                  <p>{cityLoc.stations.find((t) => t.docId === cityLoc.tour[index + 1].transfer.originId)?.shortName}</p>
+                                  <div
+                                    className="hours"
+                                    style={{
+                                      display: 'flex',
+                                      flexDirection: 'column',
+                                    }}
+                                  >
+                                    <p>{cityLoc.tour[index + 1].transfer.duration}</p>
+                                    <p className="line" style={{ marginTop: '-10px' }}></p>
+                                    <p style={{ color: '#43d359', marginTop: '-10px' }}>Non-stop</p>
+                                  </div>
+                                  <p>{cityLoc.stations.find((t) => t.docId === cityLoc.tour[index + 1].transfer.destinationId)?.shortName}</p>
+                                </div>
+
+                                <div className="time" style={{ display: 'flex', justifyContent: 'space-between', marginTop: '-50px' }}>
+                                  <p>{cityLoc.tour[index + 1].transfer.departureTime}</p>
+                                  <p>{cityLoc.tour[index + 1].transfer.arrivalTime}</p>
+                                </div>
                               </div>
                             )}
                           </div>
+                          </Link>
                         </div>
                       </Timeline.Item>
                     );
@@ -274,6 +382,26 @@ export const MapMainPage = () => {
           })}
         </Timeline>
       </div>
+      <Modal
+        title="User Name"
+        centered
+        open={modalOpen}
+        onOk={() => setModalOpen(false)}
+        onCancel={() => setModalOpen(false)}
+      >
+         <Tabs defaultActiveKey="1">
+                <TabPane tab="History" key="1">
+                  <div>
+                    <p>History</p>
+                  </div>
+                </TabPane>
+                <TabPane tab="Bookings" key="2">
+                  <div>
+                    <p>Bookings</p>
+                  </div>
+                </TabPane>
+          </Tabs>
+      </Modal>
     </div>
   );
 };

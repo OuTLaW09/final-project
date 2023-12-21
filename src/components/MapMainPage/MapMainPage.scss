@@ -43,6 +43,26 @@ custom-marker {
     padding: 10px;
     border: 1px solid #fff;
     z-index: 1000;
+    height: 400px;
+    overflow-y: auto;
+    scrollbar-width: thin; /* Firefox */
+    scrollbar-color: darkgrey lightgrey; /* Firefox */
+    
+      &::-webkit-scrollbar {
+        width: 10px;
+      }
+    
+      &::-webkit-scrollbar-track {
+        background: lightgrey;
+      }
+    
+      &::-webkit-scrollbar-thumb {
+        background-color: darkgrey;
+        border-radius: 5px;
+      }
+    
+      
+    
 
   }
   .tabs{
@@ -53,6 +73,30 @@ custom-marker {
     z-index: 1000;
   
   }
+  .line{
+    color: #888;
+    border-bottom: 1px solid #b6b6bc;
+    position: relative;
+    
+    
+  } 
+  
+  .line::after{
+    display: block;
+    content: "";
+    width: 6px;
+    height: 0;
+    border-top: 1px solid #b6b6bc;
+    position: absolute;
+    right: 0;
+    bottom: -3px;
+    -webkit-transform: rotate(-30deg);
+    -ms-transform: rotate(-30deg);
+    transform: rotate(-30deg);  
+    box-sizing: inherit;
+
+  }
+  
 
  
 }
