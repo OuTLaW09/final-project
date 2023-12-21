@@ -50,6 +50,7 @@
   .HeroSection-container {
     display: flex;
     justify-content: center;
+    align-content: center;
     span {
       font-size: 21px;
     }
@@ -60,6 +61,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
+      justify-content: center;
       .StartingText {
         font-size: 40px;
         font-weight: bolder;
@@ -81,7 +83,6 @@
       height: 60px;
       .TravelAgent-container {
         span {
-
           font-size: 20px;
         }
       }
@@ -95,16 +96,7 @@
     .HeroSection-container {
       margin-top: 20px;
       height: 250px;
-      @keyframes rotateLeftToRight {
-        0% {
-          transform: perspective(1200px) rotateY(0deg);
-        }
-        100% {
-          transform: perspective(1200px) rotateY(360deg);
-        }
-      }
       img {
-        animation: rotateLeftToRight 5s linear infinite;
         position: absolute;
         width: 300px;
         height: 150px;
