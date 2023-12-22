@@ -73,12 +73,16 @@
     }
   }
   .footer-of-carousel {
+    color: #ffffff;
+    font-weight: bolder;
     font-size: 30px;
     .upper-word {
-      margin-left: 30%;
+      text-shadow: 0 0 20px #00fffb, 0 0 40px #0081bc;
+      margin-left: 20%;
     }
     .down-word {
-      margin-left: 40%;
+      text-shadow: 0 0 20px #00fffb, 0 0 40px #0081bc;
+      margin-left: 35%;
     }
   }
 }

@@ -25,8 +25,8 @@ function getItem(label: React.ReactNode, key: React.Key, icon?: React.ReactNode,
 }
 
 const items: MenuItem[] = [
-  getItem('Option 1', '1', <PieChartOutlined />),
-  getItem('Option 2', '2', <DesktopOutlined />),
+  getItem('Home', '<Link to="/"></Link>', <PieChartOutlined />),
+  getItem('Home', '2', <DesktopOutlined />),
   getItem('Option 3', '3', <ContainerOutlined />),
 
   getItem('Navigation One', 'sub1', <MailOutlined />),

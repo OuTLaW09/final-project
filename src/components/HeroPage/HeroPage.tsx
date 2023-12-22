@@ -1,8 +1,8 @@
 import './HeroPage.scss';
+import { BurgerMenu } from '../BurgerMenu/Burger';
 import { Link } from 'react-router-dom';
 import { Modal, Tabs } from 'antd';
 import { useState } from 'react';
-import Burger from '../BurgerMenu/Burger';
 import FlightsLogo from '../../assets/Images/FlightsLogo.png';
 import TabPane from 'antd/es/tabs/TabPane';
 import airplane from '../../assets/Images/headerLogo.png';
@@ -17,7 +17,7 @@ export const HeroPage = () => {
           <img alt="" src={airplane} />
           <span className="agent-name">Agent</span>
         </div>
-        <Burger />
+        <BurgerMenu />
         <div className="Button-container">
           <Link to="/">
             <button className="Home-button">Home</button>
