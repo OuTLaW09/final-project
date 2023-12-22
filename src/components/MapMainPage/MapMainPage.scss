@@ -10,7 +10,8 @@ custom-marker {
   z-index: 1;
   transform: translate(-50%, -50%);
   background-color: #fff;
-  padding: 10px;
+  padding: 5px 10px;
+ 
   display: flex;
   justify-content: center;
   align-items: center;
@@ -19,11 +20,15 @@ custom-marker {
   text-align: center;
 
   .circle-side {
-    width: 30px;
-    height: 30px;
+    width: 40px;
+    height: 40px;
     border: 1px solid white;
     border-radius: 50%;
-    background-color: orange;
+    background-color: blue;
+    font-size:10px;
+    padding: 2px;
+    
+   
     color: white;
   }
 
@@ -35,7 +40,7 @@ custom-marker {
 .map {
   height: 100vh;
   width: 100%;
-  .ticket{
+  .ticket {
     position: absolute;
     top: 100px;
     left: 20px;
@@ -47,43 +52,36 @@ custom-marker {
     overflow-y: auto;
     scrollbar-width: thin; /* Firefox */
     scrollbar-color: darkgrey lightgrey; /* Firefox */
-    
-      &::-webkit-scrollbar {
-        width: 10px;
-      }
-    
-      &::-webkit-scrollbar-track {
-        background: lightgrey;
-      }
-    
-      &::-webkit-scrollbar-thumb {
-        background-color: darkgrey;
-        border-radius: 5px;
-      }
-    
-      
-    
 
+    &::-webkit-scrollbar {
+      width: 10px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: lightgrey;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: darkgrey;
+      border-radius: 5px;
+    }
   }
-  .tabs{
+  .tabs {
     position: absolute;
     top: 20px;
     left: 220px;
     padding: 10px;
     z-index: 1000;
-  
   }
-  .line{
+  .line {
     color: #888;
     border-bottom: 1px solid #b6b6bc;
     position: relative;
-    
-    
-  } 
-  
-  .line::after{
+  }
+
+  .line::after {
     display: block;
-    content: "";
+    content: '';
     width: 6px;
     height: 0;
     border-top: 1px solid #b6b6bc;
@@ -92,15 +90,62 @@ custom-marker {
     bottom: -3px;
     -webkit-transform: rotate(-30deg);
     -ms-transform: rotate(-30deg);
-    transform: rotate(-30deg);  
+    transform: rotate(-30deg);
     box-sizing: inherit;
+  }
+
+  .price{
+    position: absolute;
+    bottom: 100px;
+    right: 20px;
+    background-color: #fff;
+    border: 1px solid #fff;
+    z-index: 1000;
+    padding:15px;
+   .price-main{
+    .dates-range{
+      display: flex;
+      gap:10px;
+      justify-content: space-between;
+      .range{
+        margin-left:10px;
+       
+      }
+      
+    }
+    .rotate-name{
+      display: flex;
+      gap:5px;
+    
+
+      img{
+        width: 20px;
+        height: 20px;
+      }
+    }
+    .passanger-select{
+      .help-sign{
+        display: inline-block;
+        margin-top: -1px;
+        margin-left: 5px;
+        width: 12px;
+        height: 12px;
+        line-height: 12px;
+        text-align: center;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        border-radius: 50%;
+        font-size: 8px;
+        border: 1px solid #888;
+        vertical-align: middle;
+        
+        
+      }
+    }
+   }
 
   }
-  
-
- 
 }
-
 
 .leaflet-container {
   height: 100vh;

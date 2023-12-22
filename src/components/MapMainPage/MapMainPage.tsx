@@ -3,13 +3,18 @@ import { MapContainer, Marker, Polyline, Popup, TileLayer } from 'react-leaflet'
 import L, { DivIcon } from 'leaflet';
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { Button, Modal, Tabs, Timeline } from 'antd';
+import { Button, Modal, Tabs, Timeline, Select, Space } from 'antd';
 import TabPane from 'antd/es/tabs/TabPane';
 import { SpinPage } from '../SpinPage/SpinPage';
 import rightSign from '../../assets/Images/right-arrow.png';
 import divider from '../../assets/Images/divider.png';
 import airplane from '../../assets/Images/air-transport.png';
 import train from '../../assets/Images/train.png';
+import arrowIcon from '../../assets/Images/arrowIcon.png';
+
+const handleChangePassengerSelect = (value: string) => {
+  console.log(`selected ${value}`);
+};
 
 type CitiesType = {
   bgo: {};
@@ -19,10 +24,9 @@ type CitiesType = {
     docId: string;
   }[];
   cities: {
-    name:string;
-    bookingUrl:string;
-    location:any;
-
+    name: string;
+    bookingUrl: string;
+    location: any;
   }[];
   citiesCount: number;
   deviceIdentifier: string;
@@ -48,37 +52,31 @@ type CitiesType = {
       arrivalTime: string;
       departureTime: string;
       duration: string;
-      carrierId:string
-
+      carrierId: string;
     };
   }[];
   type: string;
   version: number;
 };
-const createCustomIcon = (name: string) => {
-  return L.divIcon({
-    className: 'custom-marker',
-    html: `<div class='inside-marker'>
-        <div class= "circle-side">
-          <p>time</p>
-        </div>
-        <div class="city-name">${name}</div>
-      </div> `,
-    iconSize: [40, 40],
-    iconAnchor: [20, 40],
-  });
-};
 const ScrollTicket = () => {
-  const handleScroll = (event:any) => {
+  const handleScroll = (event: any) => {
     const delta = event.deltaY;
     const scrollTicket = document.getElementById('scrollTicket');
 
     if (scrollTicket) {
       scrollTicket.scrollTop += delta;
-    };
-  };};
+    }
+  };
+};
 export const MapMainPage = () => {
-  let newCityArray: any[] = [];
+  const [selectedCount, setSelectedCount] = useState<number | null>(null);
+  const [info, setInfo] = useState<CitiesType[]>([]);
+  const [spin, setSpin] = useState<boolean>(true);
+  const [retryCount, setRetryCount] = useState(0);
+  const { signature } = useParams();
+
+  const newCityArray: any[] = [];
+  const colorArray: string[] = [];
   function getDaysCount(startDate: Date, endDate: Date) {
     const start = new Date(startDate);
     const end = new Date(endDate);
@@ -86,11 +84,7 @@ export const MapMainPage = () => {
     const daysCount = Math.ceil(timeDifference / (1000 * 3600 * 24));
     return daysCount;
   }
-  const [info, setInfo] = useState<CitiesType[]>([]);
-  const [spin, setSpin] = useState<boolean>(true);
-  const [retryCount, setRetryCount] = useState(0);
-  const [modalOpen, setModalOpen] = useState(false);
-  const { signature } = useParams();
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -112,8 +106,6 @@ export const MapMainPage = () => {
         if (data.data && data.data.value) {
           setInfo(data.data.value);
           setSpin(false);
-
-          console.log(data);
         } else {
           console.error('Invalid data structure:', data);
           setSpin(false);
@@ -126,7 +118,6 @@ export const MapMainPage = () => {
 
     fetchData();
   }, [signature, retryCount]);
-  console.log(info);
 
   const getRandomColor = () => {
     const letters = '0123456789ABCDEF';
@@ -134,10 +125,24 @@ export const MapMainPage = () => {
     for (let i = 0; i < 6; i++) {
       color += letters[Math.floor(Math.random() * 16)];
     }
+    colorArray.push(color);
     return color;
   };
 
-  const [selectedCount, setSelectedCount] = useState<number | null>(null);
+  const createCustomIcon = (name: string,arrivalDate:string, index: number) => {
+    console.log(index);
+    return L.divIcon({
+      className: 'custom-marker',
+      html: `<div class='inside-marker'>
+          <div class= "circle-side" style="background-color: ${colorArray[index]}">
+            <p>${arrivalDate.split(' ').join('<br>')}</p>
+          </div>
+          <div class="city-name">${name}</div>
+        </div> `,
+      iconSize: [40, 40],
+      iconAnchor: [20, 40],
+    });
+  };
 
   const handleTabClick = (count: number) => {
     setSelectedCount(count);
@@ -152,9 +157,6 @@ export const MapMainPage = () => {
     return <SpinPage />;
   }
 
-
-
-  
   return (
     <div className="map">
       {selectedCount !== null && (
@@ -165,28 +167,31 @@ export const MapMainPage = () => {
           />
           {info.map((cityLoc) => {
             if (cityLoc.citiesCount === selectedCount) {
-              console.log(cityLoc.cities, 'cities');
-
+              console.log(info);
+              console.log(cityLoc);
               return (
                 <>
-                  {cityLoc.cities.map((city, index) => (
-                    <Marker key={index} position={city.location} icon={createCustomIcon(city['name'])}>
-                      <Popup>{city['name']}</Popup>
-                    </Marker>
-                  ))}
-
                   {cityLoc.cities.map(
                     (cityLoc, index, array) =>
                       index < array.length - 1 && (
                         <Polyline key={index} positions={[cityLoc.location, array[index + 1].location]} color={getRandomColor()} />
                       ),
                   )}
-                  {cityLoc.cities.map(
-                    (cityLoc, index, array) =>
-                      index < array.length - 1 && (
-                        <Polyline key={index} positions={[array[0]['location'], array[array.length - 1]['location']]} color={getRandomColor()} />
-                      ),
-                  )}
+
+                  <Polyline
+                    positions={[cityLoc.cities[0]['location'], cityLoc.cities[cityLoc.cities.length - 1]['location']]}
+                    color={getRandomColor()}
+                  />
+
+                  {cityLoc.cities.map((city, index) => (
+                    <Marker key={index} position={city.location} icon={createCustomIcon(city['name'],cityLoc.tour[index].type!=='start'?(new Date(cityLoc.tour[index].date).toLocaleDateString('en-US', {
+                      day: "numeric",
+                      month: 'short',
+                     
+                    })):('start&finish'.split('&').join('<br>')), index)}>
+                      <Popup>{city['name']}</Popup>
+                    </Marker>
+                  ))}
                 </>
               );
             }
@@ -203,16 +208,16 @@ export const MapMainPage = () => {
           ))}
         </Tabs>
       </div>
-      
+
       <div
         onWheel={ScrollTicket}
         className="ticket"
-        id='scrollTicket'
+        id="scrollTicket"
         style={{
           backgroundColor: '#fff',
           opacity: '0.8',
-          overflowY:'auto',
-          height:'600px'
+          overflowY: 'auto',
+          height: '600px',
         }}
       >
         <Timeline>
@@ -265,32 +270,34 @@ export const MapMainPage = () => {
                               >
                                 {` ${city['name']}`}
                               </p>
-                              {index<array.length-1 &&(
-                               <button style={{
-                                border:'1px  solid white',
-                                borderRadius:'10px',
-                                textDecoration:'none',
-                                padding:'5px 15px',
-                                textAlign:'center',
-                               
-                               
-                               
-                               }}> <Link to={city.bookingUrl} style={{ color:'black'}}>Find Hotel</Link></button>  
+                              {index < array.length - 1 && (
+                                <button
+                                  style={{
+                                    border: '1px  solid white',
+                                    borderRadius: '10px',
+                                    textDecoration: 'none',
+                                    padding: '5px 15px',
+                                    textAlign: 'center',
+                                  }}
+                                >
+                                  {' '}
+                                  <Link to={city.bookingUrl} style={{ color: 'black' }}>
+                                    Find Hotel
+                                  </Link>
+                                </button>
                               )}
-                            
                             </div>
-                            
                           </div>
-                          {index < array.length -1 && (
-                            <div className="tour-type" style={{ backgroundColor: '#fff',
-                             }}>
-                             {
-                             cityLoc.carriers[index].type==='air'?(
-                              <img src={airplane} alt='/' style={{width:'40px',height:'40px'}}/>
-                              ):(<img src={train} alt='/' style={{width:'40px',height:'40px'}}/>)}
+                          {index < array.length - 1 && (
+                            <div className="tour-type" style={{ backgroundColor: '#fff' }}>
+                              {cityLoc?.carriers[index]?.type === 'air' ? (
+                                <img src={airplane} alt="/" style={{ width: '40px', height: '40px' }} />
+                              ) : (
+                                <img src={train} alt="/" style={{ width: '40px', height: '40px' }} />
+                              )}
                               {index <= array.length - 1 && (
                                 <div style={{ display: 'flex', flexDirection: 'column' }}>
-                                  <p style={{marginBottom:'-20px'}}> {cityLoc.carriers[index].name}</p>
+                                  <p style={{ marginBottom: '-20px' }}> {cityLoc?.carriers[index]?.name}</p>
                                   <p>
                                     {new Date(cityLoc.tour[index + 1].date).toLocaleDateString('en-US', {
                                       month: 'short',
@@ -301,9 +308,8 @@ export const MapMainPage = () => {
                               )}
                             </div>
                           )}
-                          <Link to='' onClick={() => setModalOpen(true)}>
+
                           <div
-                           
                             style={{
                               backgroundColor: '#fff',
                               opacity: '1',
@@ -371,7 +377,6 @@ export const MapMainPage = () => {
                               </div>
                             )}
                           </div>
-                          </Link>
                         </div>
                       </Timeline.Item>
                     );
@@ -382,26 +387,62 @@ export const MapMainPage = () => {
           })}
         </Timeline>
       </div>
-      <Modal
-        title="User Name"
-        centered
-        open={modalOpen}
-        onOk={() => setModalOpen(false)}
-        onCancel={() => setModalOpen(false)}
-      >
-         <Tabs defaultActiveKey="1">
-                <TabPane tab="History" key="1">
-                  <div>
-                    <p>History</p>
-                  </div>
-                </TabPane>
-                <TabPane tab="Bookings" key="2">
-                  <div>
-                    <p>Bookings</p>
-                  </div>
-                </TabPane>
-          </Tabs>
-      </Modal>
+      <div className="price">
+        <div className="price-main">
+          {info.map(
+            (city, index) =>
+              city.citiesCount === selectedCount && (
+                <div className="dates-range" key={index}>
+                  {city.tour
+                    .filter((tour) => tour.type === 'start' || tour.type === 'finish')
+                    .map((tour, tourIndex) => (
+                      <p key={tourIndex} className="dates">
+                        {tour.type === 'start' &&
+                          new Date(tour.date).toLocaleDateString('en-US', {
+                            weekday: 'short',
+                            month: 'short',
+                            day: 'numeric',
+                          })}
+                        {tour.type === 'finish' &&
+                          new Date(tour.date).toLocaleDateString('en-US', {
+                            weekday: 'short',
+                            month: 'short',
+                            day: 'numeric',
+                          })}
+                      </p>
+                    ))}
+
+                  <p className="range">{`${getDaysCount(new Date(city.tour[0].date), new Date(city.tour[city.tour.length - 1].date))} Nights`}</p>
+                </div>
+              ),
+          )}
+          <div className="rotate-name">
+            {newCityArray.map((city) => (
+              <p>
+                {city['name']} <img src={arrowIcon} alt="/" />
+              </p>
+            ))}
+          </div>
+          <div>
+            <div className="passanger-select">
+              <Space wrap>
+                <Select
+                  defaultValue="1"
+                  style={{ width: 120 }}
+                  onChange={handleChangePassengerSelect}
+                  options={[
+                    { value: '1', label: '1 passenger' },
+                    { value: '2', label: '2 passenger' },
+                    { value: '3', label: '3 passenger' },
+                    { value: '4', label: '4 passenger' },
+                  ]}
+                />
+              </Space>
+              <div className="help-sign">?</div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
