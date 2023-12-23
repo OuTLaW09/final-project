@@ -381,7 +381,7 @@ export const MapMainPage = () => {
                                   textDecoration: 'none',
                                   padding: '5px 15px',
                                   textAlign: 'center',
-                                }}><a href={city.partners[0].link} target="_blank" style={{ color: 'black' }}>{city.partners[0].name}</a></button> 
+                                }}><a href={city.partners[0]?.link} target="_blank" style={{ color: 'black' }}>{city.partners[0]?.name}</a></button> 
                                     
                                     
 
