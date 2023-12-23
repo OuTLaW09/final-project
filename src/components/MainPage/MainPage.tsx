@@ -285,24 +285,6 @@ export function Mainpage() {
         </div>
       </div>
       <Footer />
-      <div
-        className="last-part-mainpage"
-        style={{
-          width: '100%',
-          height: '100%',
-          backgroundColor: '#004D74',
-        }}
-      >
-        <div>
-          <a href="/">Privacy Policy</a>
-        </div>
-        <div>
-          <a href="/">All rights revered 2023 @Travel Agency</a>
-        </div>
-        <div>
-          <a href="/">Terms&Conditions</a>
-        </div>
-      </div>
     </div>
   );
 }

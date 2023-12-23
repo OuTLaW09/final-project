@@ -9,6 +9,24 @@ import airplane from '../../assets/Images/headerLogo.png';
 
 export const HeroPage = () => {
   const [modalOpen, setModalOpen] = useState(false);
+
+  const menu = (
+    <div className="Button-container">
+      <Link to="/">
+        <button className="Home-button">Home</button>
+      </Link>
+      <Link to="/" onClick={() => setModalOpen(true)}>
+        <button className="profile-button">My Profile</button>
+      </Link>
+      <Link to="login">
+        <button className="Login-button">Login</button>
+      </Link>
+      <Link to="sign-up">
+        <button className="Signup-button">Sign Up</button>
+      </Link>
+    </div>
+  );
+
   return (
     <div className="hero-page-container">
       <div className="Header-container">
@@ -17,21 +35,8 @@ export const HeroPage = () => {
           <img alt="" src={airplane} />
           <span className="agent-name">Agent</span>
         </div>
-        <BurgerMenu />
-        <div className="Button-container">
-          <Link to="/">
-            <button className="Home-button">Home</button>
-          </Link>
-          <Link to="/" onClick={() => setModalOpen(true)}>
-            <button className="profile-button">My Profile</button>
-          </Link>
-          <Link to="login">
-            <button className="Login-button">Login</button>
-          </Link>
-          <Link to="sign-up">
-            <button className="Signup-button">Sign Up</button>
-          </Link>
-        </div>
+        <BurgerMenu>{menu}</BurgerMenu>
+        {menu}
       </div>
       <div className="HeroSection-container">
         <div className="Info-container">

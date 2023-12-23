@@ -19,31 +19,30 @@ export const Footer = () => {
         <div className="content-of-bottom-footer">
           <div className="header-of-bottom-footer">
             <div className="logo-part-footer">
-              <div>
+              <div className="travel-agent-footer">
                 <span>Travel </span>
                 <span>
                   <img alt="" src={airplaneLogo} className="airplane-logo" />
                 </span>
                 <span>Agency</span>
               </div>
-
               <div className="about-us-footer-main">
-                <a href="/" className="about-us-footer">
-                  About us
-                </a>
+                <div className="middle-of-bottom-footer">
+                  <div className="home-part-footer">
+                    <a href="/">Home</a>
+                    <Link to="login">Log in</Link>
+                    <Link to="sign-up">Sign Up</Link>
+                    <Link to="c">My Profile</Link>
+                    <a href="/" className="about-us-footer">
+                      About us
+                    </a>
+                  </div>
+                </div>
               </div>
             </div>
             <div className="middle-of-bottom-footer-main">
               <div className="info-footer">
                 Travel with us and enjoy to explore <br /> new places
-              </div>
-              <div className="middle-of-bottom-footer">
-                <div className="home-part-footer">
-                  <a href="/">Home</a>
-                  <Link to="login">Log in</Link>
-                  <Link to="sign-up">Sign Up</Link>
-                  <Link to="c">My Profile</Link>
-                </div>
               </div>
             </div>
 
@@ -66,19 +65,30 @@ export const Footer = () => {
                   </a>
                 </div>
               </div>
+              <div className="last-part-footer">
+                <div>
+                  <a href="/">Privacy Policy</a>
+                </div>
+                <div>
+                  <a href="/">All rights revered 2023 @Travel Agency</a>
+                </div>
+                <div>
+                  <a href="/">Terms&Conditions</a>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
-      <div className="top-of-footer">
-        <img alt="" src={FooterTopImage} className="footer-top-image" />
-        <div className="back-to-top">
-          <Link to="/">
-            <button onClick={topFunction}>
-              <img alt="" src={BackToTopImage} className="backto-top-image" />
-            </button>
-          </Link>
-          <p className="back-to-top-p">Back to top</p>
+          <div className="top-of-footer">
+            <img alt="" src={FooterTopImage} className="footer-top-image" />
+            <div className="back-to-top">
+              <Link to="/">
+                <button onClick={topFunction}>
+                  <img alt="" src={BackToTopImage} className="backto-top-image" />
+                </button>
+              </Link>
+              <p>Back to top</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>

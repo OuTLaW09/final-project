@@ -4,18 +4,6 @@
   background-color: #022b42;
   width: 100%;
   height: 100%;
-
-  .last-part-mainpage {
-    display: flex;
-    justify-content: space-around;
-
-    a {
-      text-decoration: none;
-      color: #003926;
-      font-family: 'Lato';
-      font-size: 15px;
-    }
-  }
 }
 .search-container {
   display: flex;
@@ -49,10 +37,12 @@
           backdrop-filter: blur(8px);
           .build-trip-container {
             p {
-              text-shadow: 0 0 30px #00fffb, 0 0 40px #0081bc;
+              text-shadow:
+                0 0 30px #00fffb,
+                0 0 40px #0081bc;
               font-size: x-large;
               color: #ffffff;
-              font-family: "Lato";
+              font-family: 'Lato';
               font-weight: bolder;
             }
           }
@@ -135,17 +125,24 @@
     }
   }
   .search-container {
-    top: 50px;
+    border: none;
     bottom: 0;
     .search-main {
+      width: 100%;
       padding: 0;
+
       .search-form {
         padding: 30px;
+        .search-button {
+          button {
+            padding: 0;
+            margin: 0;
+          }
+        }
         .rotation-main {
           .rotation-container {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 0;
+            display: flex;
+            flex-direction: column;
             .ant-select-selector {
               font-size: 18px;
             }

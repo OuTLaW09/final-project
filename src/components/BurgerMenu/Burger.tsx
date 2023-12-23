@@ -7,10 +7,11 @@ import {
   MenuUnfoldOutlined,
   PieChartOutlined,
 } from '@ant-design/icons';
-import { Button, Menu } from 'antd';
-import React, { useState } from 'react';
+import { Button, Menu, MenuProps } from 'antd';
+import React, { ReactNode, useState } from 'react';
 // eslint-disable-next-line no-duplicate-imports
-import type { MenuProps } from 'antd';
+import './Burger.scss';
+import { Link } from 'react-router-dom';
 
 type MenuItem = Required<MenuProps>['items'][number];
 
@@ -25,8 +26,8 @@ function getItem(label: React.ReactNode, key: React.Key, icon?: React.ReactNode,
 }
 
 const items: MenuItem[] = [
-  getItem('Home', '<Link to="/"></Link>', <PieChartOutlined />),
-  getItem('Home', '2', <DesktopOutlined />),
+  getItem('Home', '1', <PieChartOutlined />),
+  getItem('Option 2', '2', <DesktopOutlined />),
   getItem('Option 3', '3', <ContainerOutlined />),
 
   getItem('Navigation One', 'sub1', <MailOutlined />),
@@ -34,7 +35,11 @@ const items: MenuItem[] = [
   getItem('Navigation Two', 'sub2', <AppstoreOutlined />),
 ];
 
-export const BurgerMenu = () => {
+type BurgerMenuProps = {
+  children: ReactNode;
+};
+
+export const BurgerMenu = (props: BurgerMenuProps) => {
   const [collapsed, setCollapsed] = useState(false);
 
   const toggleCollapsed = () => {
@@ -42,11 +47,11 @@ export const BurgerMenu = () => {
   };
   return (
     <>
-      <div style={{ width: 256 }}>
+      <div style={{ width: 256 }} className="burger-menu">
         <Button type="primary" onClick={toggleCollapsed} style={{ marginBottom: 16 }}>
           {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
         </Button>
-        <Menu defaultSelectedKeys={['1']} defaultOpenKeys={['sub1']} mode="inline" theme="dark" inlineCollapsed={collapsed} items={items} />
+        {props.children}
       </div>
     </>
   );
