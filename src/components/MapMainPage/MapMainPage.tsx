@@ -2,8 +2,8 @@ import './MapMainPage.scss';
 import { MapContainer, Marker, Polyline, Popup, TileLayer } from 'react-leaflet';
 import L, { DivIcon } from 'leaflet';
 import { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
-import { Button, Modal, Tabs, Timeline, Select, Space, Popover } from 'antd';
+import { Link, useParams, useNavigate } from 'react-router-dom';
+import { Button, Modal, Tabs, Timeline, Select, Space, Popover, message } from 'antd';
 import TabPane from 'antd/es/tabs/TabPane';
 import { SpinPage } from '../SpinPage/SpinPage';
 import rightSign from '../../assets/Images/right-arrow.png';
@@ -11,8 +11,6 @@ import divider from '../../assets/Images/divider.png';
 import airplane from '../../assets/Images/air-transport.png';
 import train from '../../assets/Images/train.png';
 import arrowIcon from '../../assets/Images/arrowIcon.png';
-
-
 
 type CitiesType = {
   bgo: {};
@@ -25,6 +23,10 @@ type CitiesType = {
     name: string;
     bookingUrl: string;
     location: any;
+    partners:{
+      link:string;
+      name:string;
+    }[];
   }[];
   citiesCount: number;
   deviceIdentifier: string;
@@ -68,20 +70,18 @@ const ScrollTicket = () => {
   };
 };
 
-
-
 export const MapMainPage = () => {
   const [selectedCount, setSelectedCount] = useState<number | null>(null);
   const [info, setInfo] = useState<CitiesType[]>([]);
   const [spin, setSpin] = useState<boolean>(true);
   const [retryCount, setRetryCount] = useState<number>(0);
-  const[passengerCount,setPassengerCount]=useState<number>();
+  const [passengerCount, setPassengerCount] = useState<number>(1);
+  const navigate = useNavigate();
   const { signature } = useParams();
 
   const newCityArray: any[] = [];
   const colorArray: string[] = [];
-  const priceArray: number[] = [];
-  let price: number = 0;
+
   function getDaysCount(startDate: Date, endDate: Date) {
     const start = new Date(startDate);
     const end = new Date(endDate);
@@ -190,15 +190,20 @@ export const MapMainPage = () => {
     }
   }, [info]);
 
-  if (spin === true) {
-    return <SpinPage />;
+  while (spin) {
+    if (retryCount > 100) {
+      alert('In this date there is no rotation,unfortunately');
+      navigate('/');
+      break;
+    } else {
+      return <SpinPage />;
+    }
   }
-  
 
   const handleChangePassengerSelect = (value: number) => {
     setPassengerCount(value);
-  
   };
+
   return (
     <div className="map">
       {selectedCount !== null && (
@@ -322,7 +327,8 @@ export const MapMainPage = () => {
                                 {` ${city['name']}`}
                               </p>
                               {index < array.length - 1 && (
-                                <button
+                                <div className="find-hotel-activities">
+                                    <button
                                   style={{
                                     border: '1px  solid white',
                                     borderRadius: '10px',
@@ -331,11 +337,28 @@ export const MapMainPage = () => {
                                     textAlign: 'center',
                                   }}
                                 >
-                                  {' '}
-                                  <Link to={city.bookingUrl} style={{ color: 'black' }}>
+                                  <a href={city.bookingUrl} target="_blank" style={{ color: 'black' }}>
                                     Find Hotel
-                                  </Link>
+                                  </a>
+                              
                                 </button>
+                                {city.partners &&(
+                                 <button  style={{
+                                  border: '1px  solid white',
+                                  borderRadius: '10px',
+                                  textDecoration: 'none',
+                                  padding: '5px 15px',
+                                  textAlign: 'center',
+                                }}><a href={city.partners[0].link} target="_blank" style={{ color: 'black' }}>{city.partners[0].name}</a></button> 
+                                    
+                                    
+
+                                )}
+                              
+
+                                </div>
+                              
+                                
                               )}
                             </div>
                           </div>
@@ -359,7 +382,9 @@ export const MapMainPage = () => {
                               )}
                             </div>
                           )}
+                          {cityLoc.tour[index].type!=='finish' &&(
 
+                          
                           <div
                             style={{
                               backgroundColor: '#fff',
@@ -428,6 +453,7 @@ export const MapMainPage = () => {
                               </div>
                             )}
                           </div>
+                          )}
                         </div>
                       </Timeline.Item>
                     );
@@ -468,15 +494,10 @@ export const MapMainPage = () => {
               ),
           )}
           <div className="rotate-name">
-            {newCityArray.map((city,index,array) => (
+            {newCityArray.map((city, index, array) => (
               <p>
                 {city['name']}
-                {
-                  index<array.length-1 &&(
-                    <img src={arrowIcon} alt="/" />
-
-                  )
-                } 
+                {index < array.length - 1 && <img src={arrowIcon} alt="/" />}
               </p>
             ))}
           </div>
@@ -500,39 +521,32 @@ export const MapMainPage = () => {
                   <button className="help-sign">?</button>
                 </Popover>
               </div>
-             { passengerCount!==undefined?(
-                <div className='tour-price'>price:${calculatePrice()*passengerCount}</div>
-
-              ):(
-                <div className='tour-price'>select passenger count</div>
+              {passengerCount !== undefined ? (
+                <div className="tour-price">price:${calculatePrice() * passengerCount}</div>
+              ) : (
+                <div className="tour-price">select passenger count</div>
               )}
-             
             </div>
             <div className="tax-and-fees">
-              <div className='tax'>
+              <div className="tax">
                 <p>Taxes and Fees</p>
                 <Popover content={contentTax} title="Taxes and Fees" trigger="hover">
                   <button className="tax-sign">?</button>
                 </Popover>
               </div>
-              { passengerCount!==undefined &&(
-                 <div className='tax-amount'>${`${Math.trunc(calculatePrice()*0.1*passengerCount)}`}</div>
-               
-
-              )}
-             
+              {passengerCount !== undefined && <div className="tax-amount">${`${Math.trunc(calculatePrice() * 0.1 * passengerCount)}`}</div>}
             </div>
-            <hr/>
-            { passengerCount!==undefined ?(
-               
-            <div className='total-price'>Total price:${calculatePrice()*passengerCount+Math.trunc(calculatePrice()*0.1*passengerCount)}</div>
-              ):(
-                <div className='total-price'>Total price:loading...</div>
-              )}
-            
+            <hr />
+            {passengerCount !== undefined ? (
+              <div className="total-price">
+                Total price:${calculatePrice() * passengerCount + Math.trunc(calculatePrice() * 0.1 * passengerCount)}
+              </div>
+            ) : (
+              <div className="total-price">Total price:loading...</div>
+            )}
           </div>
         </div>
-        <button className='buy-ticket'>Buy</button>
+        <button className="buy-ticket" onClick={(()=>(message.success('Successful Operation!')))}>Buy</button>
       </div>
     </div>
   );
