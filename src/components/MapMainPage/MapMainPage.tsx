@@ -76,6 +76,8 @@ export const MapMainPage = () => {
   const [spin, setSpin] = useState<boolean>(true);
   const [retryCount, setRetryCount] = useState<number>(0);
   const [passengerCount, setPassengerCount] = useState<number>(1);
+  const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 1096);
+  const [timelineVisible, setTimelineVisible] = useState(!isSmallScreen);
   const navigate = useNavigate();
   const { signature } = useParams();
 
@@ -123,6 +125,24 @@ export const MapMainPage = () => {
 
     fetchData();
   }, [signature, retryCount]);
+
+  
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsSmallScreen(window.innerWidth < 1096);
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+  const toggleTimelineVisibility = () => {
+    setTimelineVisible(!timelineVisible);
+  };
 
   const getRandomColor = () => {
     const letters = '0123456789ABCDEF';
@@ -204,6 +224,9 @@ export const MapMainPage = () => {
     setPassengerCount(value);
   };
 
+
+  
+
   return (
     <div className="map">
       {selectedCount !== null && (
@@ -264,7 +287,15 @@ export const MapMainPage = () => {
           ))}
         </Tabs>
       </div>
-
+      {isSmallScreen && (
+        <Button
+          type="primary"
+          style={{ position: 'absolute', bottom: '10px', right: '10px',zIndex:'1000' }}
+          onClick={toggleTimelineVisibility}
+        >
+          {timelineVisible ? 'Hide Timeline' : 'Show Timeline'}
+        </Button>
+      )}
       <div
         onWheel={ScrollTicket}
         className="ticket"
@@ -274,6 +305,7 @@ export const MapMainPage = () => {
           opacity: '0.8',
           overflowY: 'auto',
           height: '600px',
+          display: isSmallScreen && !timelineVisible ? 'none' : 'block'
         }}
       >
         <Timeline>
