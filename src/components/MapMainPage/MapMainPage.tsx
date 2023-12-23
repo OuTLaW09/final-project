@@ -3,7 +3,7 @@ import { MapContainer, Marker, Polyline, Popup, TileLayer } from 'react-leaflet'
 import L, { DivIcon } from 'leaflet';
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { Button, Modal, Tabs, Timeline, Select, Space } from 'antd';
+import { Button, Modal, Tabs, Timeline, Select, Space, Popover } from 'antd';
 import TabPane from 'antd/es/tabs/TabPane';
 import { SpinPage } from '../SpinPage/SpinPage';
 import rightSign from '../../assets/Images/right-arrow.png';
@@ -46,6 +46,7 @@ type CitiesType = {
   tour: {
     type: string;
     date: string;
+    price: number;
     transfer: {
       originId: string;
       destinationId: string;
@@ -72,11 +73,15 @@ export const MapMainPage = () => {
   const [selectedCount, setSelectedCount] = useState<number | null>(null);
   const [info, setInfo] = useState<CitiesType[]>([]);
   const [spin, setSpin] = useState<boolean>(true);
-  const [retryCount, setRetryCount] = useState(0);
+  const [retryCount, setRetryCount] = useState<number>(0);
+  const [showContent, setShowContent] = useState<boolean>(false);
+  const [prices, setPrices] = useState<number>();
   const { signature } = useParams();
 
   const newCityArray: any[] = [];
   const colorArray: string[] = [];
+  const priceArray: number[] = [];
+  let price: number = 0;
   function getDaysCount(startDate: Date, endDate: Date) {
     const start = new Date(startDate);
     const end = new Date(endDate);
@@ -129,7 +134,39 @@ export const MapMainPage = () => {
     return color;
   };
 
-  const createCustomIcon = (name: string,arrivalDate:string, index: number) => {
+  const content = (
+    <div>
+      <p>
+        The price includes tickets for <br />
+        Trains and Flights on the itinerary.
+        <br />
+        Accomodation and meals are <br /> not included in the price.
+      </p>
+    </div>
+  );
+  const contentTax = (
+    <div>
+      <p>
+        This helps us run our platform and offer services
+        <br /> like 24/7 support on your trip.
+        <br /> It includes VAT.
+      </p>
+    </div>
+  );
+  const calculateTotalPrice = () => {
+    let totalPrice = 0;
+
+    info.forEach((city) => {
+      if (city.citiesCount === selectedCount) {
+        city.tour.forEach((tour) => {
+          totalPrice += tour.type !== 'start' ? tour.price : 0;
+        });
+      }
+    });
+
+    return totalPrice;
+  };
+  const createCustomIcon = (name: string, arrivalDate: string, index: number) => {
     console.log(index);
     return L.divIcon({
       className: 'custom-marker',
@@ -184,11 +221,20 @@ export const MapMainPage = () => {
                   />
 
                   {cityLoc.cities.map((city, index) => (
-                    <Marker key={index} position={city.location} icon={createCustomIcon(city['name'],cityLoc.tour[index].type!=='start'?(new Date(cityLoc.tour[index].date).toLocaleDateString('en-US', {
-                      day: "numeric",
-                      month: 'short',
-                     
-                    })):('start&finish'.split('&').join('<br>')), index)}>
+                    <Marker
+                      key={index}
+                      position={city.location}
+                      icon={createCustomIcon(
+                        city['name'],
+                        cityLoc.tour[index].type !== 'start'
+                          ? new Date(cityLoc.tour[index].date).toLocaleDateString('en-US', {
+                              day: 'numeric',
+                              month: 'short',
+                            })
+                          : 'start&finish'.split('&').join('<br>'),
+                        index,
+                      )}
+                    >
                       <Popup>{city['name']}</Popup>
                     </Marker>
                   ))}
@@ -425,21 +471,38 @@ export const MapMainPage = () => {
           </div>
           <div>
             <div className="passanger-select">
-              <Space wrap>
-                <Select
-                  defaultValue="1"
-                  style={{ width: 120 }}
-                  onChange={handleChangePassengerSelect}
-                  options={[
-                    { value: '1', label: '1 passenger' },
-                    { value: '2', label: '2 passenger' },
-                    { value: '3', label: '3 passenger' },
-                    { value: '4', label: '4 passenger' },
-                  ]}
-                />
-              </Space>
-              <div className="help-sign">?</div>
+              <div className="left-side-passenger-select">
+                <Space wrap>
+                  <Select
+                    defaultValue="1"
+                    style={{ width: 120 }}
+                    onChange={handleChangePassengerSelect}
+                    options={[
+                      { value: '1', label: '1 passenger' },
+                      { value: '2', label: '2 passenger' },
+                      { value: '3', label: '3 passenger' },
+                      { value: '4', label: '4 passenger' },
+                    ]}
+                  />
+                </Space>
+                <Popover content={content} title="Help Center" trigger="hover">
+                  <button className="help-sign">?</button>
+                </Popover>
+              </div>
+              <div>price:${calculateTotalPrice()}</div>
             </div>
+            <div className="tax-and-fees">
+              <div className='tax'>
+                <p>Taxes and Fees</p>
+                <Popover content={contentTax} title="Taxes and Fees" trigger="hover">
+                  <button className="tax-sign">?</button>
+                </Popover>
+              </div>
+              <div className='tax-amount'>${`${Math.trunc(calculateTotalPrice()*0.1)}`}</div>
+              
+            </div>
+            <hr/>
+            <div className='total-price'>Total price:${calculateTotalPrice()+Math.trunc(calculateTotalPrice()*0.1)}</div>
           </div>
         </div>
       </div>
