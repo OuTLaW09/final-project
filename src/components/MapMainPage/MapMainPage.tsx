@@ -12,9 +12,7 @@ import airplane from '../../assets/Images/air-transport.png';
 import train from '../../assets/Images/train.png';
 import arrowIcon from '../../assets/Images/arrowIcon.png';
 
-const handleChangePassengerSelect = (value: string) => {
-  console.log(`selected ${value}`);
-};
+
 
 type CitiesType = {
   bgo: {};
@@ -69,13 +67,15 @@ const ScrollTicket = () => {
     }
   };
 };
+
+
+
 export const MapMainPage = () => {
   const [selectedCount, setSelectedCount] = useState<number | null>(null);
   const [info, setInfo] = useState<CitiesType[]>([]);
   const [spin, setSpin] = useState<boolean>(true);
   const [retryCount, setRetryCount] = useState<number>(0);
-  const [showContent, setShowContent] = useState<boolean>(false);
-  const [prices, setPrices] = useState<number>();
+  const[passengerCount,setPassengerCount]=useState<number>();
   const { signature } = useParams();
 
   const newCityArray: any[] = [];
@@ -153,7 +153,7 @@ export const MapMainPage = () => {
       </p>
     </div>
   );
-  const calculateTotalPrice = () => {
+  const calculatePrice = () => {
     let totalPrice = 0;
 
     info.forEach((city) => {
@@ -193,11 +193,16 @@ export const MapMainPage = () => {
   if (spin === true) {
     return <SpinPage />;
   }
+  
 
+  const handleChangePassengerSelect = (value: number) => {
+    setPassengerCount(value);
+  
+  };
   return (
     <div className="map">
       {selectedCount !== null && (
-        <MapContainer center={[40.409264, 49.867092]} zoom={2}>
+        <MapContainer center={[40.409264, 49.867092]} zoom={2} minZoom={2}>
           <TileLayer
             url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="https://carto.com/attribution">CARTO</a>'
@@ -463,9 +468,15 @@ export const MapMainPage = () => {
               ),
           )}
           <div className="rotate-name">
-            {newCityArray.map((city) => (
+            {newCityArray.map((city,index,array) => (
               <p>
-                {city['name']} <img src={arrowIcon} alt="/" />
+                {city['name']}
+                {
+                  index<array.length-1 &&(
+                    <img src={arrowIcon} alt="/" />
+
+                  )
+                } 
               </p>
             ))}
           </div>
@@ -474,14 +485,14 @@ export const MapMainPage = () => {
               <div className="left-side-passenger-select">
                 <Space wrap>
                   <Select
-                    defaultValue="1"
+                    defaultValue={1}
                     style={{ width: 120 }}
                     onChange={handleChangePassengerSelect}
                     options={[
-                      { value: '1', label: '1 passenger' },
-                      { value: '2', label: '2 passenger' },
-                      { value: '3', label: '3 passenger' },
-                      { value: '4', label: '4 passenger' },
+                      { value: 1, label: '1 passenger' },
+                      { value: 2, label: '2 passenger' },
+                      { value: 3, label: '3 passenger' },
+                      { value: 4, label: '4 passenger' },
                     ]}
                   />
                 </Space>
@@ -489,7 +500,13 @@ export const MapMainPage = () => {
                   <button className="help-sign">?</button>
                 </Popover>
               </div>
-              <div>price:${calculateTotalPrice()}</div>
+             { passengerCount!==undefined?(
+                <div className='tour-price'>price:${calculatePrice()*passengerCount}</div>
+
+              ):(
+                <div className='tour-price'>select passenger count</div>
+              )}
+             
             </div>
             <div className="tax-and-fees">
               <div className='tax'>
@@ -498,13 +515,24 @@ export const MapMainPage = () => {
                   <button className="tax-sign">?</button>
                 </Popover>
               </div>
-              <div className='tax-amount'>${`${Math.trunc(calculateTotalPrice()*0.1)}`}</div>
-              
+              { passengerCount!==undefined &&(
+                 <div className='tax-amount'>${`${Math.trunc(calculatePrice()*0.1*passengerCount)}`}</div>
+               
+
+              )}
+             
             </div>
             <hr/>
-            <div className='total-price'>Total price:${calculateTotalPrice()+Math.trunc(calculateTotalPrice()*0.1)}</div>
+            { passengerCount!==undefined ?(
+               
+            <div className='total-price'>Total price:${calculatePrice()*passengerCount+Math.trunc(calculatePrice()*0.1*passengerCount)}</div>
+              ):(
+                <div className='total-price'>Total price:loading...</div>
+              )}
+            
           </div>
         </div>
+        <button className='buy-ticket'>Buy</button>
       </div>
     </div>
   );
