@@ -514,64 +514,67 @@ export const MapMainPage = () => {
                         </p>
                       ))}
 
-                  <p className="range">{`${getDaysCount(new Date(city.tour[0].date), new Date(city.tour[city.tour.length - 1].date))} Nights`}</p>
+                    <p className="range">{`${getDaysCount(new Date(city.tour[0].date), new Date(city.tour[city.tour.length - 1].date))} Nights`}</p>
+                  </div>
+                ),
+            )}
+            <div className="rotate-name">
+              {newCityArray.map((city, index, array) => (
+                <p>
+                  {city['name']}
+                  {index < array.length - 1 && <img src={arrowIcon} alt="/" />}
+                </p>
+              ))}
+            </div>
+            <div>
+              <div className="passanger-select">
+                <div className="left-side-passenger-select">
+                  <Space wrap>
+                    <Select
+                      defaultValue={1}
+                      style={{ width: 120 }}
+                      onChange={handleChangePassengerSelect}
+                      options={[
+                        { value: 1, label: '1 passenger' },
+                        { value: 2, label: '2 passenger' },
+                        { value: 3, label: '3 passenger' },
+                        { value: 4, label: '4 passenger' },
+                      ]}
+                    />
+                  </Space>
+                  <Popover content={content} title="Help Center" trigger="hover">
+                    <button className="help-sign">?</button>
+                  </Popover>
                 </div>
-              ),
-          )}
-          <div className="rotate-name">
-            {newCityArray.map((city, index, array) => (
-              <p>
-                {city['name']}
-                {index < array.length - 1 && <img src={arrowIcon} alt="/" />}
-              </p>
-            ))}
-          </div>
-          <div>
-            <div className="passanger-select">
-              <div className="left-side-passenger-select">
-                <Space wrap>
-                  <Select
-                    defaultValue={1}
-                    style={{ width: 120 }}
-                    onChange={handleChangePassengerSelect}
-                    options={[
-                      { value: 1, label: '1 passenger' },
-                      { value: 2, label: '2 passenger' },
-                      { value: 3, label: '3 passenger' },
-                      { value: 4, label: '4 passenger' },
-                    ]}
-                  />
-                </Space>
-                <Popover content={content} title="Help Center" trigger="hover">
-                  <button className="help-sign">?</button>
-                </Popover>
+                {passengerCount !== undefined ? (
+                  <div className="tour-price">price:${calculatePrice() * passengerCount}</div>
+                ) : (
+                  <div className="tour-price">select passenger count</div>
+                )}
               </div>
+              <div className="tax-and-fees">
+                <div className="tax">
+                  <p>Taxes and Fees</p>
+                  <Popover content={contentTax} title="Taxes and Fees" trigger="hover">
+                    <button className="tax-sign">?</button>
+                  </Popover>
+                </div>
+                {passengerCount !== undefined && <div className="tax-amount">${`${Math.trunc(calculatePrice() * 0.1 * passengerCount)}`}</div>}
+              </div>
+              <hr />
               {passengerCount !== undefined ? (
-                <div className="tour-price">price:${calculatePrice() * passengerCount}</div>
+                <div className="total-price">
+                  Total price:${calculatePrice() * passengerCount + Math.trunc(calculatePrice() * 0.1 * passengerCount)}
+                </div>
               ) : (
-                <div className="tour-price">select passenger count</div>
+                <div className="total-price">Total price:loading...</div>
               )}
             </div>
-            <div className="tax-and-fees">
-              <div className="tax">
-                <p>Taxes and Fees</p>
-                <Popover content={contentTax} title="Taxes and Fees" trigger="hover">
-                  <button className="tax-sign">?</button>
-                </Popover>
-              </div>
-              {passengerCount !== undefined && <div className="tax-amount">${`${Math.trunc(calculatePrice() * 0.1 * passengerCount)}`}</div>}
-            </div>
-            <hr />
-            {passengerCount !== undefined ? (
-              <div className="total-price">
-                Total price:${calculatePrice() * passengerCount + Math.trunc(calculatePrice() * 0.1 * passengerCount)}
-              </div>
-            ) : (
-              <div className="total-price">Total price:loading...</div>
-            )}
           </div>
+          <button className="buy-ticket" onClick={() => message.success('Successful Operation!')}>
+            Buy
+          </button>
         </div>
-        <button className="buy-ticket" onClick={(()=>(message.success('Successful Operation!')))}>Buy</button>
       </div>
     </div>
   );
