@@ -526,7 +526,7 @@ export const MapMainPage = () => {
               ),
           )}
           <div className="rotate-name">
-            {newCityArray.map((city, index, array) => (
+            {newCityArray.map((city,index, array) => (
               <p>
                 {city['name']}
                 {index < array.length - 1 && <img src={arrowIcon} alt="/" />}
