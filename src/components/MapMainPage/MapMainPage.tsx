@@ -81,6 +81,8 @@ export const MapMainPage = () => {
   const [retryCount, setRetryCount] = useState<number>(0);
   const [passengerCount, setPassengerCount] = useState<number>(1);
   const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 1096);
+  const [isSmallScreenPrice, setIsSmallScreenPrice] = useState(window.innerWidth < 1096);
+  const [priceVisible, setPriceVisible] = useState(!isSmallScreenPrice);
   const [timelineVisible, setTimelineVisible] = useState(!isSmallScreen);
   const navigate = useNavigate();
   const { signature } = useParams();
@@ -141,9 +143,24 @@ export const MapMainPage = () => {
       window.removeEventListener('resize', handleResize);
     };
   }, []);
+  useEffect(() => {
+    const handleResizePrice = () => {
+      setIsSmallScreenPrice(window.innerWidth < 1096);
+    };
+
+    window.addEventListener('resize', handleResizePrice);
+
+    return () => {
+      window.removeEventListener('resize', handleResizePrice);
+    };
+  }, []);
 
   const toggleTimelineVisibility = () => {
     setTimelineVisible(!timelineVisible);
+  };
+  const togglePriceDivVisibility= ()=>{
+    setPriceVisible(!priceVisible);
+
   };
 
   const getRandomColor = () => {
@@ -295,7 +312,7 @@ export const MapMainPage = () => {
           style={{ position: 'absolute', top: '25px', left: '45px', backgroundColor: '#4bd963', fontWeight: 'bolder', zIndex: '1000' }}
           onClick={toggleTimelineVisibility}
         >
-          {timelineVisible ? 'Hide Timeline' : 'Show Timeline'}
+          {timelineVisible ? 'Hide Tickets' : 'Show Tickets'}
         </Button>
       )}
       <div
@@ -495,8 +512,17 @@ export const MapMainPage = () => {
           })}
         </Timeline>
       </div>
-      <div className="price-overall">
-        <div className="price">
+      {isSmallScreenPrice && (
+        <Button
+          type="primary"
+          style={{ position: 'absolute', top: '65px', left: '45px', backgroundColor: '#4bd963', fontWeight: 'bolder', zIndex: '1000' }}
+          onClick={togglePriceDivVisibility}
+        >
+          {priceVisible ? 'Hide Price' : 'Show Price'}
+        </Button>
+      )}
+      <div className="price-overall" >
+        <div className="price" style={{display: isSmallScreenPrice && !priceVisible ? 'none' : 'block',}}>
           <div className="price-main">
             {info.map(
               (city, index) =>
