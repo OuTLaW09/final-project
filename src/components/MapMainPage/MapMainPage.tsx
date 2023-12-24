@@ -1,16 +1,16 @@
 import './MapMainPage.scss';
+import { Button, Modal, Popover, Select, Space, Tabs, Timeline, message } from 'antd';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { MapContainer, Marker, Polyline, Popup, TileLayer } from 'react-leaflet';
-import L, { DivIcon } from 'leaflet';
-import { useEffect, useState } from 'react';
-import { Link, useParams, useNavigate } from 'react-router-dom';
-import { Button, Modal, Tabs, Timeline, Select, Space, Popover, message } from 'antd';
-import TabPane from 'antd/es/tabs/TabPane';
 import { SpinPage } from '../SpinPage/SpinPage';
-import rightSign from '../../assets/Images/right-arrow.png';
-import divider from '../../assets/Images/divider.png';
+import { useEffect, useState } from 'react';
+import L, { DivIcon } from 'leaflet';
+import TabPane from 'antd/es/tabs/TabPane';
 import airplane from '../../assets/Images/air-transport.png';
-import train from '../../assets/Images/train.png';
 import arrowIcon from '../../assets/Images/arrowIcon.png';
+import divider from '../../assets/Images/divider.png';
+import rightSign from '../../assets/Images/right-arrow.png';
+import train from '../../assets/Images/train.png';
 
 type CitiesType = {
   bgo: {};
@@ -23,9 +23,9 @@ type CitiesType = {
     name: string;
     bookingUrl: string;
     location: any;
-    partners:{
-      link:string;
-      name:string;
+    partners: {
+      link: string;
+      name: string;
     }[];
   }[];
   citiesCount: number;
@@ -126,8 +126,6 @@ export const MapMainPage = () => {
     fetchData();
   }, [signature, retryCount]);
 
-  
-
   useEffect(() => {
     const handleResize = () => {
       setIsSmallScreen(window.innerWidth < 1096);
@@ -224,9 +222,6 @@ export const MapMainPage = () => {
     setPassengerCount(value);
   };
 
-
-  
-
   return (
     <div className="map">
       {selectedCount !== null && (
@@ -290,7 +285,7 @@ export const MapMainPage = () => {
       {isSmallScreen && (
         <Button
           type="primary"
-          style={{ position: 'absolute', bottom: '10px', right: '10px',zIndex:'1000' }}
+          style={{ position: 'absolute', top: '25px', left: '45px', backgroundColor: '#4bd963', fontWeight: 'bolder', zIndex: '1000' }}
           onClick={toggleTimelineVisibility}
         >
           {timelineVisible ? 'Hide Timeline' : 'Show Timeline'}
@@ -305,12 +300,13 @@ export const MapMainPage = () => {
           opacity: '0.8',
           overflowY: 'auto',
           height: '600px',
-          display: isSmallScreen && !timelineVisible ? 'none' : 'block'
+          display: isSmallScreen && !timelineVisible ? 'none' : 'block',
         }}
       >
         <Timeline>
           {info.map((cityLoc) => {
             if (cityLoc.citiesCount === selectedCount) {
+              // eslint-disable-next-line no-lone-blocks
               {
                 if (cityLoc.cities.length - 1 === cityLoc.citiesCount) {
                   cityLoc.cities.forEach((city) => newCityArray.push(city));
@@ -360,37 +356,35 @@ export const MapMainPage = () => {
                               </p>
                               {index < array.length - 1 && (
                                 <div className="find-hotel-activities">
+                                  <button
+                                    style={{
+                                      border: '1px  solid white',
+                                      borderRadius: '10px',
+                                      textDecoration: 'none',
+                                      padding: '5px 15px',
+                                      textAlign: 'center',
+                                    }}
+                                  >
+                                    <a href={city.bookingUrl} target="_blank" style={{ color: 'black' }} rel="noreferrer">
+                                      Find Hotel
+                                    </a>
+                                  </button>
+                                  {city.partners && (
                                     <button
-                                  style={{
-                                    border: '1px  solid white',
-                                    borderRadius: '10px',
-                                    textDecoration: 'none',
-                                    padding: '5px 15px',
-                                    textAlign: 'center',
-                                  }}
-                                >
-                                  <a href={city.bookingUrl} target="_blank" style={{ color: 'black' }}>
-                                    Find Hotel
-                                  </a>
-                              
-                                </button>
-                                {city.partners &&(
-                                 <button  style={{
-                                  border: '1px  solid white',
-                                  borderRadius: '10px',
-                                  textDecoration: 'none',
-                                  padding: '5px 15px',
-                                  textAlign: 'center',
-                                }}><a href={city.partners[0]?.link} target="_blank" style={{ color: 'black' }}>{city.partners[0]?.name}</a></button> 
-                                    
-                                    
-
-                                )}
-                              
-
+                                      style={{
+                                        border: '1px  solid white',
+                                        borderRadius: '10px',
+                                        textDecoration: 'none',
+                                        padding: '5px 15px',
+                                        textAlign: 'center',
+                                      }}
+                                    >
+                                      <a href={city.partners[0]?.link} target="_blank" style={{ color: 'black' }} rel="noreferrer">
+                                        {city.partners[0]?.name}
+                                      </a>
+                                    </button>
+                                  )}
                                 </div>
-                              
-                                
                               )}
                             </div>
                           </div>
@@ -414,77 +408,75 @@ export const MapMainPage = () => {
                               )}
                             </div>
                           )}
-                          {cityLoc.tour[index].type!=='finish' &&(
-
-                          
-                          <div
-                            style={{
-                              backgroundColor: '#fff',
-                              opacity: '1',
-                              boxShadow: '10px 10px 20px 2px',
-                              borderRadius: '5%',
-                              padding: '15px',
-                            }}
-                          >
-                            {index < array.length - 1 && (
-                              <div style={{ display: 'flex' }}>
-                                <p
-                                  style={{
-                                    fontSize: '18px',
-                                    fontWeight: 'bolder',
-                                  }}
-                                >
-                                  {`${city['name']} `}
-                                </p>
-                                <img
-                                  src={rightSign}
-                                  alt="/"
-                                  style={{
-                                    width: '20px',
-                                    height: '20px',
-                                    marginTop: '23px',
-                                  }}
-                                />
-                                <p
-                                  style={{
-                                    fontSize: '18px',
-                                    fontWeight: 'bolder',
-                                  }}
-                                >
-                                  {`${array[index + 1]['name']}`}
-                                </p>
-                              </div>
-                            )}
-
-                            {index < array.length - 1 && (
-                              <div className="station" style={{ marginTop: '-20px' }}>
-                                <div className="long-name" style={{ display: 'flex', justifyContent: 'space-between', marginTop: '-20px' }}>
-                                  <p>{cityLoc.stations.find((t) => t.docId === cityLoc.tour[index + 1].transfer.originId)?.name}-</p>
-                                  <p>{cityLoc.stations.find((t) => t.docId === cityLoc.tour[index + 1].transfer.destinationId)?.name}</p>
-                                </div>
-                                <div className="short-name" style={{ display: 'flex', justifyContent: 'space-between' }}>
-                                  <p>{cityLoc.stations.find((t) => t.docId === cityLoc.tour[index + 1].transfer.originId)?.shortName}</p>
-                                  <div
-                                    className="hours"
+                          {cityLoc.tour[index].type !== 'finish' && (
+                            <div
+                              style={{
+                                backgroundColor: '#fff',
+                                opacity: '1',
+                                boxShadow: '10px 10px 20px 2px',
+                                borderRadius: '5%',
+                                padding: '15px',
+                              }}
+                            >
+                              {index < array.length - 1 && (
+                                <div style={{ display: 'flex' }}>
+                                  <p
                                     style={{
-                                      display: 'flex',
-                                      flexDirection: 'column',
+                                      fontSize: '18px',
+                                      fontWeight: 'bolder',
                                     }}
                                   >
-                                    <p>{cityLoc.tour[index + 1].transfer.duration}</p>
-                                    <p className="line" style={{ marginTop: '-10px' }}></p>
-                                    <p style={{ color: '#43d359', marginTop: '-10px' }}>Non-stop</p>
-                                  </div>
-                                  <p>{cityLoc.stations.find((t) => t.docId === cityLoc.tour[index + 1].transfer.destinationId)?.shortName}</p>
+                                    {`${city['name']} `}
+                                  </p>
+                                  <img
+                                    src={rightSign}
+                                    alt="/"
+                                    style={{
+                                      width: '20px',
+                                      height: '20px',
+                                      marginTop: '23px',
+                                    }}
+                                  />
+                                  <p
+                                    style={{
+                                      fontSize: '18px',
+                                      fontWeight: 'bolder',
+                                    }}
+                                  >
+                                    {`${array[index + 1]['name']}`}
+                                  </p>
                                 </div>
+                              )}
 
-                                <div className="time" style={{ display: 'flex', justifyContent: 'space-between', marginTop: '-50px' }}>
-                                  <p>{cityLoc.tour[index + 1].transfer.departureTime}</p>
-                                  <p>{cityLoc.tour[index + 1].transfer.arrivalTime}</p>
+                              {index < array.length - 1 && (
+                                <div className="station" style={{ marginTop: '-20px' }}>
+                                  <div className="long-name" style={{ display: 'flex', justifyContent: 'space-between', marginTop: '-20px' }}>
+                                    <p>{cityLoc.stations.find((t) => t.docId === cityLoc.tour[index + 1].transfer.originId)?.name}-</p>
+                                    <p>{cityLoc.stations.find((t) => t.docId === cityLoc.tour[index + 1].transfer.destinationId)?.name}</p>
+                                  </div>
+                                  <div className="short-name" style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                    <p>{cityLoc.stations.find((t) => t.docId === cityLoc.tour[index + 1].transfer.originId)?.shortName}</p>
+                                    <div
+                                      className="hours"
+                                      style={{
+                                        display: 'flex',
+                                        flexDirection: 'column',
+                                      }}
+                                    >
+                                      <p>{cityLoc.tour[index + 1].transfer.duration}</p>
+                                      <p className="line" style={{ marginTop: '-10px' }}></p>
+                                      <p style={{ color: '#43d359', marginTop: '-10px' }}>Non-stop</p>
+                                    </div>
+                                    <p>{cityLoc.stations.find((t) => t.docId === cityLoc.tour[index + 1].transfer.destinationId)?.shortName}</p>
+                                  </div>
+
+                                  <div className="time" style={{ display: 'flex', justifyContent: 'space-between', marginTop: '-50px' }}>
+                                    <p>{cityLoc.tour[index + 1].transfer.departureTime}</p>
+                                    <p>{cityLoc.tour[index + 1].transfer.arrivalTime}</p>
+                                  </div>
                                 </div>
-                              </div>
-                            )}
-                          </div>
+                              )}
+                            </div>
                           )}
                         </div>
                       </Timeline.Item>
@@ -496,89 +488,93 @@ export const MapMainPage = () => {
           })}
         </Timeline>
       </div>
-      <div className="price">
-        <div className="price-main">
-          {info.map(
-            (city, index) =>
-              city.citiesCount === selectedCount && (
-                <div className="dates-range" key={index}>
-                  {city.tour
-                    .filter((tour) => tour.type === 'start' || tour.type === 'finish')
-                    .map((tour, tourIndex) => (
-                      <p key={tourIndex} className="dates">
-                        {tour.type === 'start' &&
-                          new Date(tour.date).toLocaleDateString('en-US', {
-                            weekday: 'short',
-                            month: 'short',
-                            day: 'numeric',
-                          })}
-                        {tour.type === 'finish' &&
-                          new Date(tour.date).toLocaleDateString('en-US', {
-                            weekday: 'short',
-                            month: 'short',
-                            day: 'numeric',
-                          })}
-                      </p>
-                    ))}
+      <div className="price-overall">
+        <div className="price">
+          <div className="price-main">
+            {info.map(
+              (city, index) =>
+                city.citiesCount === selectedCount && (
+                  <div className="dates-range" key={index}>
+                    {city.tour
+                      .filter((tour) => tour.type === 'start' || tour.type === 'finish')
+                      .map((tour, tourIndex) => (
+                        <p key={tourIndex} className="dates">
+                          {tour.type === 'start' &&
+                            new Date(tour.date).toLocaleDateString('en-US', {
+                              weekday: 'short',
+                              month: 'short',
+                              day: 'numeric',
+                            })}
+                          {tour.type === 'finish' &&
+                            new Date(tour.date).toLocaleDateString('en-US', {
+                              weekday: 'short',
+                              month: 'short',
+                              day: 'numeric',
+                            })}
+                        </p>
+                      ))}
 
-                  <p className="range">{`${getDaysCount(new Date(city.tour[0].date), new Date(city.tour[city.tour.length - 1].date))} Nights`}</p>
+                    <p className="range">{`${getDaysCount(new Date(city.tour[0].date), new Date(city.tour[city.tour.length - 1].date))} Nights`}</p>
+                  </div>
+                ),
+            )}
+            <div className="rotate-name">
+              {newCityArray.map((city, index, array) => (
+                <p>
+                  {city['name']}
+                  {index < array.length - 1 && <img src={arrowIcon} alt="/" />}
+                </p>
+              ))}
+            </div>
+            <div>
+              <div className="passanger-select">
+                <div className="left-side-passenger-select">
+                  <Space wrap>
+                    <Select
+                      defaultValue={1}
+                      style={{ width: 120 }}
+                      onChange={handleChangePassengerSelect}
+                      options={[
+                        { value: 1, label: '1 passenger' },
+                        { value: 2, label: '2 passenger' },
+                        { value: 3, label: '3 passenger' },
+                        { value: 4, label: '4 passenger' },
+                      ]}
+                    />
+                  </Space>
+                  <Popover content={content} title="Help Center" trigger="hover">
+                    <button className="help-sign">?</button>
+                  </Popover>
                 </div>
-              ),
-          )}
-          <div className="rotate-name">
-            {newCityArray.map((city, index, array) => (
-              <p>
-                {city['name']}
-                {index < array.length - 1 && <img src={arrowIcon} alt="/" />}
-              </p>
-            ))}
-          </div>
-          <div>
-            <div className="passanger-select">
-              <div className="left-side-passenger-select">
-                <Space wrap>
-                  <Select
-                    defaultValue={1}
-                    style={{ width: 120 }}
-                    onChange={handleChangePassengerSelect}
-                    options={[
-                      { value: 1, label: '1 passenger' },
-                      { value: 2, label: '2 passenger' },
-                      { value: 3, label: '3 passenger' },
-                      { value: 4, label: '4 passenger' },
-                    ]}
-                  />
-                </Space>
-                <Popover content={content} title="Help Center" trigger="hover">
-                  <button className="help-sign">?</button>
-                </Popover>
+                {passengerCount !== undefined ? (
+                  <div className="tour-price">price:${calculatePrice() * passengerCount}</div>
+                ) : (
+                  <div className="tour-price">select passenger count</div>
+                )}
               </div>
+              <div className="tax-and-fees">
+                <div className="tax">
+                  <p>Taxes and Fees</p>
+                  <Popover content={contentTax} title="Taxes and Fees" trigger="hover">
+                    <button className="tax-sign">?</button>
+                  </Popover>
+                </div>
+                {passengerCount !== undefined && <div className="tax-amount">${`${Math.trunc(calculatePrice() * 0.1 * passengerCount)}`}</div>}
+              </div>
+              <hr />
               {passengerCount !== undefined ? (
-                <div className="tour-price">price:${calculatePrice() * passengerCount}</div>
+                <div className="total-price">
+                  Total price:${calculatePrice() * passengerCount + Math.trunc(calculatePrice() * 0.1 * passengerCount)}
+                </div>
               ) : (
-                <div className="tour-price">select passenger count</div>
+                <div className="total-price">Total price:loading...</div>
               )}
             </div>
-            <div className="tax-and-fees">
-              <div className="tax">
-                <p>Taxes and Fees</p>
-                <Popover content={contentTax} title="Taxes and Fees" trigger="hover">
-                  <button className="tax-sign">?</button>
-                </Popover>
-              </div>
-              {passengerCount !== undefined && <div className="tax-amount">${`${Math.trunc(calculatePrice() * 0.1 * passengerCount)}`}</div>}
-            </div>
-            <hr />
-            {passengerCount !== undefined ? (
-              <div className="total-price">
-                Total price:${calculatePrice() * passengerCount + Math.trunc(calculatePrice() * 0.1 * passengerCount)}
-              </div>
-            ) : (
-              <div className="total-price">Total price:loading...</div>
-            )}
           </div>
+          <button className="buy-ticket" onClick={() => message.success('Successful Operation!')}>
+            Buy
+          </button>
         </div>
-        <button className="buy-ticket" onClick={(()=>(message.success('Successful Operation!')))}>Buy</button>
       </div>
     </div>
   );
