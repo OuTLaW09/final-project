@@ -681,11 +681,11 @@ export const citiesArray: City[] = [
 ];
 
 export const citiesThemes = [
-  { apiVersion: ':2:', code: 'eurp_us', dstn: 'eurp', docId: 'thm-8', zoom: 3.5, name: 'Europe: Best Places to Visit' },
-  { apiVersion: ':2:', code: 'eurp_sh', dstn: 'europe', docId: 'thm-5', zoom: 4.0999999999999996, name: 'Europe: Schengen countries' },
-  { name: 'Turkey', dstn: 'tr', code: 'turkey', apiVersion: ':2:', docId: 'thm-94' },
-  { apiVersion: ':2:', code: 'america/europe', docId: 'thm-54', name: ' America and Europe' },
-  { name: 'United States', dstn: 'us', code: 'america', docId: 'thm-43', apiVersion: ':2:' },
-  { name: 'Asia', code: 'asia', docId: 'thm-51', apiVersion: ':2:' },
-  { apiVersion: ':2:', code: 'capital', docId: 'thm-10', dstn: 'europe', name: 'Capitals' },
+  {"apiVersion":":2:","code":"capital","docId":"thm-30","name":"Europe: Capitals"},
+  {"apiVersion":":2:","code":"rmntc","dstn":"eurp","docId":"thm-1","zoom":4.5999999999999996,"name":"Europe: Romantic Cities"},
+  {"name":"Russia: All cities","code":"ru_big","dstn":"ru_big","apiVersion":":2:","docId":"thm-102"},
+  {"apiVersion":":2:","code":"eurp","dstn":"europe","docId":"thm-3","zoom":4.5999999999999996,"name":"Europe: Best Places to Visit"},
+  {"name":"Europe: Schengen Countries","code":"schengen_pllt","dstn":"europe","docId":"thm-93","apiVersion":":2:","descriptionShort":"schengen for PL LT"},
+  {"name":"Europe: by Train","code":"eurp_train","dstn":"europe","apiVersion":":2:","docId":"thm-121"}
+  
 ];

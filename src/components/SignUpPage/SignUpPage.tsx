@@ -47,8 +47,8 @@ export const SignUpPage: React.FC<SignupFormProps> = ({ onSubmit }) => {
   const prefixSelector = (
     <Form.Item name="prefix" noStyle>
       <Select style={{ width: 80 }}>
-        <Option value="994">+994</Option>
-        <Option value="998">+998</Option>
+        <Option value='994' >+994</Option>
+        <Option value='998' >+998</Option>
       </Select>
     </Form.Item>
   );
@@ -78,8 +78,8 @@ export const SignUpPage: React.FC<SignupFormProps> = ({ onSubmit }) => {
             <p className="signup-p">Sign Up </p>
           </div>
           <Form name="form_item_path" layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed} className="Form">
-            <MyFormItemGroup prefix={['user']}>
-              <MyFormItemGroup prefix={['name']}>
+            <div >
+              <div >
                 <div className="user-name">
                   <MyFormItem
                     name="firstName"
@@ -93,7 +93,7 @@ export const SignUpPage: React.FC<SignupFormProps> = ({ onSubmit }) => {
                     <Input placeholder="Last Name" />
                   </MyFormItem>
                 </div>
-              </MyFormItemGroup>
+              </div>
               <div className="email-age">
                 <MyFormItem
                   name="email"
@@ -152,7 +152,7 @@ export const SignUpPage: React.FC<SignupFormProps> = ({ onSubmit }) => {
                   iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
                 />
               </MyFormItem>
-            </MyFormItemGroup>
+            </div>
             <Button type="primary" htmlType="submit">
               SIGN UP
             </Button>
