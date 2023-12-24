@@ -14,21 +14,11 @@ interface LoginFormProps {
 }
 const MyFormItemContext = React.createContext<(string | number)[]>([]);
 
-interface MyFormItemGroupProps {
-  prefix: string | number | (string | number)[];
-  children: React.ReactNode;
-}
 
 function toArr(str: string | number | (string | number)[]): (string | number)[] {
   return Array.isArray(str) ? str : [str];
 }
 
-const MyFormItemGroup = ({ prefix, children }: MyFormItemGroupProps) => {
-  const prefixPath = React.useContext(MyFormItemContext);
-  const concatPath = React.useMemo(() => [...prefixPath, ...toArr(prefix)], [prefixPath, prefix]);
-
-  return <MyFormItemContext.Provider value={concatPath}>{children}</MyFormItemContext.Provider>;
-};
 
 const MyFormItem = ({ name, ...props }: FormItemProps) => {
   const prefixPath = React.useContext(MyFormItemContext);
@@ -91,16 +81,14 @@ export const LoginPage : React.FC<LoginFormProps> = ({ onSubmit }) => {
             <Divider><p className="use-account">or use your account</p></Divider>
           </div>
           <Form name="form_item_path" layout="vertical" onFinish={onFinishLogIn} className="form">
-            <MyFormItemGroup prefix={['user']}>
-              <MyFormItemGroup prefix={['name']}>
+            
                 <MyFormItem name="firstName" label="First Name" rules={[{ required: true, message: 'please fill the form' }]}>
                   <Input placeholder="First Name" className="input" />
                 </MyFormItem>
                 <MyFormItem name="lastName" label="Last Name" rules={[{ required: true, message: 'please fill the form' }]}>
                   <Input placeholder="Last Name" className="input" />
                 </MyFormItem>
-              </MyFormItemGroup>
-            </MyFormItemGroup>
+              
             <Form.Item
               name="password"
               label="Password"

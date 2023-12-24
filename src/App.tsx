@@ -13,7 +13,7 @@ function App() {
   const [signupInfo, setSignupInfo] = useState<any | null>(null);
   const handleSignUpSubmit = async (values: any) => {
     try {
-      const response = await fetch('http://localhost:3000', {
+      const response = await fetch('https://devedu-az.com:7001/api/movies/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -29,25 +29,28 @@ function App() {
 
     setSignupInfo(values);
     message.success('you create new account,succesfully');
-    signUpData.push(values['user']['password']);
-    signUpData.push(values['user']['email']);
-    signUpData.push(values['user']['phone-number']);
+    signUpData.push(values['password']);
+    signUpData.push(values['email']);
+    signUpData.push(values['phone-number']);
 
     console.log(values);
   };
 
   const handleLoginSubmit = (values: any) => {
-    console.log(values);
+    console.log(values,'jhjhjhj');
 
     if (
       signupInfo &&
-      values['user']['name']['firstName'] === signupInfo['user']['name']['firstName'] &&
-      values['user']['name']['lastName'] === signupInfo['user']['name']['lastName'] &&
-      values['password'] === signupInfo['user']['password']
+      values['firstName'] === signupInfo['firstName'] &&
+      values['lastName'] === signupInfo['lastName'] &&
+      values['password'] === signupInfo['password']
     ) {
       checkLogIn = true;
       message.success('Login succesfull');
     } else {
+      console.log( values['firstName'],signupInfo['firstName']);
+      console.log( values['lastName'],signupInfo['lastName']);
+      console.log( values['password'],signupInfo['password']);
       checkLogIn = false;
       message.warning('some information is wrong,please check');
     }

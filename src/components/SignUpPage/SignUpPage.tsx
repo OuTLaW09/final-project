@@ -47,8 +47,8 @@ export const SignUpPage: React.FC<SignupFormProps> = ({ onSubmit }) => {
   const prefixSelector = (
     <Form.Item name="prefix" noStyle>
       <Select style={{ width: 80 }}>
-        <Option value="994">+994</Option>
-        <Option value="998">+998</Option>
+        <Option value='994' >+994</Option>
+        <Option value='998' >+998</Option>
       </Select>
     </Form.Item>
   );

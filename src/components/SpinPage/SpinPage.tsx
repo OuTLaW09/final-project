@@ -12,13 +12,7 @@ export const SpinPage = () => {
      
     <div className='spin-icon'>
       <img src={spinner} alt="" className='spinner-logo'/>
-    {/* <Spin className='spinner' indicator={<LoadingOutlined style={{ fontSize: 24,
-     display:'flex',
-     justifyContent:'center',
-     marginLeft:'500px',
-     marginTop:'400px'
-   
-      }} spin />} /> */}
+    
 
     </div>
    
