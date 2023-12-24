@@ -30,11 +30,14 @@
         height: 500px;
         .rotation-container {
           border: 1px solid #000000;
-          box-shadow: #000000 0px 3px 3px 7px;
+          box-shadow: #000000 0px 1px 1px 4px;
           display: flex;
           flex-direction: column;
           align-items: center;
           backdrop-filter: blur(8px);
+          display: flex;
+          flex-direction: column;
+          align-items: center;
           .build-trip-container {
             p {
               text-shadow:
@@ -60,15 +63,9 @@
             border: 1px solid grey;
             border-radius: 5px;
           }
-          .count-of-city {
-            width: 150px;
-            height: 70px;
-            border: 1px solid grey;
-            border-radius: 5px;
-          }
           .countries-select {
             font-size: 20px;
-            width: 200px;
+            width: 350px;
             height: 95px;
             padding: 10px;
             border-radius: 0%;
