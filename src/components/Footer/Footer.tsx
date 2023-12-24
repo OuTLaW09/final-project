@@ -2,15 +2,24 @@ import './Footer.scss';
 import { Link } from 'react-router-dom';
 import BackToTopImage from '../../assets/Images/backtotop.png';
 import FooterTopImage from '../../assets/Images/footerImage.png';
-import airplaneLogo from '../../assets/Images/airplaneLogo.png';
+import airplaneLogo from '../../assets/Images/travel.png';
 import facebookFooter from '../../assets/Images/facebookFooter.png';
 import instagramFooter from '../../assets/Images/instagramFooter.png';
 import linkedinFooter from '../../assets/Images/linkedinFooter.png';
+import { Popover } from 'antd';
 
 const topFunction = () => {
   document.body.scrollTop = 0;
   document.documentElement.scrollTop = 0;
 };
+
+const contentContactUs = (
+  <div>
+    <p>Contact Numbers:</p>
+    <p>+994705983905</p>
+    <p>+994507619995</p>
+  </div>
+);
 
 export const Footer = () => {
   return (
@@ -32,7 +41,6 @@ export const Footer = () => {
                     <a href="/">Home</a>
                     <Link to="login">Log in</Link>
                     <Link to="sign-up">Sign Up</Link>
-                    <Link to="c">My Profile</Link>
                     <a href="/" className="about-us-footer">
                       About us
                     </a>
@@ -49,18 +57,22 @@ export const Footer = () => {
             <div className="right-of-bottom-footer">
               <div className="get-in-touch-contact-us">
                 <div className="get-in-touch">Get in touch</div>
+             
+                <Popover content={contentContactUs} title="Contact Us" trigger="click">
                 <button className="contact-us-footer">Contact us</button>
+                </Popover>
+                
               </div>
               <div className="follow-us-part">
                 <a href="/">Follow us</a>
                 <div className="follow-us-logo-part">
-                  <a href="/">
+                  <a href="https://www.instagram.com/" target='_blank'>
                     <img src={instagramFooter} alt="" />
                   </a>
-                  <a href="/">
+                  <a href="https://www.facebook.com/" target='_blank'>
                     <img src={facebookFooter} alt="" />
                   </a>
-                  <a href="/">
+                  <a href="https://www.linkedin.com/" target='_blank'>
                     <img src={linkedinFooter} alt="" />
                   </a>
                 </div>

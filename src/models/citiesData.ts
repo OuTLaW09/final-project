@@ -5,12 +5,12 @@ export type City = {
   nameAddition?: string;
   codeIata: string;
   codeSky?: null | string;
-  timezoneIana: string;
-  bookingUrl: string;
+  timezoneIana?: string;
+  bookingUrl?: string;
   airbnbUrl?: string;
   themes: string[];
-  icon: null;
-  location: number[];
+  icon?: null;
+  location?: number[];
   countryId: string;
   docId: string;
   dayTrips?: undefined;
@@ -278,24 +278,7 @@ export const citiesArray: City[] = [
     apiVersion: ':2:',
     content: { topReason: 'Bullring Shopping Centre, Gas Street, Barclaycard Arena', shortDesc: 'City in East Sussex' },
   },
-  {
-    name: 'Bedford',
-    weight: 75,
-    nameSearch: 'Bedford',
-    codeIata: 'EWB',
-    codeSky: null,
-    timezoneIana: 'Europe/London',
-    themes: ['europe', 'uk'],
-    icon: null,
-    location: [52.134999999999998, -0.46999999999999997],
-    countryId: 'ctry-17',
-    docId: 'cty-1144',
-    bookingUrl: '',
-    airbnbUrl: '',
-    startThemes: ['europe', 'eu', 'schengen', 'eurp_sh', 'eurp_us'],
-    apiVersion: ':2:',
-    content: { topReason: '', shortDesc: 'City in England' },
-  },
+
   {
     name: 'Berlin',
     weight: 93,
@@ -632,23 +615,45 @@ export const citiesArray: City[] = [
       oneDayTrip: 'Lugano, Monza, Stresa',
     },
   },
+
   {
-    name: 'Tokyo',
-    nameSearch: 'TYO,Tokyo,\u0422\u043e\u043a\u0438\u043e,\u042f\u043f\u043e\u043d\u0438\u044f',
-    codeIata: 'TYO',
+    name: 'Leon',
+    weight: 45,
+    nameSearch: 'Leon',
+    nameAddition: 'Spain',
+    codeIata: 'LEN',
     codeSky: null,
-    timezoneIana: 'Asia/Tokyo',
-    themes: ['wrld', 'eurasia', 'asia', 'east_asia', 'jp', 'asia_s'],
+    timezoneIana: 'Europe/Madrid',
+    themes: ['es', 'europe'],
     icon: null,
-    bookingUrl: 'http://www.booking.com/searchresults.html?city=-246227\u0026aid=855838\u0026no_rooms=1\u0026group_adults=1',
+    location: [42.605556, -5.5700000000000003],
+    countryId: 'ctry-23',
+    docId: 'cty-1073',
+    bookingUrl: 'https://www.booking.com/searchresults.en.html?city=-389068\u0026aid=849127\u0026no_rooms=1\u0026group_adults=1\u0026room1=A',
     airbnbUrl: '',
-    location: [35.689487499999998, 139.69170639999999],
-    countryId: 'ctry-213',
-    docId: 'cty-282',
-    startThemes: ['eurp_us', 'capital', 'asia'],
+    startThemes: ['eurp'],
     apiVersion: ':2:',
-    content: { topReason: 'Japanese Cuisine, Japanese Culture, Train System\n', shortDesc: 'Capital of Japan' },
+    content: { topReason: '', shortDesc: 'It\u2019s home to many churches and cathedrals noted for their architecture and art.' },
   },
+  {
+    name: 'Mazyr',
+    nameAddition: 'Belarus',
+    nameSearch: 'Mazyr,\u041c\u043e\u0437\u044b\u0440\u044c',
+    codeIata: '',
+    codeSky: null,
+    timezoneIana: 'Europe/Minsk',
+    themes: ['by_big'],
+    icon: null,
+    location: [52.049999999999997, 29.266667000000002],
+    countryId: 'ctry-160',
+    docId: 'cty-1125',
+    bookingUrl: '',
+    airbnbUrl: '',
+    startThemes: ['eurp_sh', 'eurp'],
+    apiVersion: ':2:',
+    content: { topReason: 'Nightlife, skyline views and Old Town exploring', shortDesc: 'A city in Gomel Region of Belarus on the Pripyat River.' },
+  },
+
   {
     name: 'Luxembourg',
     weight: 70,
@@ -678,14 +683,49 @@ export const citiesArray: City[] = [
       localHolidays: [{ date: '23rd June', reason: 'National Day' }],
     },
   },
+  {
+    name: 'Dubai',
+    nameSearch: 'Dubai,DXB,Abu D,UAE',
+    codeIata: 'DXB',
+    countryId: 'ctry-244',
+    docId: 'cty-286',
+    themes: ['aa', 'wrld', 'eurasia', 'asia'],
+    startThemes: ['eurp_us', 'eurp_sh', 'capital', 'mediterranean'],
+  },
+  {
+    name: 'Strasbourg',
+    nameSearch:
+      'Estrasborg,Estrasbou,Estrasburg,Estrasburgo,Estrasburgu,Gorad Strasburg,Lungsod ng Strasbourg,SXB,Sjtraasburg,Straasburch,Straasbuurich,Straatsburg,Strasborg,Strasborgh,Strasbourg,Strasbourgo,Strasbur,Strasbura,Strasburas,Strasburg,Strasburgo,Strasburgu,Strasburk,Strasbwrg,Strasb\u00f4rg,Strasb\u016bra,Strasb\u016bras,Strassborg,Strassbourg,Strassburg,Straszburg,Strazbur,Strazburg,Strazburgu,Stra\u00dfborg,Stra\u00dfburg,Stra\u017cburgu,Stroosburi,Stroossbuerg,Str\u00e5ssburg,Str\u01e3tburg,astrasbwrg,s thra sbur,seuteulaseubuleu,si te la si bao,stiraspurk,strasabarga,strasaborga,strasaburga,strasbwrg,strasbwrgh,strsbwrg,sutorasuburu,\u0160trasburg,\u0160trasburk,\u03a3\u03c4\u03c1\u03b1\u03c3\u03b2\u03bf\u03cd\u03c1\u03b3\u03bf,\u0413\u043e\u0440\u0430\u0434 \u0421\u0442\u0440\u0430\u0441\u0431\u0443\u0440\u0433,\u0421\u0442\u0440\u0430\u0437\u0431\u0443\u0440,\u0421\u0442\u0440\u0430\u0441\u0431\u0443\u0440\u0433,\u05e9\u05d8\u05e8\u05d0\u05e1\u05d1\u05d5\u05e8\u05d2,\u05e9\u05d8\u05e8\u05e1\u05d1\u05d5\u05e8\u05d2,\u0627\u0633\u062a\u0631\u0627\u0633\u0628\u0648\u0631\u06af,\u0633\u062a\u0631\u0627\u0633\u0628\u0648\u0631\u063a,\u0633\u062a\u0631\u0627\u0633\u0628\u0648\u0631\u06af,\u0634\u0679\u0631\u0627\u0633\u0628\u0631\u06af,\u0938\u094d\u091f\u094d\u0930\u093e\u0938\u092c\u0930\u094d\u0917,\u0938\u094d\u0924\u094d\u0930\u093e\u0938\u092c\u0941\u0930\u094d\u0917,\u0ab8\u0acd\u0a9f\u0acd\u0ab0\u0abe\u0ab8\u0aac\u0acb\u0ab0\u0acd\u0a97,\u0bb8\u0bcd\u0ba4\u0bbf\u0bb0\u0bbe\u0bb8\u0bcd\u0baa\u0bc2\u0bb0\u0bcd\u0b95\u0bcd,\u0e2a\u0e17\u0e23\u0e32\u0e0b\u0e1a\u0e39\u0e23\u0e4c,\u0f66\u0f72\u0f0b\u0f50\u0f72\u0f0b\u0f62\u0f71\u0f0b\u0f66\u0f72\u0f0b\u0f56\u0f74\u0f62\u0f0d,\u10e1\u10e2\u10e0\u10d0\u10e1\u10d1\u10e3\u10e0\u10d8,\u1235\u1275\u122b\u12dd\u1261\u122d\u130d,\u30b9\u30c8\u30e9\u30b9\u30d6\u30fc\u30eb,\u65af\u7279\u62c9\u65af\u5821,\uc2a4\ud2b8\ub77c\uc2a4\ubd80\ub974',
+    nameAddition: 'France',
+    codeIata: 'SXB',
+    countryId: 'ctry-120',
+    docId: 'cty-18',
+    themes: ['eurp_il', 'eurp_sh', 'eurp_us', 'include', 'eurp', 'eurasia', 'fr', 'fr_big', 'fr_max', 'europe', 'itfr'],
+    startThemes: ['eurp_us', 'eurp_sh', 'capital', 'mediterranean', 'fr'],
+  },
+  {
+    name: 'Atlanta, GA',
+    nameSearch: 'Atlanta,GA,ATL,\u0410\u0442\u043b\u0430\u043d\u0442\u0430',
+    nameAddition: '',
+    codeIata: 'ATL',
+    countryId: 'ctry-92',
+    docId: 'cty-181',
+    themes: ['aa', 'wrld', 'america', 'nam', 'us', 'us_big', 'southern', 'cam', 'include'],
+    startThemes: ['eurp_us', 'eurp_sh', 'capital', 'mediterranean'],
+  },
 ];
 
 export const citiesThemes = [
-  {"apiVersion":":2:","code":"capital","docId":"thm-30","name":"Europe: Capitals"},
-  {"apiVersion":":2:","code":"rmntc","dstn":"eurp","docId":"thm-1","zoom":4.5999999999999996,"name":"Europe: Romantic Cities"},
-  {"name":"Russia: All cities","code":"ru_big","dstn":"ru_big","apiVersion":":2:","docId":"thm-102"},
-  {"apiVersion":":2:","code":"eurp","dstn":"europe","docId":"thm-3","zoom":4.5999999999999996,"name":"Europe: Best Places to Visit"},
-  {"name":"Europe: Schengen Countries","code":"schengen_pllt","dstn":"europe","docId":"thm-93","apiVersion":":2:","descriptionShort":"schengen for PL LT"},
-  {"name":"Europe: by Train","code":"eurp_train","dstn":"europe","apiVersion":":2:","docId":"thm-121"}
-  
+  { apiVersion: ':2:', code: 'capital', docId: 'thm-30', name: 'Europe: Capitals' },
+  { apiVersion: ':2:', code: 'rmntc', dstn: 'eurp', docId: 'thm-1', zoom: 4.5999999999999996, name: 'Europe: Romantic Cities' },
+  { apiVersion: ':2:', code: 'eurp', dstn: 'europe', docId: 'thm-3', zoom: 4.5999999999999996, name: 'Europe: Best Places to Visit' },
+  {
+    name: 'Europe: Schengen Countries',
+    code: 'schengen_pllt',
+    dstn: 'europe',
+    docId: 'thm-93',
+    apiVersion: ':2:',
+    descriptionShort: 'schengen for PL LT',
+  },
+  { name: 'Europe: by Train', code: 'eurp_train', dstn: 'europe', apiVersion: ':2:', docId: 'thm-121' },
 ];

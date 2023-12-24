@@ -4,16 +4,7 @@ import { CarouselRef } from 'antd/es/carousel';
 import { cities } from '../../models/CarouselObject';
 import React, { useEffect } from 'react';
 
-interface Cities {
-  imageUrl: string;
-  seasons: string[];
-  rating: number;
-  packages: string[];
-  description: string;
-}
-interface ArrayProps {
-  items: Cities[];
-}
+
 export const CarouselPage: React.FC = () => {
   const carouselRef = React.createRef<CarouselRef>();
   const carouselWrapperRef = React.createRef<HTMLDivElement>();
@@ -61,16 +52,19 @@ export const CarouselPage: React.FC = () => {
               <div className="city-card">
                 <div className="city-card-flex">
                   <div className="carousel-image-container">
-                    <img alt="" src={item.imageUrl} />
+                    <img alt="" src={item.icon} />
                   </div>
                   <div className="about-city-container">
-                    <p className="place-name">{item.name}</p>
-                    <p className="city-properties">Suitable Seasons:{item.seasons}</p>
-                    <p className="city-properties">Rating:{item.rating}</p>
-                    <p className="city-properties">Packages:{item.packages}</p>
+                  <p className="place-name">{item.name}</p>
+                  
+                    
                   </div>
                 </div>
-                <p className="description-of-places">{item.description}</p>
+                <div className="description-of-places">
+               
+                <p className="city-properties">{item.content?.shortDesc}</p>
+                 <p>Top Reason:{item.content?.topReason}</p> 
+                </div>
               </div>
             ))}
           </Carousel>

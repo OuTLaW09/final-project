@@ -32,9 +32,6 @@ const App: React.FC = () => {
         <Link to="/">
           <button className="Home-button">Home</button>
         </Link>
-        <Link to="/">
-          <button className="profile-button">My Profile</button>
-        </Link>
         <Link to="login">
           <button className="Login-button">Login</button>
         </Link>

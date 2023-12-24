@@ -49,8 +49,8 @@ custom-marker {
     z-index: 1000;
     height: 400px;
     overflow-y: auto;
-    scrollbar-width: thin; /* Firefox */
-    scrollbar-color: darkgrey lightgrey; /* Firefox */
+    scrollbar-width: thin; 
+    scrollbar-color: darkgrey lightgrey; 
 
     &::-webkit-scrollbar {
       width: 10px;
