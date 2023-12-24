@@ -3,6 +3,7 @@ import './Burger.scss';
 import { Button, Drawer, Radio, Space } from 'antd';
 import { Link } from 'react-router-dom';
 import React, { useState } from 'react';
+import burgericon from '../../assets/Images/burger-icon.png';
 import type { DrawerProps, RadioChangeEvent } from 'antd';
 
 const App: React.FC = () => {
@@ -25,7 +26,7 @@ const App: React.FC = () => {
     <>
       <Space>
         <Button type="primary" onClick={showDrawer}>
-          Menu
+          <img src={burgericon} alt="" />
         </Button>
       </Space>
       <Drawer title="Menu" placement={placement} closable={false} onClose={onClose} open={open} key={placement}>

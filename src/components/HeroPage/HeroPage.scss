@@ -10,7 +10,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 0px 25px 0px 25px;
-    .ant-space-item{
+    .ant-space-item {
       display: none;
     }
     span {
@@ -19,7 +19,7 @@
     .TravelAgent-container {
       display: flex;
       align-items: center;
-      gap:5px;
+      gap: 5px;
       img {
         width: 60px;
         height: 60px;
@@ -82,13 +82,30 @@
   html {
     height: 100%;
   }
+  .ant-drawer-wrapper-body {
+    background-color: #032030;
+    .ant-drawer-title {
+      color: #ffffff;
+      text-shadow:
+        0 0 20px #00fffb,
+        0 0 40px #0081bc;
+    }
+    a{
+      button{
+        color: #ffffff !important;
+        background-color: transparent;
+        font-weight: bolder;
+      }
+    }
+  
+  }
   .hero-page-container {
     width: 100%;
     height: 100%;
     .Header-container {
       padding: 0;
       height: 60px;
-      .ant-space-item{
+      .ant-space-item {
         display: contents;
       }
       .TravelAgent-container {
