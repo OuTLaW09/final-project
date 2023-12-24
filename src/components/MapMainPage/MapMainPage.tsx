@@ -1,3 +1,5 @@
+/* eslint-disable array-callback-return */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import './MapMainPage.scss';
 import { Button, Modal, Popover, Select, Space, Tabs, Timeline, message } from 'antd';
 import { Link, useNavigate, useParams } from 'react-router-dom';
@@ -22,6 +24,7 @@ type CitiesType = {
   cities: {
     name: string;
     bookingUrl: string;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     location: any;
     partners: {
       link: string;
@@ -60,6 +63,7 @@ type CitiesType = {
   version: number;
 };
 const ScrollTicket = () => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleScroll = (event: any) => {
     const delta = event.deltaY;
     const scrollTicket = document.getElementById('scrollTicket');
@@ -185,6 +189,7 @@ export const MapMainPage = () => {
     return totalPrice;
   };
   const createCustomIcon = (name: string, arrivalDate: string, index: number) => {
+    // eslint-disable-next-line no-console
     console.log(index);
     return L.divIcon({
       className: 'custom-marker',
@@ -232,7 +237,9 @@ export const MapMainPage = () => {
           />
           {info.map((cityLoc) => {
             if (cityLoc.citiesCount === selectedCount) {
+              // eslint-disable-next-line no-console
               console.log(info);
+              // eslint-disable-next-line no-console
               console.log(cityLoc);
               return (
                 <>
