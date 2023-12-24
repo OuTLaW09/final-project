@@ -1,9 +1,25 @@
-.burger-menu {
-    .Button-container {
-        flex-direction: column;
-
-        button {
-            width: auto;
-        }
+.ant-btn-primary {
+  text-shadow:
+    0 0 20px #00fffb,
+    0 0 40px #0081bc;
+  background-color: transparent;
+  margin-right: 15px;
+  padding: 0;
+}
+.ant-drawer-content-wrapper {
+  width: 200px !important;
+  .ant-drawer-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    button {
+      border: none;
+      width: 120px;
+      color: #032030;
+      height: 60px;
+      font-size: x-large;
+      font-family: "Lato";
     }
+  }
 }

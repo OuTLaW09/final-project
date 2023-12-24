@@ -1,58 +1,49 @@
-import {
-  AppstoreOutlined,
-  ContainerOutlined,
-  DesktopOutlined,
-  MailOutlined,
-  MenuFoldOutlined,
-  MenuUnfoldOutlined,
-  PieChartOutlined,
-} from '@ant-design/icons';
-import { Button, Menu, MenuProps } from 'antd';
-import React, { ReactNode, useState } from 'react';
-// eslint-disable-next-line no-duplicate-imports
+/* eslint-disable no-duplicate-imports */
 import './Burger.scss';
+import { Button, Drawer, Radio, Space } from 'antd';
 import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import type { DrawerProps, RadioChangeEvent } from 'antd';
 
-type MenuItem = Required<MenuProps>['items'][number];
+const App: React.FC = () => {
+  const [open, setOpen] = useState(false);
+  const [placement, setPlacement] = useState<DrawerProps['placement']>('right');
 
-function getItem(label: React.ReactNode, key: React.Key, icon?: React.ReactNode, children?: MenuItem[], type?: 'group'): MenuItem {
-  return {
-    key,
-    icon,
-    children,
-    label,
-    type,
-  } as MenuItem;
-}
-
-const items: MenuItem[] = [
-  getItem('Home', '1', <PieChartOutlined />),
-  getItem('Option 2', '2', <DesktopOutlined />),
-  getItem('Option 3', '3', <ContainerOutlined />),
-
-  getItem('Navigation One', 'sub1', <MailOutlined />),
-
-  getItem('Navigation Two', 'sub2', <AppstoreOutlined />),
-];
-
-type BurgerMenuProps = {
-  children: ReactNode;
-};
-
-export const BurgerMenu = (props: BurgerMenuProps) => {
-  const [collapsed, setCollapsed] = useState(false);
-
-  const toggleCollapsed = () => {
-    setCollapsed(!collapsed);
+  const showDrawer = () => {
+    setOpen(true);
   };
+
+  const onClose = () => {
+    setOpen(false);
+  };
+
+  const onChange = (e: RadioChangeEvent) => {
+    setPlacement(e.target.value);
+  };
+
   return (
     <>
-      <div style={{ width: 256 }} className="burger-menu">
-        <Button type="primary" onClick={toggleCollapsed} style={{ marginBottom: 16 }}>
-          {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+      <Space>
+        <Button type="primary" onClick={showDrawer}>
+          Menu
         </Button>
-        {props.children}
-      </div>
+      </Space>
+      <Drawer title="Menu" placement={placement} closable={false} onClose={onClose} open={open} key={placement}>
+        <Link to="/">
+          <button className="Home-button">Home</button>
+        </Link>
+        <Link to="/">
+          <button className="profile-button">My Profile</button>
+        </Link>
+        <Link to="login">
+          <button className="Login-button">Login</button>
+        </Link>
+        <Link to="sign-up">
+          <button className="Signup-button">Sign Up</button>
+        </Link>
+      </Drawer>
     </>
   );
 };
+
+export default App;
