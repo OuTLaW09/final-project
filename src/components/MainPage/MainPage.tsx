@@ -14,10 +14,7 @@ const { Option } = Select;
 const { RangePicker } = DatePicker;
 type RangeValue = [Dayjs | null, Dayjs | null] | null;
 
-export let DepartureArray: any[] = [];
-export let DepartureArrayName: string[] = [];
-export let themeId: string = '';
-export let docId: string = '';
+
 
 type ChoosenCitiesType = {
   name: string;
@@ -44,8 +41,6 @@ export function Mainpage() {
   const navigate = useNavigate();
   const [whereFromValue, setWhereFromValue] = useState<string>('');
   const [cityTheme, setCityTheme] = useState<string>('');
-  const [choosenCity, setChoosenCity] = useState<ChoosenCitiesType[]>([]);
-  const [lastChoosenCity, setLastChoosenCity] = useState<ChoosenCitiesType[]>([]);
   const [cities, setCities] = useState<City[]>([]);
   const [num, setNum] = useState(1);
 
@@ -58,14 +53,6 @@ export function Mainpage() {
   useEffect(() => {
     request();
   }, [num]);
-  const newCityArray: any[] = [];
-  const rotationArrayNames: string[] = [];
-  const newCityArrayLocation: number[] = [];
-  const choosenCityArray: ChoosenCitiesType[] = [];
-  const lastChoosenCityArray: ChoosenCitiesType[] = [];
-  const newCityArrayDocId: string[] = [];
-  const rotationArray: any[] = [];
-  console.log(docId, whereFromValue);
 
   const onFinishForm = async (values: any) => {
     if (value) {
@@ -108,42 +95,27 @@ export function Mainpage() {
       });
       const data = await response.json();
       if (data.signature) {
-        // navigate to map component
         navigate(`map-page/${data.signature}`);
         console.log(data.signature);
       }
     }
-    console.log(values, 'on finisf form values');
+    console.log(values, 'on finish form values');
   };
 
   const onFinishFailedForm = (errorInfo: any) => {
-    console.log('Failed:', errorInfo);
+    return( errorInfo);
   };
 
   const onChangeSelect = (value: string) => {
-    citiesArray.forEach((City) => {
-      City.startThemes.forEach((startTheme) => {
-        const matchingTheme = citiesThemes.find((theme) => theme.code === startTheme);
-        if (matchingTheme && matchingTheme.name === value) {
-          if (matchingTheme.code === startTheme) {
-            choosenCityArray.push(City);
-          }
-        }
-      });
-    });
-    setChoosenCity(choosenCityArray);
+    return(value);
+   
   };
-  console.log(choosenCity);
+
 
   const onSearchSelect = (value: string) => {
-    console.log('search:', value);
-    setCityTheme(value);
+    return( value);
   };
-  citiesThemes.forEach((filter) => {
-    if (cityTheme === filter.name) {
-      themeId = filter.docId;
-    }
-  });
+
   const filterOption = (input: string, option?: { label: string; value: string }) =>
     (option?.label ?? '').toLowerCase().includes(input.toLowerCase());
 
@@ -183,26 +155,6 @@ export function Mainpage() {
   };
 
   const [value, setValue] = useState<RangeValue>(null);
-
-  for (let indexName = 0; indexName < newCityArray.length; indexName++) {
-    if (whereFromValue === newCityArray[indexName]) {
-      for (let indexLoc = 0; indexLoc < newCityArrayLocation.length; indexLoc++) {
-        if (indexLoc === indexName) {
-          rotationArray.push(newCityArrayLocation[indexLoc]);
-          rotationArrayNames.push(newCityArray[indexName]);
-        }
-      }
-    }
-  }
-
-  lastChoosenCity.forEach((lastCity) => {
-    rotationArray.push(lastCity.location);
-    rotationArrayNames.push(lastCity.name);
-  });
-  DepartureArray = rotationArray;
-  DepartureArrayName = rotationArrayNames;
-  console.log(DepartureArrayName);
-  console.log(DepartureArray);
 
   return (
     <div className="main-page-container">

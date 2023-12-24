@@ -88,6 +88,7 @@
           }
           .travel-agent-footer {
             display: flex;
+            gap:5px;
             .airplane-logo {
               width: 40px;
               height: 40px;
@@ -146,16 +147,17 @@
             }
 
             .contact-us-footer {
-              border: 1px solid orange;
+              border: 1px solid #032030;
               border-radius: 50px;
               padding: 5px 30px;
-              background-color: yellow;
-              color: #003926;
+              background-color: #0081bc;
+              color: #032030;
               cursor: pointer;
             }
 
             .contact-us-footer:hover {
-              background-color: orange;
+              background-color:#032030 ;
+              color:#fff;
             }
           }
 
@@ -174,10 +176,10 @@
               img {
                 width: 30px;
                 height: 30px;
-                border: 1px solid #104936;
+                border: 1px solid#032030;
                 border-radius: 50%;
                 padding: 6px;
-                background-color: #07442f;
+                background-color:#0081bc;
               }
             }
           }

@@ -68,13 +68,13 @@ export const LoginPage : React.FC<LoginFormProps> = ({ onSubmit }) => {
           </Link>
             <p className="login-capture">Log in</p>
             <div className="login-logos">
-              <a href="/" className="login-logo-link">
+              <a href="https://www.google.com/" className="login-logo-link" target='_blank'>
                 <img alt="" src={googleLogo} className="login-logo" />
               </a>
-              <a href="/" className="login-logo-link">
+              <a href="https://www.facebook.com/" className="login-logo-link" target='_blank'>
                 <img alt="" src={facebookLogo} className="login-logo" />
               </a>
-              <a href="/" className="login-logo-link">
+              <a href="https://www.linkedin.com/" className="login-logo-link" target='_blank'>
                 <img alt="" src={linkedinLogo} className="login-logo" />
               </a>
             </div>

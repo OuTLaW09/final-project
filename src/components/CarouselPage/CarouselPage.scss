@@ -19,15 +19,16 @@
     .main-carousel {
       border-radius: 3%;
       margin-top: 30px;
-      max-width: 600px;
-      height: 450px;
+      max-width: 700px;
       display: flex;
 
       .city-card {
+        font-family: 'Lato';
         font-weight: bolder;
         color: #ffffff;
         background-color: transparent;
         gap: 0px;
+       
         .city-card-flex {
           display: flex;
           justify-content: space-between;
@@ -36,26 +37,26 @@
           .carousel-image-container {
             display: flex;
             justify-content: center;
-            width: 250px;
+            width: 700px;
             height: 250px;
             img {
               margin-top: 5px;
               width: 100%;
               height: 100%;
-              border-radius: 50%;
+              border-radius: 30px;
             }
           }
           .about-city-container {
             color: #f0c38e;
             align-content: center;
             flex-wrap: wrap;
-            width: 200px;
+            width: 150px;
             display: flex;
             flex-direction: column;
             font-size: larger;
             .place-name {
               margin-top: 5px;
-              margin-left: 10px;
+              margin-right: 10px;
               font-size: xx-large;
             }
             .city-properties {
