@@ -77,11 +77,10 @@ export const CarouselPage: React.FC = () => {
         </div>
       </div>
       <div className="footer-of-carousel">
-        <div className="upper-word">
-          <span className="prime">Prime</span>
-          <span className="hottest-deals">Hottest Deals</span>
+        <div className="carousel-footer-container">
+          <p className="upper-word">Prime Hottest Deals</p>
+          <p className="down-word">Save big and visit these dream destinations!</p>
         </div>
-        <div className="down-word">Save big and visit these dream destinations!</div>
       </div>
     </div>
   );

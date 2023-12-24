@@ -1,13 +1,32 @@
 import './HeroPage.scss';
 import { Link } from 'react-router-dom';
-import FlightsLogo from '../../assets/Images/FlightsLogo.png';
-import airplane from '../../assets/Images/headerLogo.png';
-import { Modal, Tabs, TabsProps } from 'antd';
+import { Modal, Tabs } from 'antd';
 import { useState } from 'react';
+import BurgerMenu from '../BurgerMenu/Burger';
+import FlightsLogo from '../../assets/Images/FlightsLogo.png';
 import TabPane from 'antd/es/tabs/TabPane';
+import airplane from '../../assets/Images/headerLogo.png';
 
 export const HeroPage = () => {
   const [modalOpen, setModalOpen] = useState(false);
+
+  const menu = (
+    <div className="Button-container">
+      <Link to="/">
+        <button className="Home-button">Home</button>
+      </Link>
+      <Link to="/" onClick={() => setModalOpen(true)}>
+        <button className="profile-button">My Profile</button>
+      </Link>
+      <Link to="login">
+        <button className="Login-button">Login</button>
+      </Link>
+      <Link to="sign-up">
+        <button className="Signup-button">Sign Up</button>
+      </Link>
+    </div>
+  );
+
   return (
     <div className="hero-page-container">
       <div className="Header-container">
@@ -16,22 +35,9 @@ export const HeroPage = () => {
           <img alt="" src={airplane} />
           <span className="agent-name">Agent</span>
         </div>
-        <div className="Button-container">
-          <Link to="/">
-            <button className="Home-button">Home</button>
-          </Link>
-          <Link to="/" onClick={() => setModalOpen(true)}>
-            <button className="profile-button">My Profile</button>
-          </Link>
-          <Link to="login">
-            <button className="Login-button">Login</button>
-          </Link>
-          <Link to="sign-up">
-            <button className="Signup-button">Sign Up</button>
-          </Link>
-        </div>
+        {<BurgerMenu />}
+        {menu}
       </div>
-
       <div className="HeroSection-container">
         <div className="Info-container">
           <p className="StartingText">You Can Travel Anywhere With Us</p>
@@ -43,27 +49,20 @@ export const HeroPage = () => {
         <img alt="" src={FlightsLogo} />
       </div>
       <div className="AboutPlaces-container"></div>
-      <Modal
-        title="User Name"
-        centered
-        open={modalOpen}
-        onOk={() => setModalOpen(false)}
-        onCancel={() => setModalOpen(false)}
-      >
-         <Tabs defaultActiveKey="1">
-                <TabPane tab="History" key="1">
-                  <div>
-                    <p>History</p>
-                  </div>
-                </TabPane>
-                <TabPane tab="Bookings" key="2">
-                  <div>
-                    <p>Bookings</p>
-                  </div>
-                </TabPane>
-          </Tabs>
+      <Modal title="User Name" centered open={modalOpen} onOk={() => setModalOpen(false)} onCancel={() => setModalOpen(false)}>
+        <Tabs defaultActiveKey="1">
+          <TabPane tab="History" key="1">
+            <div>
+              <p>History</p>
+            </div>
+          </TabPane>
+          <TabPane tab="Bookings" key="2">
+            <div>
+              <p>Bookings</p>
+            </div>
+          </TabPane>
+        </Tabs>
       </Modal>
     </div>
-    
   );
 };

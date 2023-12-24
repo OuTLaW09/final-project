@@ -1,4 +1,3 @@
-
 import './Mainpage.scss';
 import { CarouselPage } from '../CarouselPage/CarouselPage';
 import { City, citiesArray, citiesThemes } from '../../models/citiesData';
@@ -68,7 +67,6 @@ export function Mainpage() {
   const rotationArray: any[] = [];
   console.log(docId, whereFromValue);
 
-
   const onFinishForm = async (values: any) => {
     if (value) {
       const date1 = value[0]?.format('YYYY-MM-DD');
@@ -117,8 +115,6 @@ export function Mainpage() {
     }
     console.log(values, 'on finisf form values');
   };
-
-
 
   const onFinishFailedForm = (errorInfo: any) => {
     console.log('Failed:', errorInfo);
@@ -217,6 +213,9 @@ export function Mainpage() {
           <Form className="search-form" onFinish={onFinishForm} name="searchForm" onFinishFailed={onFinishFailedForm}>
             <div className="rotation-main">
               <div className="rotation-container">
+                <div className="build-trip-container">
+                  <p>Let's Build Your Trip</p>
+                </div>
                 <Form.Item rules={[{ required: true, message: 'Please select an option' }]} name="cityId">
                   <Select
                     showSearch
@@ -254,33 +253,6 @@ export function Mainpage() {
                     ))}
                   </Select>
                 </Form.Item>
-                <Form.Item name="citiesCount">
-                  <Select
-                    className="count-of-city"
-                    showSearch
-                    placeholder="Count of City"
-                    optionFilterProp="children"
-                    filterOption={filterOptionCountCity}
-                    options={[
-                      {
-                        value: '1',
-                        label: '1',
-                      },
-                      {
-                        value: '2',
-                        label: '2',
-                      },
-                      {
-                        value: '3',
-                        label: '3',
-                      },
-                      {
-                        value: '4',
-                        label: '4',
-                      },
-                    ]}
-                  ></Select>
-                </Form.Item>
                 <Form.Item name="dates">
                   <Space direction="vertical" size={12}>
                     <RangePicker
@@ -313,21 +285,6 @@ export function Mainpage() {
         </div>
       </div>
       <Footer />
-      <div className="last-part-mainpage" style={{
-        width:'100%',
-        height:'100%',
-        backgroundColor:'#004D74' }}>
-        <div>
-          <a href="/">Privacy Policy</a>
-        </div>
-        <div>
-          <a href="/">All rights revered 2023 @Travel Agency</a>
-        </div>
-        <div>
-          <a href="/">Terms&Conditions</a>
-        </div>
-      </div>
     </div>
   );
 }
-

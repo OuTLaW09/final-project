@@ -1,207 +1,209 @@
-.footer-main{
-    display: flex;
-    flex-direction: column-reverse;
+.footer-main {
+  display: flex;
+  width: 100%;
+  background-color: #004d74;
+
+  .top-of-footer {
     width: 100%;
-    height: 800px;
-    
-    
-    .top-of-footer{
-        width: 100%;
-        height: 300px;
-        background-color:#004D74;
-        opacity: 0.9;
-        position: relative;
-        top:-63px;
-
-        button{
-            border:none;
-            background-color: transparent;
-        }
-    
-        .footer-top-image{
-            width: 100%;
-            height: 300px;
-            object-fit: contain;
-           
-            z-index: -1;
-
-        }
-        .back-to-top{
-            
-            position: relative;
-            
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            bottom:280px;
-            flex-direction: column;
-            color: #003926;
-            
-
-            
-            .backto-top-image{
-                width: 50px;
-                height: 50px;
-            }
-            .back-to-top-p{
-                font-size: 15px;
-                font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-            }
-           
-            
-        }
-
+    height: 300px;
+    position: relative;
+    button {
+      border: none;
+      background-color: transparent;
     }
-    .bottom-of-footer::before{
-        content:'';
-        position: absolute;
-        top: 0;
-        left: 50%;
-        width: 100%;
-        height: 500px;
-        background-color: #004D74;
-        border-radius: 50%;
-        transform-origin: top;
-        transform: translateX(-50%) scale(4);
-       
 
-
+    .footer-top-image {
+      width: 100%;
+      height: 300px;
+      object-fit: contain;
     }
-    .bottom-of-footer{
-        position: relative;
-        width: 100%;
-        height: 100%;
-        overflow: hidden;
-        bottom:63px;
-       
-       
-       
-        
-        .content-of-bottom-footer{
-            position: relative;
-            z-index: 1;
-            width: 100%;
+    .back-to-top {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      bottom: 280px;
+      flex-direction: column;
+      color: #ffffff;
+
+      .backto-top-image {
+        width: 50px;
+        height: 50px;
+      }
+      p {
+        font-size: 15px;
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+      }
+    }
+  }
+  .bottom-of-footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 100%;
+    height: 500px;
+    background-color: #004d74;
+    border-radius: 50%;
+    transform-origin: top;
+    transform: translateX(-50%) scale(4);
+  }
+  .bottom-of-footer {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    bottom: 63px;
+
+    .content-of-bottom-footer {
+      margin-top: 80px;
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 60px;
+
+      .header-of-bottom-footer {
+        display: flex;
+        justify-content: space-around;
+        color: #fff;
+        font-family: 'Lato';
+        font-weight: bold;
+
+        .logo-part-footer {
+          display: flex;
+          flex-direction: column;
+          gap: 30px;
+          font-size: 30px;
+          a {
+            text-decoration: none;
+            color: #fff;
+            font-size: 20px;
+          }
+          .home-part-footer {
             display: flex;
             flex-direction: column;
-           
-            gap:60px;
-            padding: 90px 40px;
-
-            .header-of-bottom-footer{
-                display: flex;
-                justify-content: space-around;
-                color:#fff;
-                font-family: 'Lato';
-                font-weight: bold;
-                .logo-part-footer{
-                    display: flex;
-                    flex-direction: column;
-                    gap: 30px;
-                    font-size:30px;
-                    .airplane-logo{
-                        width: 40px;
-                        height: 40px;
-                    }
-                }
-
-                .middle-of-bottom-footer-main{
-                    display: flex;
-                    flex-direction: column;
-                    gap:40px;
-                    .info-footer{
-                        font-size:20px;
-                    }
-
-                    .middle-of-bottom-footer{
-                        display: flex;
-                        justify-content: space-around;
-                        margin-left:-100px;
-                        margin-right: 100px;
-                        
-                        
-                         font-family: 'Lato';
-                         font-weight: bolder;
-         
-                         .about-us-footer{
-                             margin-left:25px;
-         
-                         }
-                            
-                         .home-part-footer{
-                             display: flex;
-                             flex-direction: column;
-                             gap:30px;
-                            
-                         }
-    
-                         
-                    }
-                }
-                
-               
-
-                a{
-                    text-decoration: none;
-                    color:#fff;
-                    font-size:20px;
-                }
-                .right-of-bottom-footer{
-                    display: flex;
-                    flex-direction: column;
-                    gap: 40px;
-                    .get-in-touch-contact-us{
-                        display: flex;
-                        gap:20px;
-                        .get-in-touch{
-                            font-size:25px;
-                            font-family: 'Lato' sans-serif;
-                            font-weight: bolder;
-                            margin-top:5px;
-                            
-                        }
-                        .contact-us-footer{
-                            border:1px solid orange;
-                            border-radius: 50px;
-                            padding:5px 30px;
-                            background-color: yellow;
-                            color:#003926;
-                        }
-                        .contact-us-footer:hover{
-                            background-color: orange;
-                        }
-                    }
-
-                    .follow-us-part{
-                        display: flex;
-                        flex-direction: column;
-                        gap:30px;
-                        
-    
-                     
-                        
-    
-                        .follow-us-logo-part{
-                            display: flex;
-                            gap:10px;
-                            img{
-                                width:30px;
-                                height: 30px;
-                                border:1px solid #104936;
-                                border-radius:50%;
-                                padding:6px;
-                                background-color:#07442f;
-                               
-                            }
-                        }
-                       
-                    }
-
-                }
-                
+            gap: 10px;
+          }
+          .travel-agent-footer {
+            display: flex;
+            .airplane-logo {
+              width: 40px;
+              height: 40px;
             }
-           
+          }
         }
-      
+
+        .middle-of-bottom-footer-main {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          .info-footer {
+            text-shadow:
+              0 0 20px #00fffb,
+              0 0 40px #0081bc;
+            font-size: 30px;
+            text-align: center;
+            text-transform: capitalize;
+          }
+
+          .middle-of-bottom-footer {
+            justify-content: space-around;
+            font-family: 'Lato';
+            font-weight: bolder;
+
+            .home-part-footer {
+              display: flex;
+              flex-direction: column;
+              gap: 30px;
+            }
+          }
+        }
+        .right-of-bottom-footer {
+          display: flex;
+          flex-direction: column;
+          gap: 20px;
+          .last-part-footer {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            a {
+              font-size: 13px;
+              color: #ffffff;
+              text-decoration: none;
+            }
+          }
+
+          .get-in-touch-contact-us {
+            display: flex;
+            gap: 20px;
+
+            .get-in-touch {
+              font-size: 25px;
+              font-family: 'Lato' sans-serif;
+              font-weight: bolder;
+            }
+
+            .contact-us-footer {
+              border: 1px solid orange;
+              border-radius: 50px;
+              padding: 5px 30px;
+              background-color: yellow;
+              color: #003926;
+              cursor: pointer;
+            }
+
+            .contact-us-footer:hover {
+              background-color: orange;
+            }
+          }
+
+          .follow-us-part {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            a {
+              text-decoration: none;
+              color: #ffffff;
+            }
+
+            .follow-us-logo-part {
+              display: flex;
+              gap: 10px;
+              img {
+                width: 30px;
+                height: 30px;
+                border: 1px solid #104936;
+                border-radius: 50%;
+                padding: 6px;
+                background-color: #07442f;
+              }
+            }
+          }
+        }
+      }
     }
-   
+  }
+}
+@media (max-width: 415px) {
+  .footer-main {
+    width: 100%;
+    height: 100%;
+    .bottom-of-footer {
+      top: 90px;
+      bottom: 0;
+      .content-of-bottom-footer {
+        .header-of-bottom-footer {
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+          .right-of-bottom-footer {
+            margin-top: 30px;
+            margin-left: 50%;
+            
+          }
+        }
+      }
+    }
+  }
 }
