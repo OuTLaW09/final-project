@@ -13,7 +13,7 @@ function App() {
   const [signupInfo, setSignupInfo] = useState<any | null>(null);
   const handleSignUpSubmit = async (values: any) => {
     try {
-      const response = await fetch('https://devedu-az.com:7001/api/movies/register', {
+      const response = await fetch('https://devedu-az.com:7001/api/travel/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -32,12 +32,14 @@ function App() {
     signUpData.push(values['password']);
     signUpData.push(values['email']);
     signUpData.push(values['phone-number']);
+    console.log(signUpData.push(values['email']),'jgjjgjgjgjg');
+    console.log(signUpData.push(values['phone-number']),'jgjjggj');
 
     console.log(values);
   };
 
   const handleLoginSubmit = (values: any) => {
-    console.log(values,'jhjhjhj');
+    console.log(values);
 
     if (
       signupInfo &&

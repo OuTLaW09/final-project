@@ -222,7 +222,7 @@ export function Mainpage() {
                 </Form.Item>
                 <Form.Item>
                   <div className="search-button">
-                    {!checkLogIn ? (
+                    {checkLogIn ? (
                       <button>Search Flights</button>
                     ) : (
                       <Link to="login">
